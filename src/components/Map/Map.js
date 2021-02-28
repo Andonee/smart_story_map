@@ -1,18 +1,20 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import useMap from '../../hooks/useMap'
-import { filter as rxFilter, first } from 'rxjs/operators'
+import { filter as rxFilter } from 'rxjs/operators'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
 	map: {
-		background: 'green',
 		height: '100%',
 	},
 })
 
-const Map = () => {
+const Map = ({ data }) => {
 	const classes = useStyles()
 	const [isLoaded, setIsLoaded] = useState(false)
+	const [places, setPlaces] = useState(
+		window.opalSdk.createDataset('places', { data })
+	)
 
 	const map = useMap('map')
 
@@ -28,6 +30,31 @@ const Map = () => {
 			subsription.unsubscribe()
 		}
 	}, [map])
+
+	const addData = useCallback(() => {
+		if (!(map || places)) return
+
+		map.addData(places, {
+			id: 'places',
+			type: 'symbol',
+			layout: {
+				// 'icon-size': ['interpolate', ['linear'], ['zoom'], 14.9, 0, 15, 1],
+				'icon-image': 'swietlice_01',
+			},
+		})
+	}, [map, places])
+
+	useEffect(() => {
+		if (!isLoaded) return
+
+		addData()
+	})
+
+	useEffect(() => {
+		if (places) {
+			places.setData(data)
+		}
+	}, [data, places])
 	return <div className={classes.map} id='map'></div>
 }
 
