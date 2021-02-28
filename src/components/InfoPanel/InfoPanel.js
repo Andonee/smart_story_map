@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
 	info: {
-		background: 'green',
+		background: 'blue',
 		height: '100%',
 	},
 })
