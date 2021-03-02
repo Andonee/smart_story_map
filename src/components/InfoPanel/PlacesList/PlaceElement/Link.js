@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { IconArrowNarrowRight } from '@tabler/icons'
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
 
 const useStyles = makeStyles(theme => ({
 	constainer: {
@@ -31,7 +31,7 @@ const Link = ({ link }) => {
 	return (
 		<div className={classes.constainer}>
 			<div className={classes.arrow}>
-				<IconArrowNarrowRight color='#545454' />
+				<ArrowRightAltIcon color='primary' />
 			</div>
 			<a
 				href={link}
