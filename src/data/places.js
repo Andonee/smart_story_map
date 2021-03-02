@@ -1,5 +1,7 @@
 export const objects = [
 	{
+		type: 'story map',
+		// type: 'timeline',
 		gliwice: {
 			type: 'FeatureCollection',
 			name: 'gliwice',
@@ -17,12 +19,12 @@ export const objects = [
 							'https://www.24gliwice.pl/wiadomosci/wp-content/uploads/2018/11/1-ratusz-rynek-3-001-810x456.jpg',
 						photo2: 'https://www.mapofpoland.pl/zdjecia-13880/Ratusz.jpg',
 						photo3:
-							'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pretium, nibh at lobortis tincidunt, sem nisl aliquam est, vel viverra lacus est at lorem. Morbi ut tempor dui, ut dictum nibh. Donec bibendum metus sed est luctus, lacinia commodo sapien lacinia. Donec posuere magna mi, eget elementum magna faucibus in. Sed accumsan libero nec diam fringilla finibus. ',
+							'https://www.24gliwice.pl/wiadomosci/wp-content/uploads/2017/03/1-ratusz.jpg',
 						description:
 							'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pretium, nibh at lobortis tincidunt, sem nisl aliquam est, vel viverra lacus est at lorem. Morbi ut tempor dui, ut dictum nibh. Donec bibendum metus sed est luctus, lacinia commodo sapien lacinia. Donec posuere magna mi, eget elementum magna faucibus in. Sed accumsan libero nec diam fringilla finibus.',
-						video:
-							'https://www.youtube.com/watch?v=fGMX2N4FIaE&ab_channel=POLANDONAIR',
+						video: 'https://www.youtube.com/embed/fGMX2N4FIaE',
 						audio: 'https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.mp3',
+						link: 'https://gliwice.eu/',
 					},
 					geometry: {
 						type: 'Point',
@@ -41,9 +43,9 @@ export const objects = [
 						photo3: null,
 						description:
 							'Cras varius pellentesque velit et efficitur. Phasellus a odio iaculis, tincidunt augue vel, tristique enim. Sed pharetra dignissim dolor nec dignissim. Mauris ullamcorper nulla eget tellus imperdiet condimentum. Nam euismod purus interdum, auctor tortor eget, accumsan libero. Nunc accumsan, tellus ac auctor blandit, arcu nisl sodales justo, sit amet porttitor massa turpis vel purus. Nam vel consectetur nibh, imperdiet vulputate diam. Aliquam non urna venenatis, condimentum sem non, tempor elit.\n\n',
-						video:
-							'https://www.youtube.com/watch?v=p5saqi9OSdY&ab_channel=smartgeomatic',
+						video: 'https://www.youtube.com/embed/p5saqi9OSdY',
 						audio: null,
+						link: 'http://smartgeomatic.pl/',
 					},
 					geometry: {
 						type: 'Point',
@@ -62,6 +64,8 @@ export const objects = [
 						description: null,
 						video: null,
 						audio: null,
+						link:
+							'https://www.gimmik.net/Lotniskowiec-USS-Wasp-1-350-24GHz-RTR,o,24845.html',
 					},
 					geometry: {
 						type: 'Point',

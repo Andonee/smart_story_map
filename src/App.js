@@ -9,29 +9,30 @@ import Map from './components/Map/Map'
 import { objects } from './data/places'
 
 function App() {
-	const [data, setData] = useState()
+	const [spatialData, setSpatialData] = useState()
 
 	useEffect(() => {
-		setData(objects[0].gliwice)
+		console.log(objects[0])
+		setSpatialData(objects[0])
 	}, [])
 	return (
 		<div className='App'>
 			<Grid container className='grid_container'>
-				<Grid item xs={3} xl={2}>
+				<Grid item xs={4} xl={3}>
 					<div className='grid_element'>
-						<InfoPanel />
+						{spatialData && <InfoPanel spatialData={spatialData} />}
 					</div>
 				</Grid>
 				<Grid item xs className='grid_element'>
 					<div className='grid_element'>
-						<Map data={data} />
+						<Map spatialData={spatialData} />
 					</div>
 				</Grid>
-				{/* <Grid item xs={4} xl={3} className='grid_element'>
+				<Grid item xs={4} xl={3} className='grid_element'>
 					<div className='grid_element'>
 						<EditorPanel />
 					</div>
-				</Grid> */}
+				</Grid>
 			</Grid>
 		</div>
 	)

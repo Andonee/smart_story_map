@@ -1,16 +1,24 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import PlacesList from './PlacesList/PlacesList'
+import Timeline from './Timeline/Timeline'
 
 const useStyles = makeStyles({
 	info: {
-		background: 'blue',
 		height: '100%',
+		overflow: 'scroll',
 	},
 })
 
-const Sidebar = () => {
+const Sidebar = ({ spatialData }) => {
+	let renderComponent
+	if (spatialData.type === 'story map') {
+		renderComponent = <PlacesList spatialData={spatialData} />
+	} else if (spatialData.type === 'timeline') {
+		renderComponent = <Timeline spatialData={spatialData} />
+	}
 	const classes = useStyles()
-	return <div className={classes.info}>Sidebar</div>
+	return <div className={classes.info}>{renderComponent}</div>
 }
 
 export default Sidebar

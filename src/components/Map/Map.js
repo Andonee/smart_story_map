@@ -9,11 +9,11 @@ const useStyles = makeStyles({
 	},
 })
 
-const Map = ({ data }) => {
+const Map = ({ spatialData }) => {
 	const classes = useStyles()
 	const [isLoaded, setIsLoaded] = useState(false)
 	const [places, setPlaces] = useState(
-		window.opalSdk.createDataset('places', { data })
+		window.opalSdk.createDataset('places', { data: spatialData })
 	)
 
 	const map = useMap('map')
@@ -52,9 +52,9 @@ const Map = ({ data }) => {
 
 	useEffect(() => {
 		if (places) {
-			places.setData(data)
+			places.setData(spatialData)
 		}
-	}, [data, places])
+	}, [spatialData, places])
 	return <div className={classes.map} id='map'></div>
 }
 

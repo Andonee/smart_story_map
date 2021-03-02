@@ -4,6 +4,10 @@
 .grid_container {
 	height: 100%;
 }
+.grid_container > div {
+	height: 100%;
+	/* overflow: scroll; */
+}
 
 .grid_element {
 	height: 100%;
