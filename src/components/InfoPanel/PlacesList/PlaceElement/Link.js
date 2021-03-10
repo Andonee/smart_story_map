@@ -2,11 +2,11 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	constainer: {
 		display: 'flex',
 		alignItems: 'center',
-		padding: '20px 40px',
+		padding: '20px 20px',
 	},
 	arrow: {
 		width: '24px',
@@ -38,7 +38,8 @@ const Link = ({ link }) => {
 				target='_blank'
 				rel='noreferrer'
 				className={classes.link}
-				title={link}>
+				title={link}
+			>
 				{link}
 			</a>
 		</div>

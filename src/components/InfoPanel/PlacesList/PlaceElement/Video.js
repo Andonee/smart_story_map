@@ -1,9 +1,9 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	video: {
-		padding: '20px 40px',
+		padding: '20px 20px',
 	},
 }))
 
@@ -17,8 +17,9 @@ const Video = ({ video }) => {
 				height='200'
 				src={video}
 				frameborder='0'
-				allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-				allowfullscreen></iframe>
+				allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
+				allowfullscreen
+			></iframe>
 		</div>
 	)
 }

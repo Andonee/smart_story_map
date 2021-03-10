@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
 	audio: {
-		padding: '20px 40px',
+		padding: '20px 20px',
 	},
 })
 

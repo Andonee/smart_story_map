@@ -14,7 +14,7 @@ const useStyles = makeStyles({
 		marginBottom: '100px',
 	},
 })
-const PlaceElement = ({ spatialData }) => {
+const PlaceElement = ({ spatialData, imageOpenHandler }) => {
 	const classes = useStyles()
 	console.log(spatialData.properties)
 
@@ -30,9 +30,9 @@ const PlaceElement = ({ spatialData }) => {
 	} = spatialData.properties
 	return (
 		<div className={classes.placeElement}>
-			{photo1 && <Photo photo={photo1} />}
-			{photo2 && <Photo photo={photo2} />}
-			{photo3 && <Photo photo={photo3} />}
+			{photo1 && <Photo photo={photo1} open={imageOpenHandler} />}
+			{photo2 && <Photo photo={photo2} open={imageOpenHandler} />}
+			{photo3 && <Photo photo={photo3} open={imageOpenHandler} />}
 			{title && <PlaceName title={title} />}
 			{description && <Divider variant='middle' />}
 			{description && <PlaceDescription description={description} />}

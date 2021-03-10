@@ -10,10 +10,15 @@ const useStyles = makeStyles({
 	},
 })
 
-const Sidebar = ({ spatialData }) => {
+const Sidebar = ({ spatialData, imageOpenHandler }) => {
 	let renderComponent
 	if (spatialData.type === 'story map') {
-		renderComponent = <PlacesList spatialData={spatialData} />
+		renderComponent = (
+			<PlacesList
+				spatialData={spatialData}
+				imageOpenHandler={imageOpenHandler}
+			/>
+		)
 	} else if (spatialData.type === 'timeline') {
 		renderComponent = <Timeline spatialData={spatialData} />
 	}
