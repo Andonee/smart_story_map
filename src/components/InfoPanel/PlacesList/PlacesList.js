@@ -4,7 +4,7 @@ import PlaceElement from './PlaceElement/PlaceElement'
 const PlacesList = ({ spatialData, imageOpenHandler }) => {
 	return (
 		<div>
-			{spatialData.gliwice.features.map((place) => (
+			{spatialData.features.map(place => (
 				<PlaceElement
 					spatialData={place}
 					key={place.properties.id}

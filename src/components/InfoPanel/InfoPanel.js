@@ -15,7 +15,7 @@ const Sidebar = ({ spatialData, imageOpenHandler }) => {
 	if (spatialData.type === 'story map') {
 		renderComponent = (
 			<PlacesList
-				spatialData={spatialData}
+				spatialData={spatialData.data.map}
 				imageOpenHandler={imageOpenHandler}
 			/>
 		)

@@ -12,3 +12,7 @@
 .grid_element {
 	height: 100%;
 }
+
+.grid_editor_panel {
+	overflow: scroll;
+}

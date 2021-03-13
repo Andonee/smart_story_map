@@ -18,11 +18,11 @@ function App() {
 
 	useEffect(() => {
 		axios
-			.get('http://localhost:5000/objects/1')
-			.then((res) => setSpatialData(res.data))
+			.get('http://localhost:5000/maps/1')
+			.then(res => setSpatialData(res.data))
 	}, [])
 
-	const imageOpenHandler = (e) => {
+	const imageOpenHandler = e => {
 		const image = e.target.src
 		setIsImageModalOpen({
 			isOpen: true,
@@ -44,12 +44,12 @@ function App() {
 				</Grid>
 				<Grid item xs className='grid_element'>
 					<div className='grid_element'>
-						<Map spatialData={spatialData} />
+						{spatialData && <Map spatialData={spatialData.data.map} />}
 					</div>
 				</Grid>
 				<Grid item xs={4} xl={3} className='grid_element'>
-					<div className='grid_element'>
-						<EditorPanel />
+					<div className='grid_element grid_editor_panel'>
+						{spatialData && <EditorPanel data={spatialData.data.info} />}
 					</div>
 				</Grid>
 			</Grid>

@@ -16,7 +16,6 @@ const useStyles = makeStyles({
 })
 const PlaceElement = ({ spatialData, imageOpenHandler }) => {
 	const classes = useStyles()
-	console.log(spatialData.properties)
 
 	const {
 		photo1,
