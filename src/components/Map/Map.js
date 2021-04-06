@@ -39,14 +39,26 @@ const Map = ({ spatialData }) => {
 			type: 'symbol',
 			layout: {
 				// 'icon-size': ['interpolate', ['linear'], ['zoom'], 14.9, 0, 15, 1],
-				'icon-image': 'swietlice_01',
+				'icon-image': 'catPrezesa',
 			},
 		})
 	}, [map, places])
 
 	useEffect(() => {
 		if (!isLoaded) return
-
+		console.log(map.images().list())
+		fetch('https://upload.wikimedia.org/wikipedia/commons/7/7c/201408_cat.png')
+			.then(response => response.arrayBuffer())
+			.then(data => {
+				const blob = new window.Blob([new Uint8Array(data)], {
+					type: 'image/png',
+				})
+				return window.createImageBitmap(blob)
+			})
+			.then(image => map.images().add('catPrezesa', image))
+			.then(() => {
+				console.log(map.images().list())
+			})
 		addData()
 	})
 
