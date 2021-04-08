@@ -1,55 +1,12 @@
 import React, { useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import IconButton from '@material-ui/core/IconButton'
-
-const useStyles = makeStyles((theme) => ({
-	modal: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		boxShadow: theme.shadows[5],
-		position: 'relative',
-	},
-	paper: {
-		boxShadow: theme.shadows[5],
-		border: `2px solid ${theme.palette.primary.main}`,
-		backgroundColor: '#fff',
-		padding: '10px',
-		position: 'relative',
-		outline: 'none',
-		maxWidth: '45%',
-		[theme.breakpoints.down('sm')]: {
-			height: 'auto',
-			width: '95%',
-			maxWidth: '95%',
-		},
-	},
-	closeBtn: {
-		position: 'absolute',
-		top: '10px',
-		right: '10px',
-		color: theme.palette.primary.main,
-
-		'&:hover': {
-			cursor: 'pointer',
-		},
-	},
-	image: {
-		width: '100%',
-		// height: '100%',
-		[theme.breakpoints.down('sm')]: {
-			// height: '100%',
-			width: '100%',
-		},
-	},
-}))
+import styled from 'styled-components'
 
 const ImageModal = ({ isOpen, setIsOpen }) => {
-	const classes = useStyles()
 	const [open, setOpen] = React.useState(isOpen.isOpen)
 
 	useEffect(() => {
@@ -65,10 +22,9 @@ const ImageModal = ({ isOpen, setIsOpen }) => {
 	}
 
 	return (
-		<Modal
+		<Wrapper
 			aria-labelledby='transition-modal-title'
 			aria-describedby='transition-modal-description'
-			className={classes.modal}
 			open={open}
 			onClose={handleClose}
 			closeAfterTransition
@@ -78,19 +34,62 @@ const ImageModal = ({ isOpen, setIsOpen }) => {
 			}}
 		>
 			<Fade in={open}>
-				<div className={classes.paper}>
-					<IconButton
-						className={classes.closeBtn}
-						onClick={handleClose}
-						size='small'
-					>
+				<Paper>
+					<CloseBtn onClick={handleClose} size='small'>
 						<CloseIcon onClick={handleClose} />
-					</IconButton>
-					<img src={isOpen.img} alt={isOpen.img} className={classes.image} />
-				</div>
+					</CloseBtn>
+					<Img src={isOpen.img} alt={isOpen.img} />
+				</Paper>
 			</Fade>
-		</Modal>
+		</Wrapper>
 	)
 }
 
 export default ImageModal
+
+const Wrapper = styled(Modal)`
+	${({ theme }) => `
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: theme.shadows[5];
+	position: relative;
+		`}
+`
+const Paper = styled.div`
+	${({ theme }) => `
+		boxShadow: theme.shadows[5];
+		border: 2px solid ${theme.palette.primary.main};
+		background-color: #fff;
+		padding: 10px;
+		position: relative;
+		outline: none;
+		max-width: 45%;
+		${theme.breakpoints.down('sm')} {
+			height: auto;
+			width: 95%;
+			max-width: 95%;
+		},
+		`}
+`
+
+const CloseBtn = styled(IconButton)`
+	${({ theme }) => `
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: ${theme.palette.primary.main};
+
+	&:hover {
+		cursor: pointer,
+	}
+`}
+`
+const Img = styled.img`
+	${({ theme }) => `
+		width: 100%;
+		${theme.breakpoints.down('sm')} {
+			width: '100%';
+		},
+		`}
+`

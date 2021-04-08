@@ -1,19 +1,16 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-
-const useStyles = makeStyles({
-	audio: {
-		padding: '20px 20px',
-	},
-})
+import styled from 'styled-components'
 
 const Audio = ({ audio }) => {
-	const classes = useStyles()
 	return (
-		<audio controls className={classes.audio}>
+		<Player controls>
 			<source src={audio} type='audio/mpeg' />
-		</audio>
+		</Player>
 	)
 }
 
 export default Audio
+
+const Player = styled.audio`
+	padding: 20px 20px;
+`

@@ -1,51 +1,12 @@
 import React from 'react'
-import { withStyles, makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-
-const InputField = withStyles(theme => ({
-	root: {
-		width: '90%',
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		'& label': {
-			color: theme.palette.primary.main,
-		},
-		'& label.Mui-focused': {
-			color: theme.palette.primary.main,
-			// fontSize: '12px',
-		},
-		'& input': {
-			color: theme.palette.primary.main,
-		},
-
-		'& .MuiOutlinedInput-root': {
-			'& fieldset': {
-				borderColor: theme.palette.primary.main,
-			},
-			'&:hover fieldset': {
-				borderColor: theme.palette.primary.main,
-			},
-		},
-	},
-}))(TextField)
-
-const useStyles = makeStyles({
-	description: {
-		fontSize: '16px',
-		marginLeft: '20px',
-	},
-	inputContainer: {
-		height: '150px',
-		display: 'flex',
-	},
-})
+import styled from 'styled-components'
 
 const Title = ({ description, onDescriptionChange }) => {
-	const classes = useStyles()
 	return (
-		<div className={classes.inputContainer}>
+		<Wrapper>
 			{description.isEdited ? (
-				<InputField
+				<Input
 					id='map-description'
 					name='description'
 					label='Map description'
@@ -58,10 +19,44 @@ const Title = ({ description, onDescriptionChange }) => {
 					rows={5}
 				/>
 			) : (
-				<div className={classes.description}>{description.description}</div>
+				<Description>{description.description}</Description>
 			)}
-		</div>
+		</Wrapper>
 	)
 }
 
 export default Title
+
+const Wrapper = styled.div`
+	height: 150px;
+	display: flex;
+`
+
+const Description = styled.div`
+	font-size: 16px;
+	margin-left: 20px;
+`
+
+const Input = styled(TextField)`
+	${({ theme }) => `
+		width: 90%;
+		margin-left: auto;
+		margin-right: auto;
+		& label {
+			color: ${theme.palette.primary.main};
+		}
+		& label.Mui-focused {
+			color:${theme.palette.primary.main};
+		}
+
+		& .MuiOutlinedInput-root {
+			color: ${theme.palette.primary.main};
+			& fieldset{
+				border-color:${theme.palette.primary.main};
+			}
+			&:hover fieldset {
+				border-color: ${theme.palette.primary.main};
+			}
+		}
+`}
+`

@@ -1,14 +1,7 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import PlacesList from './PlacesList/PlacesList'
 import Timeline from './Timeline/Timeline'
-
-const useStyles = makeStyles({
-	info: {
-		height: '100%',
-		overflow: 'scroll',
-	},
-})
+import styled from 'styled-components'
 
 const Sidebar = ({ spatialData, imageOpenHandler }) => {
 	let renderComponent
@@ -22,8 +15,13 @@ const Sidebar = ({ spatialData, imageOpenHandler }) => {
 	} else if (spatialData.type === 'timeline') {
 		renderComponent = <Timeline spatialData={spatialData} />
 	}
-	const classes = useStyles()
-	return <div className={classes.info}>{renderComponent}</div>
+
+	return <Wrapper>{renderComponent}</Wrapper>
 }
 
 export default Sidebar
+
+const Wrapper = styled.div`
+	height: 100%;
+	overflow: scroll;
+`

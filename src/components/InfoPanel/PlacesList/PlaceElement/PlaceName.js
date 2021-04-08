@@ -1,18 +1,17 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-
-const useStyles = makeStyles(theme => ({
-	title: {
-		color: theme.palette.primary.main,
-		fontSize: '26px',
-		padding: '20px',
-		fontWeight: 'bold',
-	},
-}))
+import styled from 'styled-components'
 
 const PlaceName = ({ title }) => {
-	const classes = useStyles()
-	return <div className={classes.title}>{title}</div>
+	return <Wrapper>{title}</Wrapper>
 }
 
 export default PlaceName
+
+const Wrapper = styled.div`
+	${({ theme }) => `
+		color: ${theme.palette.primary.main};
+		font-size: 26px;
+		padding: 20px;
+		font-weight: bold;
+	`}
+`

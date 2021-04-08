@@ -1,37 +1,33 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import VisibilityIcon from '@material-ui/icons/Visibility'
-
-const useStyles = makeStyles({
-	container: {
-		position: 'relative',
-	},
-	img: {
-		width: '100%',
-		marginBottom: '10px',
-
-		'&:hover': {
-			cursor: 'pointer',
-			background: 'transparentize',
-		},
-	},
-	visibility: {
-		position: 'absolute',
-		color: '#fff',
-		top: '5px',
-		left: '5px',
-	},
-})
+import styled from 'styled-components'
 
 const Photo = ({ photo, open }) => {
-	const classes = useStyles()
-
 	return (
-		<div className={classes.container}>
-			<VisibilityIcon className={classes.visibility} />
-			<img src={photo} className={classes.img} onClick={open} />
-		</div>
+		<Wrapper>
+			<Icon />
+			<Img src={photo} onClick={open} />
+		</Wrapper>
 	)
 }
 
 export default Photo
+
+const Wrapper = styled.div`
+	position: relative;
+`
+const Img = styled.img`
+	width: 100%;
+	margin-bottom: 10px;
+
+	&:hover {
+		cursor: pointer;
+		background: transparentize;
+	}
+`
+const Icon = styled(VisibilityIcon)`
+	position: absolute;
+	color: #fff;
+	top: 5px;
+	left: 5px;
+`

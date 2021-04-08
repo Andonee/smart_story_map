@@ -1,16 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import useMap from '../../hooks/useMap'
 import { filter as rxFilter } from 'rxjs/operators'
-import { makeStyles } from '@material-ui/core/styles'
-
-const useStyles = makeStyles({
-	map: {
-		height: '100%',
-	},
-})
+import styled from 'styled-components'
 
 const Map = ({ spatialData }) => {
-	const classes = useStyles()
 	const [isLoaded, setIsLoaded] = useState(false)
 	const [places, setPlaces] = useState(
 		window.opalSdk.createDataset('places', { data: spatialData })
@@ -39,26 +32,29 @@ const Map = ({ spatialData }) => {
 			type: 'symbol',
 			layout: {
 				// 'icon-size': ['interpolate', ['linear'], ['zoom'], 14.9, 0, 15, 1],
-				'icon-image': 'catPrezesa',
+				'icon-image': 'swietlice_01',
 			},
 		})
 	}, [map, places])
 
 	useEffect(() => {
 		if (!isLoaded) return
-		console.log(map.images().list())
-		fetch('https://upload.wikimedia.org/wikipedia/commons/7/7c/201408_cat.png')
-			.then(response => response.arrayBuffer())
-			.then(data => {
-				const blob = new window.Blob([new Uint8Array(data)], {
-					type: 'image/png',
-				})
-				return window.createImageBitmap(blob)
-			})
-			.then(image => map.images().add('catPrezesa', image))
-			.then(() => {
-				console.log(map.images().list())
-			})
+
+		// Add icon to map
+
+		// console.log(map.images().list())
+		// fetch('https://upload.wikimedia.org/wikipedia/commons/7/7c/201408_cat.png')
+		// 	.then(response => response.arrayBuffer())
+		// 	.then(data => {
+		// 		const blob = new window.Blob([new Uint8Array(data)], {
+		// 			type: 'image/png',
+		// 		})
+		// 		return window.createImageBitmap(blob)
+		// 	})
+		// 	.then(image => map.images().add('catPrezesa', image))
+		// 	.then(() => {
+		// 		console.log(map.images().list())
+		// 	})
 		addData()
 	})
 
@@ -67,7 +63,11 @@ const Map = ({ spatialData }) => {
 			places.setData(spatialData)
 		}
 	}, [spatialData, places])
-	return <div className={classes.map} id='map'></div>
+	return <Wrapper id='map'></Wrapper>
 }
 
 export default Map
+
+const Wrapper = styled.div`
+	height: 100%;
+`

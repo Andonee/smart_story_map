@@ -1,50 +1,10 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import Title from './Title'
 import Description from './Description'
 import Button from '@material-ui/core/Button'
-
-const useStyles = makeStyles(theme => ({
-	editor: {
-		height: '100%',
-
-		'& > div': {
-			marginTop: '20px',
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
-			// background: 'green',
-		},
-	},
-	titleContainer: {
-		width: '90%',
-	},
-
-	editBtnContainer: {
-		width: '100%',
-		display: 'flex',
-		justifyContent: 'flex-end',
-	},
-
-	editBtn: {
-		marginRight: '20px',
-		background: theme.palette.info.main,
-
-		'&:hover': {
-			background: theme.palette.info.light,
-		},
-	},
-
-	divider: {
-		width: '90%',
-		height: '1px',
-		background: '#cccccc',
-		margin: '20px 0',
-	},
-}))
+import styled from 'styled-components'
 
 const EditorPanel = ({ data }) => {
-	const classes = useStyles()
 	console.log(data)
 	const [title, setTitle] = useState({
 		title: data.title,
@@ -55,69 +15,109 @@ const EditorPanel = ({ data }) => {
 		isEdited: false,
 	})
 
-	const onTitleChange = e => {
-		setTitle(prevState => ({
+	const onTitleChange = (e) => {
+		setTitle((prevState) => ({
 			...prevState,
 			title: e.target.value,
 		}))
 	}
 
-	const onDescriptionChange = e => {
-		setDescription(prevState => ({
+	const onDescriptionChange = (e) => {
+		setDescription((prevState) => ({
 			...prevState,
 			description: e.target.value,
 		}))
 	}
 
-	const onTitleEditHandle = e => {
-		setTitle(prevState => ({
+	const onTitleEditHandle = (e) => {
+		setTitle((prevState) => ({
 			...prevState,
 			isEdited: !title.isEdited,
 		}))
 	}
 
-	const onDescriptionEditHandle = e => {
-		setDescription(prevState => ({
+	const onDescriptionEditHandle = (e) => {
+		setDescription((prevState) => ({
 			...prevState,
 			isEdited: !description.isEdited,
 		}))
 	}
 
 	return (
-		<div className={classes.editor}>
+		<Editor>
 			<div>
-				<div className={classes.titleContainer}>
+				<TitleWrapper>
 					<Title title={title} onTitleChange={onTitleChange} />
-					<div className={classes.editBtnContainer}>
-						<Button
-							className={classes.editBtn}
+					<EditBtnWrapper>
+						<EditBtn
 							variant='contained'
 							color='primary'
-							onClick={onTitleEditHandle}>
+							onClick={onTitleEditHandle}
+						>
 							Edit
-						</Button>
-					</div>
-				</div>
-				<div className={classes.divider} />
-				<div className={classes.titleContainer}>
+						</EditBtn>
+					</EditBtnWrapper>
+				</TitleWrapper>
+				<Divider />
+				<TitleWrapper>
 					<Description
 						description={description}
 						onDescriptionChange={onDescriptionChange}
 					/>
-					<div className={classes.editBtnContainer}>
-						<Button
-							className={classes.editBtn}
+					<EditBtnWrapper>
+						<EditBtn
 							variant='contained'
 							color='primary'
-							onClick={onDescriptionEditHandle}>
+							onClick={onDescriptionEditHandle}
+						>
 							Edit
-						</Button>
-					</div>
-				</div>
-				<div className={classes.divider} />
+						</EditBtn>
+					</EditBtnWrapper>
+				</TitleWrapper>
+				<Divider />
 			</div>
-		</div>
+		</Editor>
 	)
 }
 
 export default EditorPanel
+
+const Editor = styled.div`
+	${({ theme }) => `
+	height: 100%;
+
+	& > div {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+`}
+`
+const TitleWrapper = styled.div`
+	width: 90%;
+`
+
+const EditBtnWrapper = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+`
+
+const EditBtn = styled(Button)`
+	${({ theme }) => `
+		margin-right: 20px;
+		background: ${theme.palette.info.main};
+
+		&:hover {
+			background: ${theme.palette.info.light};
+		},
+		`}
+`
+const Divider = styled.div`
+	width: 90%;
+	height: 1px;
+	background: #cccccc;
+	margin: 20px 0;
+`

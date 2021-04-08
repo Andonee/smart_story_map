@@ -7,16 +7,9 @@ import Video from './Video'
 import Link from './Link'
 import Audio from './Audio'
 
-import { makeStyles } from '@material-ui/core/styles'
+import styled from 'styled-components'
 
-const useStyles = makeStyles({
-	placeElement: {
-		marginBottom: '100px',
-	},
-})
 const PlaceElement = ({ spatialData, imageOpenHandler }) => {
-	const classes = useStyles()
-
 	const {
 		photo1,
 		photo2,
@@ -28,7 +21,7 @@ const PlaceElement = ({ spatialData, imageOpenHandler }) => {
 		link,
 	} = spatialData.properties
 	return (
-		<div className={classes.placeElement}>
+		<Wrapper>
 			{photo1 && <Photo photo={photo1} open={imageOpenHandler} />}
 			{photo2 && <Photo photo={photo2} open={imageOpenHandler} />}
 			{photo3 && <Photo photo={photo3} open={imageOpenHandler} />}
@@ -41,8 +34,12 @@ const PlaceElement = ({ spatialData, imageOpenHandler }) => {
 			{link && <Link link={link} />}
 			{audio && <Divider variant='middle' />}
 			{audio && <Audio audio={audio} />}
-		</div>
+		</Wrapper>
 	)
 }
 
 export default PlaceElement
+
+const Wrapper = styled.div`
+	margin-bottom: 100px;
+`
