@@ -3,17 +3,21 @@ import useMap from '../../hooks/useMap'
 import { filter as rxFilter } from 'rxjs/operators'
 import styled from 'styled-components'
 
-const Map = ({ spatialData }) => {
+const Map = ({ spatialData, mapIcon, setMapInstance }) => {
 	const [isLoaded, setIsLoaded] = useState(false)
 	const [places, setPlaces] = useState(
 		window.opalSdk.createDataset('places', { data: spatialData })
 	)
+	const [icon, setIcon] = useState()
+	const [iconIsChanged, setIconIsChanged] = useState(false)
 
+	console.log(mapIcon)
 	const map = useMap('map')
 
 	useEffect(() => {
 		if (!map) return
 
+		setMapInstance(map)
 		const subsription = map.event$
 			.pipe(rxFilter(({ type }) => 'load' === type))
 			.subscribe(() => setIsLoaded(true))
@@ -22,24 +26,40 @@ const Map = ({ spatialData }) => {
 			setIsLoaded(false)
 			subsription.unsubscribe()
 		}
-	}, [map])
+	}, [map, mapIcon, icon])
+
+	useEffect(() => {
+		if (map) {
+			setIcon(mapIcon)
+			// map.layer('places').remove()
+			// addData()
+			setIconIsChanged(true)
+		}
+	}, [mapIcon, map])
+
+	useEffect(() => {
+		if (iconIsChanged) {
+			addData()
+			setIconIsChanged(false)
+		}
+		setIconIsChanged(false)
+	}, [iconIsChanged])
 
 	const addData = useCallback(() => {
-		if (!(map || places)) return
-
+		if (!(map || places || icon)) return
+		console.log('addData')
 		map.addData(places, {
 			id: 'places',
 			type: 'symbol',
 			layout: {
 				// 'icon-size': ['interpolate', ['linear'], ['zoom'], 14.9, 0, 15, 1],
-				'icon-image': 'swietlice_01',
+				'icon-image': `${icon}`,
 			},
 		})
-	}, [map, places])
+	}, [map, places, icon])
 
 	useEffect(() => {
 		if (!isLoaded) return
-
 		// Add icon to map
 
 		// console.log(map.images().list())
@@ -56,13 +76,15 @@ const Map = ({ spatialData }) => {
 		// 		console.log(map.images().list())
 		// 	})
 		addData()
-	})
+	}, [addData, isLoaded, icon])
 
 	useEffect(() => {
 		if (places) {
+			console.log('setData')
 			places.setData(spatialData)
 		}
-	}, [spatialData, places])
+	}, [spatialData, places, icon])
+
 	return <StyledWrapper id='map'></StyledWrapper>
 }
 

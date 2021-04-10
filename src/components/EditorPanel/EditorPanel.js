@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import Title from './Title'
 import Description from './Description'
+import MapConfig from './MapConfig'
 import Button from '@material-ui/core/Button'
 import styled from 'styled-components'
 
-const EditorPanel = ({ data }) => {
+const EditorPanel = ({ data, onIconChange }) => {
 	console.log(data)
 	const [title, setTitle] = useState({
 		title: data.title,
@@ -75,6 +76,7 @@ const EditorPanel = ({ data }) => {
 					</StyledEditBtnWrapper>
 				</StyledTitleWrapper>
 				<StyledDivider />
+				<MapConfig onIconChange={onIconChange} />
 			</div>
 		</Editor>
 	)
