@@ -4,28 +4,28 @@ import styled from 'styled-components'
 
 const Link = ({ link }) => {
 	return (
-		<Wrapper>
-			<Arrow>
+		<StyledWrapper>
+			<StyledArrow>
 				<ArrowRightAltIcon color='primary' />
-			</Arrow>
-			<Hyperlink href={link} target='_blank' rel='noreferrer' title={link}>
+			</StyledArrow>
+			<StyledHyperlink href={link} target='_blank' rel='noreferrer' title={link}>
 				{link}
-			</Hyperlink>
-		</Wrapper>
+			</StyledHyperlink>
+		</StyledWrapper>
 	)
 }
 
 export default Link
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	padding: 20px 20px;
 `
-const Arrow = styled.div`
+const StyledArrow = styled.div`
 	width: 24px;
 `
-const Hyperlink = styled.a`
+const StyledHyperlink = styled.a`
 	${({ theme }) => `
 		color: ${theme.palette.primary.main};
 		textDecoration: none;

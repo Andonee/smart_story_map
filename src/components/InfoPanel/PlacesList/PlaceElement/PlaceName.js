@@ -2,12 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 
 const PlaceName = ({ title }) => {
-	return <Wrapper>{title}</Wrapper>
+	return <StyledWrapper>{title}</StyledWrapper>
 }
 
 export default PlaceName
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
 	${({ theme }) => `
 		color: ${theme.palette.primary.main};
 		font-size: 26px;

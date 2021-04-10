@@ -46,35 +46,35 @@ const EditorPanel = ({ data }) => {
 	return (
 		<Editor>
 			<div>
-				<TitleWrapper>
+				<StyledTitleWrapper>
 					<Title title={title} onTitleChange={onTitleChange} />
-					<EditBtnWrapper>
-						<EditBtn
+					<StyledEditBtnWrapper>
+						<StyledEditBtn
 							variant='contained'
 							color='primary'
 							onClick={onTitleEditHandle}
 						>
 							Edit
-						</EditBtn>
-					</EditBtnWrapper>
-				</TitleWrapper>
-				<Divider />
-				<TitleWrapper>
+						</StyledEditBtn>
+					</StyledEditBtnWrapper>
+				</StyledTitleWrapper>
+				<StyledDivider />
+				<StyledTitleWrapper>
 					<Description
 						description={description}
 						onDescriptionChange={onDescriptionChange}
 					/>
-					<EditBtnWrapper>
-						<EditBtn
+					<StyledEditBtnWrapper>
+						<StyledEditBtn
 							variant='contained'
 							color='primary'
 							onClick={onDescriptionEditHandle}
 						>
 							Edit
-						</EditBtn>
-					</EditBtnWrapper>
-				</TitleWrapper>
-				<Divider />
+						</StyledEditBtn>
+					</StyledEditBtnWrapper>
+				</StyledTitleWrapper>
+				<StyledDivider />
 			</div>
 		</Editor>
 	)
@@ -95,17 +95,17 @@ const Editor = styled.div`
 
 `}
 `
-const TitleWrapper = styled.div`
+const StyledTitleWrapper = styled.div`
 	width: 90%;
 `
 
-const EditBtnWrapper = styled.div`
+const StyledEditBtnWrapper = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;
 `
 
-const EditBtn = styled(Button)`
+const StyledEditBtn = styled(Button)`
 	${({ theme }) => `
 		margin-right: 20px;
 		background: ${theme.palette.info.main};
@@ -115,7 +115,7 @@ const EditBtn = styled(Button)`
 		},
 		`}
 `
-const Divider = styled.div`
+const StyledDivider = styled.div`
 	width: 90%;
 	height: 1px;
 	background: #cccccc;

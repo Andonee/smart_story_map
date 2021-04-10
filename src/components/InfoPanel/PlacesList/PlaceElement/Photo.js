@@ -4,19 +4,19 @@ import styled from 'styled-components'
 
 const Photo = ({ photo, open }) => {
 	return (
-		<Wrapper>
-			<Icon />
-			<Img src={photo} onClick={open} />
-		</Wrapper>
+		<StyledWrapper>
+			<StyledIcon />
+			<StyledImg src={photo} onClick={open} />
+		</StyledWrapper>
 	)
 }
 
 export default Photo
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
 	position: relative;
 `
-const Img = styled.img`
+const StyledImg = styled.img`
 	width: 100%;
 	margin-bottom: 10px;
 
@@ -25,7 +25,7 @@ const Img = styled.img`
 		background: transparentize;
 	}
 `
-const Icon = styled(VisibilityIcon)`
+const StyledIcon = styled(VisibilityIcon)`
 	position: absolute;
 	color: #fff;
 	top: 5px;

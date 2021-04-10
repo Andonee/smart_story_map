@@ -16,12 +16,12 @@ const Sidebar = ({ spatialData, imageOpenHandler }) => {
 		renderComponent = <Timeline spatialData={spatialData} />
 	}
 
-	return <Wrapper>{renderComponent}</Wrapper>
+	return <StyledWrapper>{renderComponent}</StyledWrapper>
 }
 
 export default Sidebar
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
 	height: 100%;
 	overflow: scroll;
 `

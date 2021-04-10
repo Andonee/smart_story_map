@@ -22,7 +22,7 @@ const ImageModal = ({ isOpen, setIsOpen }) => {
 	}
 
 	return (
-		<Wrapper
+		<StyledWrapper
 			aria-labelledby='transition-modal-title'
 			aria-describedby='transition-modal-description'
 			open={open}
@@ -34,20 +34,20 @@ const ImageModal = ({ isOpen, setIsOpen }) => {
 			}}
 		>
 			<Fade in={open}>
-				<Paper>
-					<CloseBtn onClick={handleClose} size='small'>
+				<StyledPaper>
+					<StyledCloseBtn onClick={handleClose} size='small'>
 						<CloseIcon onClick={handleClose} />
-					</CloseBtn>
-					<Img src={isOpen.img} alt={isOpen.img} />
-				</Paper>
+					</StyledCloseBtn>
+					<StyledImg src={isOpen.img} alt={isOpen.img} />
+				</StyledPaper>
 			</Fade>
-		</Wrapper>
+		</StyledWrapper>
 	)
 }
 
 export default ImageModal
 
-const Wrapper = styled(Modal)`
+const StyledWrapper = styled(Modal)`
 	${({ theme }) => `
 	display: flex;
 	align-items: center;
@@ -56,7 +56,7 @@ const Wrapper = styled(Modal)`
 	position: relative;
 		`}
 `
-const Paper = styled.div`
+const StyledPaper = styled.div`
 	${({ theme }) => `
 		boxShadow: theme.shadows[5];
 		border: 2px solid ${theme.palette.primary.main};
@@ -73,7 +73,7 @@ const Paper = styled.div`
 		`}
 `
 
-const CloseBtn = styled(IconButton)`
+const StyledCloseBtn = styled(IconButton)`
 	${({ theme }) => `
 	position: absolute;
 	top: 10px;
@@ -85,7 +85,7 @@ const CloseBtn = styled(IconButton)`
 	}
 `}
 `
-const Img = styled.img`
+const StyledImg = styled.img`
 	${({ theme }) => `
 		width: 100%;
 		${theme.breakpoints.down('sm')} {

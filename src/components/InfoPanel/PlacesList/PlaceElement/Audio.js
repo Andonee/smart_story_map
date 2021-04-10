@@ -3,14 +3,14 @@ import styled from 'styled-components'
 
 const Audio = ({ audio }) => {
 	return (
-		<Player controls>
+		<StyledPlayer controls>
 			<source src={audio} type='audio/mpeg' />
-		</Player>
+		</StyledPlayer>
 	)
 }
 
 export default Audio
 
-const Player = styled.audio`
+const StyledPlayer = styled.audio`
 	padding: 20px 20px;
 `

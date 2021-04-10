@@ -63,11 +63,11 @@ const Map = ({ spatialData }) => {
 			places.setData(spatialData)
 		}
 	}, [spatialData, places])
-	return <Wrapper id='map'></Wrapper>
+	return <StyledWrapper id='map'></StyledWrapper>
 }
 
 export default Map
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
 	height: 100%;
 `

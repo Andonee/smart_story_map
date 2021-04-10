@@ -21,7 +21,7 @@ const PlaceElement = ({ spatialData, imageOpenHandler }) => {
 		link,
 	} = spatialData.properties
 	return (
-		<Wrapper>
+		<StyledWrapper>
 			{photo1 && <Photo photo={photo1} open={imageOpenHandler} />}
 			{photo2 && <Photo photo={photo2} open={imageOpenHandler} />}
 			{photo3 && <Photo photo={photo3} open={imageOpenHandler} />}
@@ -34,12 +34,12 @@ const PlaceElement = ({ spatialData, imageOpenHandler }) => {
 			{link && <Link link={link} />}
 			{audio && <Divider variant='middle' />}
 			{audio && <Audio audio={audio} />}
-		</Wrapper>
+		</StyledWrapper>
 	)
 }
 
 export default PlaceElement
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
 	margin-bottom: 100px;
 `

@@ -4,9 +4,9 @@ import styled from 'styled-components'
 
 const Title = ({ description, onDescriptionChange }) => {
 	return (
-		<Wrapper>
+		<StyledWrapper>
 			{description.isEdited ? (
-				<Input
+				<StyledInput
 					id='map-description'
 					name='description'
 					label='Map description'
@@ -19,25 +19,25 @@ const Title = ({ description, onDescriptionChange }) => {
 					rows={5}
 				/>
 			) : (
-				<Description>{description.description}</Description>
+				<StyledDescription>{description.description}</StyledDescription>
 			)}
-		</Wrapper>
+		</StyledWrapper>
 	)
 }
 
 export default Title
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
 	height: 150px;
 	display: flex;
 `
 
-const Description = styled.div`
+const StyledDescription = styled.div`
 	font-size: 16px;
 	margin-left: 20px;
 `
 
-const Input = styled(TextField)`
+const StyledInput = styled(TextField)`
 	${({ theme }) => `
 		width: 90%;
 		margin-left: auto;

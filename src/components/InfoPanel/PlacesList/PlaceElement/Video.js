@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Video = ({ video }) => {
 	return (
-		<Wrapper>
+		<StyledWrapper>
 			<iframe
 				title={video}
 				width='100%'
@@ -12,12 +12,12 @@ const Video = ({ video }) => {
 				frameBorder='0'
 				allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
 			></iframe>
-		</Wrapper>
+		</StyledWrapper>
 	)
 }
 
 export default Video
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
 	padding: 20px 20px;
 `
