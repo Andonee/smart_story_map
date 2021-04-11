@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react'
 
-const useMap = (mapContainer) => {
+const useMap = (mapContainer, Basemap) => {
 	const [map, setMap] = useState()
 	const [mapUrl, setMapUrl] = useState(
 		'https://map.nmaps.pl/carto.NVYBik/-4G0QGiVu2'
 	)
-	const [currentMap, setCurrentMap] = useState('UgKM__BPXk')
+	const [currentMap, setCurrentMap] = useState(Basemap)
+
+	useEffect(() => {
+		setCurrentMap(Basemap)
+	}, [Basemap])
 
 	useEffect(() => {
 		const url = window.location.href
 		let options
 
-		const authenticator = window.opalSdk.MapAuthenticator.fromUrl(mapUrl)
+		// const authenticator = window.opalSdk.MapAuthenticator.fromUrl(mapUrl)
+		const authenticator = window.opalSdk.MapAuthenticator.fromUrl(
+			`https://map.nmaps.pl/carto.NVYBik/${currentMap}`
+		)
 		if (url.includes('@')) {
 			// const urlSplit = url.split('@')
 			// const urlCoordinates = urlSplit[1].split(',')
@@ -41,7 +48,7 @@ const useMap = (mapContainer) => {
 		window.opalSdk
 			.createMap(authenticator, options)
 			.then(onCreate)
-			.catch((e) => console.error('Oups', e))
+			.catch(e => console.error('Oups', e))
 
 		return () => map && window.opalSdk.destroyMap(map)
 	}, [currentMap, mapContainer])

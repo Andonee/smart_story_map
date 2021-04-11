@@ -3,7 +3,7 @@ import useMap from '../../hooks/useMap'
 import { filter as rxFilter } from 'rxjs/operators'
 import styled from 'styled-components'
 
-const Map = ({ spatialData, mapIcon, setMapInstance, IconSize }) => {
+const Map = ({ spatialData, mapIcon, setMapInstance, IconSize, Basemap }) => {
 	const [isLoaded, setIsLoaded] = useState(false)
 	const [places, setPlaces] = useState(
 		window.opalSdk.createDataset('places', { data: spatialData })
@@ -13,7 +13,7 @@ const Map = ({ spatialData, mapIcon, setMapInstance, IconSize }) => {
 	const [iconIsChanged, setIconIsChanged] = useState(false)
 
 	console.log(mapIcon, IconSize)
-	const map = useMap('map')
+	let map = useMap('map', Basemap)
 
 	useEffect(() => {
 		if (!map) return
@@ -27,7 +27,7 @@ const Map = ({ spatialData, mapIcon, setMapInstance, IconSize }) => {
 			setIsLoaded(false)
 			subsription.unsubscribe()
 		}
-	}, [map, mapIcon, icon])
+	}, [map, mapIcon, icon, Basemap])
 
 	useEffect(() => {
 		if (map) {

@@ -15,45 +15,72 @@ import PanstwoIcon from '../../assets/mapIcons/panstwo_01.svg'
 import ProwincjaIcon from '../../assets/mapIcons/prowincja_01.svg'
 import WyspaIcon from '../../assets/mapIcons/wyspa_01.svg'
 
-const MapConfig = ({ onIconChange, onIconSizeChange, IconSize }) => {
-	const [anchorEl, setAnchorEl] = React.useState(null)
+const MapConfig = ({
+	onIconChange,
+	onIconSizeChange,
+	IconSize,
+	onBasemapChange,
+}) => {
+	const [IconAnchorEl, setIconAnchorEl] = React.useState(null)
+	const [BasemapAnchorEl, setBasemapAnchorEl] = React.useState(null)
 
-	const handleClick = (e) => {
-		setAnchorEl(e.currentTarget)
-		if (!anchorEl) {
-			setAnchorEl(e.currentTarget)
+	const handleIconClick = e => {
+		setIconAnchorEl(e.currentTarget)
+		if (!IconAnchorEl) {
+			setIconAnchorEl(e.currentTarget)
 		} else {
 			if (e.target.nodeName === 'INPUT') return
-			setAnchorEl(null)
+			setIconAnchorEl(null)
 		}
 	}
 
-	const handleClose = () => {
-		setAnchorEl(null)
+	const handleBasemapClick = e => {
+		setBasemapAnchorEl(e.currentTarget)
+		if (!BasemapAnchorEl) {
+			setBasemapAnchorEl(e.currentTarget)
+		} else {
+			setBasemapAnchorEl(null)
+		}
 	}
 
-	const onIconSelect = (e) => {
+	const handleIconClose = () => {
+		setIconAnchorEl(null)
+	}
+
+	const handleBasemapClose = () => {
+		setBasemapAnchorEl(null)
+	}
+
+	const onIconSelect = e => {
 		onIconChange(e.target.name)
-		setAnchorEl(null)
+		setIconAnchorEl(null)
 	}
 
-	const onSizeChange = (e) => {
+	const onSizeChange = e => {
 		onIconSizeChange(e.target.value)
 		console.log(e.target.value)
 	}
 
-	const open = Boolean(anchorEl)
-	const id = open ? 'simple-popover' : undefined
+	const onBasemapSelect = e => {
+		console.log(e.target.attributes.name.nodeValue)
+		onBasemapChange(e.target.attributes.name.nodeValue)
+	}
+
+	const openIconPicker = Boolean(IconAnchorEl)
+	const iconId = openIconPicker ? 'icon-picker' : undefined
+
+	const openBasemapPicker = Boolean(BasemapAnchorEl)
+	const basemapId = openBasemapPicker ? 'basemap-picker' : undefined
 
 	return (
 		<div>
-			<StyledBtn aria-describedby={id} onClick={handleClick}>
+			<StyledBtn aria-describedby={iconId} onClick={handleIconClick}>
 				<PlaceIcon />
 				<Popover
-					id={id}
-					open={open}
-					anchorEl={anchorEl}
-					onClose={handleClose}
+					id={iconId}
+					open={openIconPicker}
+					anchorEl={IconAnchorEl}
+					onClose={handleIconClose}
 					anchorOrigin={{
 						vertical: 'bottom',
 						horizontal: 'center',
@@ -121,8 +148,31 @@ const MapConfig = ({ onIconChange, onIconSizeChange, IconSize }) => {
 					</StyledIconWrapper>
 				</Popover>
 			</StyledBtn>
-			<StyledBtn>
+			<StyledBtn aria-describedby={basemapId} onClick={handleBasemapClick}>
 				<MapIcon />
+				<Popover
+					id={basemapId}
+					open={openBasemapPicker}
+					anchorEl={BasemapAnchorEl}
+					onClose={handleBasemapClose}
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center',
+					}}
+					transformOrigin={{
+						vertical: 'top',
+						horizontal: 'center',
+					}}
+				>
+					<StyledBasemapWrapper>
+						<StyledBasemap name='dark' onClick={onBasemapSelect}>
+							Dark
+						</StyledBasemap>
+						<StyledBasemap name='bright' onClick={onBasemapSelect}>
+							Bright
+						</StyledBasemap>
+					</StyledBasemapWrapper>
+				</Popover>
 			</StyledBtn>
 			<StyledBtn>
 				<SyncAltIcon />
@@ -163,6 +213,22 @@ const StyledIconWrapper = styled.div`
 		}
 	}
 `
+
+const StyledBasemapWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 150px;
+	align-items: center;
+`
+
+const StyledBasemap = styled.div`
+	margin: 5px 0;
+	&:hover {
+		cursor: pointer;
+		background: #ccc;
+	}
+`
+
 const StyledInput = styled(TextField)`
 	${({ theme }) => `
 		width: 50%;

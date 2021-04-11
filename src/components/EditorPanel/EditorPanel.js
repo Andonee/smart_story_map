@@ -5,7 +5,13 @@ import MapConfig from './MapConfig'
 import Button from '@material-ui/core/Button'
 import styled from 'styled-components'
 
-const EditorPanel = ({ data, onIconChange, onIconSizeChange, IconSize }) => {
+const EditorPanel = ({
+	data,
+	onIconChange,
+	onIconSizeChange,
+	IconSize,
+	onBasemapChange,
+}) => {
 	console.log(data)
 	const [title, setTitle] = useState({
 		title: data.title,
@@ -16,29 +22,29 @@ const EditorPanel = ({ data, onIconChange, onIconSizeChange, IconSize }) => {
 		isEdited: false,
 	})
 
-	const onTitleChange = (e) => {
-		setTitle((prevState) => ({
+	const onTitleChange = e => {
+		setTitle(prevState => ({
 			...prevState,
 			title: e.target.value,
 		}))
 	}
 
-	const onDescriptionChange = (e) => {
-		setDescription((prevState) => ({
+	const onDescriptionChange = e => {
+		setDescription(prevState => ({
 			...prevState,
 			description: e.target.value,
 		}))
 	}
 
-	const onTitleEditHandle = (e) => {
-		setTitle((prevState) => ({
+	const onTitleEditHandle = e => {
+		setTitle(prevState => ({
 			...prevState,
 			isEdited: !title.isEdited,
 		}))
 	}
 
-	const onDescriptionEditHandle = (e) => {
-		setDescription((prevState) => ({
+	const onDescriptionEditHandle = e => {
+		setDescription(prevState => ({
 			...prevState,
 			isEdited: !description.isEdited,
 		}))
@@ -80,6 +86,7 @@ const EditorPanel = ({ data, onIconChange, onIconSizeChange, IconSize }) => {
 					onIconChange={onIconChange}
 					onIconSizeChange={onIconSizeChange}
 					IconSize={IconSize}
+					onBasemapChange={onBasemapChange}
 				/>
 			</div>
 		</Editor>

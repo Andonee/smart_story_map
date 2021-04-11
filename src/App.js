@@ -17,18 +17,20 @@ function App() {
 	})
 	const [mapIcon, setMapIcon] = useState()
 	const [IconSize, setIconSize] = useState()
+	const [Basemap, setBasemap] = useState()
 	const [mapInstance, setMapInstance] = useState()
 
 	useEffect(() => {
-		axios.get('http://localhost:5000/maps/1').then((res) => {
+		axios.get('http://localhost:5000/maps/1').then(res => {
 			console.log(res.data)
 			setSpatialData(res.data)
 			setMapIcon(res.data.data.info.icons.icon)
 			setIconSize(res.data.data.info.icons.size)
+			setBasemap(res.data.data.info.basemap)
 		})
 	}, [])
 
-	const imageOpenHandler = (e) => {
+	const imageOpenHandler = e => {
 		const image = e.target.src
 		setIsImageModalOpen({
 			isOpen: true,
@@ -36,14 +38,18 @@ function App() {
 		})
 	}
 
-	const onIconChange = (icon) => {
+	const onIconChange = icon => {
 		mapInstance.layer('places').remove()
 		setMapIcon(icon)
 	}
 
-	const onIconSizeChange = (size) => {
+	const onIconSizeChange = size => {
 		mapInstance.layer('places').remove()
 		setIconSize(size)
+	}
+
+	const onBasemapChange = basemap => {
+		setBasemap(basemap)
 	}
 	return (
 		<div className='App'>
@@ -60,12 +66,13 @@ function App() {
 				</Grid>
 				<Grid item xs className='grid_element'>
 					<div className='grid_element'>
-						{spatialData && (
+						{spatialData && Basemap && (
 							<Map
 								spatialData={spatialData.data.map}
 								mapIcon={mapIcon}
 								setMapInstance={setMapInstance}
 								IconSize={IconSize}
+								Basemap={Basemap}
 							/>
 						)}
 					</div>
@@ -78,6 +85,7 @@ function App() {
 								onIconChange={onIconChange}
 								onIconSizeChange={onIconSizeChange}
 								IconSize={IconSize}
+								onBasemapChange={onBasemapChange}
 							/>
 						)}
 					</div>
