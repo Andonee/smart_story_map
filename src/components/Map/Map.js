@@ -3,15 +3,16 @@ import useMap from '../../hooks/useMap'
 import { filter as rxFilter } from 'rxjs/operators'
 import styled from 'styled-components'
 
-const Map = ({ spatialData, mapIcon, setMapInstance }) => {
+const Map = ({ spatialData, mapIcon, setMapInstance, IconSize }) => {
 	const [isLoaded, setIsLoaded] = useState(false)
 	const [places, setPlaces] = useState(
 		window.opalSdk.createDataset('places', { data: spatialData })
 	)
 	const [icon, setIcon] = useState()
+	const [sizeIcon, setSizeIcon] = useState()
 	const [iconIsChanged, setIconIsChanged] = useState(false)
 
-	console.log(mapIcon)
+	console.log(mapIcon, IconSize)
 	const map = useMap('map')
 
 	useEffect(() => {
@@ -38,6 +39,13 @@ const Map = ({ spatialData, mapIcon, setMapInstance }) => {
 	}, [mapIcon, map])
 
 	useEffect(() => {
+		if (map) {
+			setSizeIcon(parseFloat(IconSize))
+			setIconIsChanged(true)
+		}
+	}, [IconSize, map])
+
+	useEffect(() => {
 		if (iconIsChanged) {
 			addData()
 			setIconIsChanged(false)
@@ -46,17 +54,20 @@ const Map = ({ spatialData, mapIcon, setMapInstance }) => {
 	}, [iconIsChanged])
 
 	const addData = useCallback(() => {
+		// console.log('asasdsdasd', sizeIcon)
 		if (!(map || places || icon)) return
 		console.log('addData')
 		map.addData(places, {
 			id: 'places',
 			type: 'symbol',
 			layout: {
-				// 'icon-size': ['interpolate', ['linear'], ['zoom'], 14.9, 0, 15, 1],
+				'icon-allow-overlap': true,
+				'text-allow-overlap': true,
+				'icon-size': sizeIcon,
 				'icon-image': `${icon}`,
 			},
 		})
-	}, [map, places, icon])
+	}, [map, places, icon, sizeIcon])
 
 	useEffect(() => {
 		if (!isLoaded) return

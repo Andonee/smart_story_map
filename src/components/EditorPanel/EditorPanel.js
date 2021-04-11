@@ -5,7 +5,7 @@ import MapConfig from './MapConfig'
 import Button from '@material-ui/core/Button'
 import styled from 'styled-components'
 
-const EditorPanel = ({ data, onIconChange }) => {
+const EditorPanel = ({ data, onIconChange, onIconSizeChange, IconSize }) => {
 	console.log(data)
 	const [title, setTitle] = useState({
 		title: data.title,
@@ -76,7 +76,11 @@ const EditorPanel = ({ data, onIconChange }) => {
 					</StyledEditBtnWrapper>
 				</StyledTitleWrapper>
 				<StyledDivider />
-				<MapConfig onIconChange={onIconChange} />
+				<MapConfig
+					onIconChange={onIconChange}
+					onIconSizeChange={onIconSizeChange}
+					IconSize={IconSize}
+				/>
 			</div>
 		</Editor>
 	)

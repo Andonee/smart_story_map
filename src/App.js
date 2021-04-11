@@ -16,6 +16,7 @@ function App() {
 		img: '',
 	})
 	const [mapIcon, setMapIcon] = useState()
+	const [IconSize, setIconSize] = useState()
 	const [mapInstance, setMapInstance] = useState()
 
 	useEffect(() => {
@@ -23,6 +24,7 @@ function App() {
 			console.log(res.data)
 			setSpatialData(res.data)
 			setMapIcon(res.data.data.info.icons.icon)
+			setIconSize(res.data.data.info.icons.size)
 		})
 	}, [])
 
@@ -35,9 +37,13 @@ function App() {
 	}
 
 	const onIconChange = (icon) => {
-		// console.log(mapInstance.layer('places'))
 		mapInstance.layer('places').remove()
 		setMapIcon(icon)
+	}
+
+	const onIconSizeChange = (size) => {
+		mapInstance.layer('places').remove()
+		setIconSize(size)
 	}
 	return (
 		<div className='App'>
@@ -59,6 +65,7 @@ function App() {
 								spatialData={spatialData.data.map}
 								mapIcon={mapIcon}
 								setMapInstance={setMapInstance}
+								IconSize={IconSize}
 							/>
 						)}
 					</div>
@@ -69,6 +76,8 @@ function App() {
 							<EditorPanel
 								data={spatialData.data.info}
 								onIconChange={onIconChange}
+								onIconSizeChange={onIconSizeChange}
+								IconSize={IconSize}
 							/>
 						)}
 					</div>

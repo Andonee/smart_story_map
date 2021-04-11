@@ -5,6 +5,7 @@ import PlaceIcon from '@material-ui/icons/Place'
 import MapIcon from '@material-ui/icons/Map'
 import SyncAltIcon from '@material-ui/icons/SyncAlt'
 import Popover from '@material-ui/core/Popover'
+import TextField from '@material-ui/core/TextField'
 
 import InneIcon from '../../assets/mapIcons/inne_01.svg'
 import KrainaIcon from '../../assets/mapIcons/kraina_01.svg'
@@ -14,14 +15,15 @@ import PanstwoIcon from '../../assets/mapIcons/panstwo_01.svg'
 import ProwincjaIcon from '../../assets/mapIcons/prowincja_01.svg'
 import WyspaIcon from '../../assets/mapIcons/wyspa_01.svg'
 
-const MapConfig = ({ onIconChange }) => {
+const MapConfig = ({ onIconChange, onIconSizeChange, IconSize }) => {
 	const [anchorEl, setAnchorEl] = React.useState(null)
 
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget)
+	const handleClick = (e) => {
+		setAnchorEl(e.currentTarget)
 		if (!anchorEl) {
-			setAnchorEl(event.currentTarget)
+			setAnchorEl(e.currentTarget)
 		} else {
+			if (e.target.nodeName === 'INPUT') return
 			setAnchorEl(null)
 		}
 	}
@@ -32,6 +34,12 @@ const MapConfig = ({ onIconChange }) => {
 
 	const onIconSelect = (e) => {
 		onIconChange(e.target.name)
+		setAnchorEl(null)
+	}
+
+	const onSizeChange = (e) => {
+		onIconSizeChange(e.target.value)
+		console.log(e.target.value)
 	}
 
 	const open = Boolean(anchorEl)
@@ -99,6 +107,17 @@ const MapConfig = ({ onIconChange }) => {
 							name='wyspa_01'
 							alt='wyspa_01'
 						/>
+						<StyledInput
+							id='icon-size'
+							name='icon-size'
+							label='Icon size'
+							variant='outlined'
+							defaultValue={IconSize}
+							onChange={onSizeChange}
+							// inputProps={{ maxLength: 2 }}
+							size='small'
+							// type='number'
+						/>
 					</StyledIconWrapper>
 				</Popover>
 			</StyledBtn>
@@ -143,4 +162,27 @@ const StyledIconWrapper = styled.div`
 			cursor: pointer;
 		}
 	}
+`
+const StyledInput = styled(TextField)`
+	${({ theme }) => `
+		width: 50%;
+		margin-left: auto;
+		margin-right: auto;
+		& label {
+			color: ${theme.palette.primary.main};
+		}
+		& label.Mui-focused {
+			color:${theme.palette.primary.main};
+		}
+
+		& .MuiOutlinedInput-root {
+			color: ${theme.palette.primary.main};
+			& fieldset{
+				border-color:${theme.palette.primary.main};
+			}
+			&:hover fieldset {
+				border-color: ${theme.palette.primary.main};
+			}
+		}
+`}
 `
