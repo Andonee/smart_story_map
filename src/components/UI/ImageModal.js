@@ -48,16 +48,19 @@ const ImageModal = ({ isOpen, setIsOpen }) => {
 export default ImageModal
 
 const StyledWrapper = styled(Modal)`
-	${({ theme }) => `
+	&& {
+		${({ theme }) => `
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	box-shadow: theme.shadows[5];
 	position: relative;
 		`}
+	}
 `
 const StyledPaper = styled.div`
-	${({ theme }) => `
+	&& {
+		${({ theme }) => `
 		boxShadow: theme.shadows[5];
 		border: 2px solid ${theme.palette.primary.main};
 		background-color: #fff;
@@ -71,10 +74,12 @@ const StyledPaper = styled.div`
 			max-width: 95%;
 		},
 		`}
+	}
 `
 
 const StyledCloseBtn = styled(IconButton)`
-	${({ theme }) => `
+	&& {
+		${({ theme }) => `
 	position: absolute;
 	top: 10px;
 	right: 10px;
@@ -84,12 +89,15 @@ const StyledCloseBtn = styled(IconButton)`
 		cursor: pointer,
 	}
 `}
+	}
 `
 const StyledImg = styled.img`
-	${({ theme }) => `
+	&& {
+		${({ theme }) => `
 		width: 100%;
 		${theme.breakpoints.down('sm')} {
 			width: '100%';
 		},
 		`}
+	}
 `

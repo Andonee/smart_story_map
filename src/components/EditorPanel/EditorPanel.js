@@ -11,6 +11,7 @@ const EditorPanel = ({
 	onIconSizeChange,
 	IconSize,
 	onBasemapChange,
+	onPanelsOrderChange,
 }) => {
 	console.log(data)
 	const [title, setTitle] = useState({
@@ -52,43 +53,42 @@ const EditorPanel = ({
 
 	return (
 		<Editor>
-			<div>
-				<StyledTitleWrapper>
-					<Title title={title} onTitleChange={onTitleChange} />
-					<StyledEditBtnWrapper>
-						<StyledEditBtn
-							variant='contained'
-							color='primary'
-							onClick={onTitleEditHandle}
-						>
-							Edit
-						</StyledEditBtn>
-					</StyledEditBtnWrapper>
-				</StyledTitleWrapper>
-				<StyledDivider />
-				<StyledTitleWrapper>
-					<Description
-						description={description}
-						onDescriptionChange={onDescriptionChange}
-					/>
-					<StyledEditBtnWrapper>
-						<StyledEditBtn
-							variant='contained'
-							color='primary'
-							onClick={onDescriptionEditHandle}
-						>
-							Edit
-						</StyledEditBtn>
-					</StyledEditBtnWrapper>
-				</StyledTitleWrapper>
-				<StyledDivider />
-				<MapConfig
-					onIconChange={onIconChange}
-					onIconSizeChange={onIconSizeChange}
-					IconSize={IconSize}
-					onBasemapChange={onBasemapChange}
+			<StyledTitleWrapper>
+				<Title title={title} onTitleChange={onTitleChange} />
+				<StyledEditBtnWrapper>
+					<StyledEditBtn
+						variant='contained'
+						color='primary'
+						onClick={onTitleEditHandle}
+					>
+						Edit
+					</StyledEditBtn>
+				</StyledEditBtnWrapper>
+			</StyledTitleWrapper>
+			<StyledDivider />
+			<StyledTitleWrapper>
+				<Description
+					description={description}
+					onDescriptionChange={onDescriptionChange}
 				/>
-			</div>
+				<StyledEditBtnWrapper>
+					<StyledEditBtn
+						variant='contained'
+						color='primary'
+						onClick={onDescriptionEditHandle}
+					>
+						Edit
+					</StyledEditBtn>
+				</StyledEditBtnWrapper>
+			</StyledTitleWrapper>
+			<StyledDivider />
+			<MapConfig
+				onIconChange={onIconChange}
+				onIconSizeChange={onIconSizeChange}
+				IconSize={IconSize}
+				onBasemapChange={onBasemapChange}
+				onPanelsOrderChange={onPanelsOrderChange}
+			/>
 		</Editor>
 	)
 }
@@ -96,41 +96,49 @@ const EditorPanel = ({
 export default EditorPanel
 
 const Editor = styled.div`
-	${({ theme }) => `
+	&& {
+		${({ theme }) => `
 	height: 100%;
-
-	& > div {
-	margin-top: 20px;
+	background: #fff;
+	padding-top: 20px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-}
 
 `}
+	}
 `
 const StyledTitleWrapper = styled.div`
-	width: 90%;
+	&& {
+		width: 90%;
+	}
 `
 
 const StyledEditBtnWrapper = styled.div`
-	width: 100%;
-	display: flex;
-	justify-content: flex-end;
+	&& {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+	}
 `
 
 const StyledEditBtn = styled(Button)`
-	${({ theme }) => `
+	&& {
+		${({ theme }) => `
 		margin-right: 20px;
 		background: ${theme.palette.info.main};
 
 		&:hover {
 			background: ${theme.palette.info.light};
-		},
+		}
 		`}
+	}
 `
 const StyledDivider = styled.div`
-	width: 90%;
-	height: 1px;
-	background: #cccccc;
-	margin: 20px 0;
+	&& {
+		width: 90%;
+		height: 1px;
+		background: #cccccc;
+		margin: 20px 0;
+	}
 `

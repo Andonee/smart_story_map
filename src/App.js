@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react'
 
 import axios from 'axios'
 
-import './App.css'
-import Grid from '@material-ui/core/Grid'
 import InfoPanel from './components/InfoPanel/InfoPanel'
 import EditorPanel from './components/EditorPanel/EditorPanel'
 import Map from './components/Map/Map'
 import ImageModal from './components/UI/ImageModal'
+import styled from 'styled-components'
 
 function App() {
 	const [spatialData, setSpatialData] = useState()
+	const [mapInstance, setMapInstance] = useState()
 	const [isImageModalOpen, setIsImageModalOpen] = useState({
 		isOpen: false,
 		img: '',
@@ -18,7 +18,10 @@ function App() {
 	const [mapIcon, setMapIcon] = useState()
 	const [IconSize, setIconSize] = useState()
 	const [Basemap, setBasemap] = useState()
-	const [mapInstance, setMapInstance] = useState()
+	const [panelsOrder, setPanelsOrder] = useState({
+		infoPanel: -1,
+		editorPanel: 1,
+	})
 
 	useEffect(() => {
 		axios.get('http://localhost:5000/maps/1').then(res => {
@@ -51,49 +54,87 @@ function App() {
 	const onBasemapChange = basemap => {
 		setBasemap(basemap)
 	}
+
+	const onPanelsOrderChange = () => {
+		if (panelsOrder.infoPanel === -1 && panelsOrder.editorPanel === 1) {
+			setPanelsOrder({
+				infoPanel: 1,
+				editorPanel: -1,
+			})
+		} else {
+			setPanelsOrder({
+				infoPanel: -1,
+				editorPanel: 1,
+			})
+		}
+	}
 	return (
-		<div className='App'>
-			<Grid container className='grid_container'>
-				<Grid item xs={3} xl={2}>
-					<div className='grid_element'>
-						{spatialData && (
-							<InfoPanel
-								spatialData={spatialData}
-								imageOpenHandler={imageOpenHandler}
-							/>
-						)}
-					</div>
-				</Grid>
-				<Grid item xs className='grid_element'>
-					<div className='grid_element'>
-						{spatialData && Basemap && (
-							<Map
-								spatialData={spatialData.data.map}
-								mapIcon={mapIcon}
-								setMapInstance={setMapInstance}
-								IconSize={IconSize}
-								Basemap={Basemap}
-							/>
-						)}
-					</div>
-				</Grid>
-				<Grid item xs={4} xl={3} className='grid_element'>
-					<div className='grid_element grid_editor_panel'>
-						{spatialData && (
-							<EditorPanel
-								data={spatialData.data.info}
-								onIconChange={onIconChange}
-								onIconSizeChange={onIconSizeChange}
-								IconSize={IconSize}
-								onBasemapChange={onBasemapChange}
-							/>
-						)}
-					</div>
-				</Grid>
-			</Grid>
+		<StyledWrapper>
+			<StyledInfoPanel order={panelsOrder.infoPanel}>
+				{spatialData && (
+					<InfoPanel
+						spatialData={spatialData}
+						imageOpenHandler={imageOpenHandler}
+					/>
+				)}
+			</StyledInfoPanel>
+
+			<StyledMap>
+				{spatialData && Basemap && (
+					<Map
+						spatialData={spatialData.data.map}
+						mapIcon={mapIcon}
+						setMapInstance={setMapInstance}
+						IconSize={IconSize}
+						Basemap={Basemap}
+					/>
+				)}
+			</StyledMap>
+
+			<StyledEditorPanel order={panelsOrder.editorPanel}>
+				{spatialData && (
+					<EditorPanel
+						data={spatialData.data.info}
+						onIconChange={onIconChange}
+						onIconSizeChange={onIconSizeChange}
+						IconSize={IconSize}
+						onBasemapChange={onBasemapChange}
+						onPanelsOrderChange={onPanelsOrderChange}
+					/>
+				)}
+			</StyledEditorPanel>
+
 			<ImageModal isOpen={isImageModalOpen} setIsOpen={setIsImageModalOpen} />
-		</div>
+		</StyledWrapper>
 	)
 }
 
 export default App
+
+const StyledInfoPanel = styled.div`
+	&& {
+		width: 350px;
+		order: ${props => props.order || -1};
+	}
+`
+
+const StyledEditorPanel = styled.div`
+	&& {
+		width: 350px;
+		order: ${props => props.order || 1};
+		overflow: scroll;
+	}
+`
+const StyledMap = styled.div`
+	&& {
+		flex-grow: 1;
+		order: 0;
+	}
+`
+
+const StyledWrapper = styled.div`
+	&& {
+		display: flex;
+		overflow: hidden;
+	}
+`

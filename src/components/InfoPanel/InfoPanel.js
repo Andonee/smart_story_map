@@ -22,6 +22,9 @@ const Sidebar = ({ spatialData, imageOpenHandler }) => {
 export default Sidebar
 
 const StyledWrapper = styled.div`
-	height: 100%;
-	overflow: scroll;
+	&& {
+		height: 100%;
+		overflow: scroll;
+		background: #fff;
+	}
 `

@@ -20,6 +20,7 @@ const MapConfig = ({
 	onIconSizeChange,
 	IconSize,
 	onBasemapChange,
+	onPanelsOrderChange,
 }) => {
 	const [IconAnchorEl, setIconAnchorEl] = React.useState(null)
 	const [BasemapAnchorEl, setBasemapAnchorEl] = React.useState(null)
@@ -64,6 +65,10 @@ const MapConfig = ({
 	const onBasemapSelect = e => {
 		console.log(e.target.attributes.name.nodeValue)
 		onBasemapChange(e.target.attributes.name.nodeValue)
+	}
+
+	const onOrderChange = () => {
+		onPanelsOrderChange()
 	}
 
 	const openIconPicker = Boolean(IconAnchorEl)
@@ -174,7 +179,7 @@ const MapConfig = ({
 					</StyledBasemapWrapper>
 				</Popover>
 			</StyledBtn>
-			<StyledBtn>
+			<StyledBtn onClick={onOrderChange}>
 				<SyncAltIcon />
 			</StyledBtn>
 		</div>
@@ -183,10 +188,9 @@ const MapConfig = ({
 
 export default MapConfig
 
-const StyledWrapper = styled.div``
-
 const StyledBtn = styled(Button)`
-	${({ theme }) => `
+	&& {
+		${({ theme }) => `
 		margin-right: 20px;
 		background: ${theme.palette.info.main};
     color: #fff;
@@ -195,42 +199,50 @@ const StyledBtn = styled(Button)`
 			background: ${theme.palette.info.light};
 		},
 		`}
+	}
 `
 
 const StyledIconWrapper = styled.div`
-	max-width: 200px;
-	display: flex;
-	justify-content: start;
-	padding: 5px;
-	flex-wrap: wrap;
-
-	& > img {
-		width: 25px;
+	&& {
+		max-width: 200px;
+		display: flex;
+		justify-content: start;
 		padding: 5px;
+		flex-wrap: wrap;
 
-		&:hover {
-			cursor: pointer;
+		& > img {
+			width: 25px;
+			padding: 5px;
+
+			&:hover {
+				cursor: pointer;
+			}
 		}
 	}
 `
 
 const StyledBasemapWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 150px;
-	align-items: center;
+	&& {
+		display: flex;
+		flex-direction: column;
+		width: 150px;
+		align-items: center;
+	}
 `
 
 const StyledBasemap = styled.div`
-	margin: 5px 0;
-	&:hover {
-		cursor: pointer;
-		background: #ccc;
+	&& {
+		margin: 5px 0;
+		&:hover {
+			cursor: pointer;
+			background: #ccc;
+		}
 	}
 `
 
 const StyledInput = styled(TextField)`
-	${({ theme }) => `
+	&& {
+		${({ theme }) => `
 		width: 50%;
 		margin-left: auto;
 		margin-right: auto;
@@ -251,4 +263,5 @@ const StyledInput = styled(TextField)`
 			}
 		}
 `}
+	}
 `
