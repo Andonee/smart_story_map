@@ -2,13 +2,19 @@ import React from 'react'
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
 import styled from 'styled-components'
 
-const Link = ({ link }) => {
+const Link = ({ link, fontColor }) => {
 	return (
 		<StyledWrapper>
-			<StyledArrow>
-				<ArrowRightAltIcon color='primary' />
+			<StyledArrow color={fontColor}>
+				<ArrowRightAltIcon />
 			</StyledArrow>
-			<StyledHyperlink href={link} target='_blank' rel='noreferrer' title={link}>
+			<StyledHyperlink
+				href={link}
+				target='_blank'
+				rel='noreferrer'
+				title={link}
+				color={fontColor}
+			>
 				{link}
 			</StyledHyperlink>
 		</StyledWrapper>
@@ -24,19 +30,18 @@ const StyledWrapper = styled.div`
 `
 const StyledArrow = styled.div`
 	width: 24px;
+	color: ${props => props.color};
 `
 const StyledHyperlink = styled.a`
-	${({ theme }) => `
-		color: ${theme.palette.primary.main};
-		textDecoration: none;
-		margin-left: 10px;
-		transition-duration: .3s;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+	color: ${props => props.color};
+	text-decoration: none;
+	margin-left: 10px;
+	transition-duration: 0.3s;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 
-		&:hover {
-			color: #D3D3D3,
-		},
-		`}
+	&:hover {
+		color: #d3d3d3;
+	}
 `

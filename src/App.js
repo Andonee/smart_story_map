@@ -22,6 +22,8 @@ function App() {
 		infoPanel: -1,
 		editorPanel: 1,
 	})
+	const [backgroundColor, setBackgroundColor] = useState('#fff')
+	const [fontColor, setFontColor] = useState('#545454')
 
 	useEffect(() => {
 		axios.get('http://localhost:5000/maps/1').then(res => {
@@ -70,11 +72,12 @@ function App() {
 	}
 	return (
 		<StyledWrapper>
-			<StyledInfoPanel order={panelsOrder.infoPanel}>
+			<StyledInfoPanel order={panelsOrder.infoPanel} color={backgroundColor}>
 				{spatialData && (
 					<InfoPanel
 						spatialData={spatialData}
 						imageOpenHandler={imageOpenHandler}
+						fontColor={fontColor}
 					/>
 				)}
 			</StyledInfoPanel>
@@ -91,7 +94,10 @@ function App() {
 				)}
 			</StyledMap>
 
-			<StyledEditorPanel order={panelsOrder.editorPanel}>
+			<StyledEditorPanel
+				order={panelsOrder.editorPanel}
+				color={backgroundColor}
+			>
 				{spatialData && (
 					<EditorPanel
 						data={spatialData.data.info}
@@ -100,6 +106,10 @@ function App() {
 						IconSize={IconSize}
 						onBasemapChange={onBasemapChange}
 						onPanelsOrderChange={onPanelsOrderChange}
+						backgroundColor={backgroundColor}
+						setBackgroundColor={setBackgroundColor}
+						fontColor={fontColor}
+						setFontColor={setFontColor}
 					/>
 				)}
 			</StyledEditorPanel>
@@ -115,6 +125,7 @@ const StyledInfoPanel = styled.div`
 	&& {
 		width: 350px;
 		order: ${props => props.order || -1};
+		background: ${props => props.color || '#fff'};
 	}
 `
 
@@ -123,6 +134,7 @@ const StyledEditorPanel = styled.div`
 		width: 350px;
 		order: ${props => props.order || 1};
 		overflow: scroll;
+		${props => props.color || '#fff'}
 	}
 `
 const StyledMap = styled.div`

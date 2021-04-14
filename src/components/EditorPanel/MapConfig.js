@@ -15,15 +15,28 @@ import PanstwoIcon from '../../assets/mapIcons/panstwo_01.svg'
 import ProwincjaIcon from '../../assets/mapIcons/prowincja_01.svg'
 import WyspaIcon from '../../assets/mapIcons/wyspa_01.svg'
 
+import { ChromePicker } from 'react-color'
+import PaletteIcon from '@material-ui/icons/Palette'
+import FormatColorTextIcon from '@material-ui/icons/FormatColorText'
+import Paper from '@material-ui/core/Paper'
+
 const MapConfig = ({
 	onIconChange,
 	onIconSizeChange,
 	IconSize,
 	onBasemapChange,
 	onPanelsOrderChange,
+	backgroundColor,
+	setBackgroundColor,
+	fontColor,
+	setFontColor,
 }) => {
 	const [IconAnchorEl, setIconAnchorEl] = React.useState(null)
 	const [BasemapAnchorEl, setBasemapAnchorEl] = React.useState(null)
+	const [BackgroundColorAnchorEl, setBackgroundColorAnchorEl] = React.useState(
+		null
+	)
+	const [FontColorAnchorEl, setFontColorAnchorEl] = React.useState(null)
 
 	const handleIconClick = e => {
 		setIconAnchorEl(e.currentTarget)
@@ -44,12 +57,38 @@ const MapConfig = ({
 		}
 	}
 
+	const handleBackgroundColorClick = e => {
+		if (!BackgroundColorAnchorEl) {
+			setBackgroundColorAnchorEl(e.currentTarget)
+		} else {
+			if (e.target.className === 'saturation-white') return
+			setBackgroundColorAnchorEl(null)
+		}
+	}
+
+	const handleFontColorClick = e => {
+		if (!FontColorAnchorEl) {
+			setFontColorAnchorEl(e.currentTarget)
+		} else {
+			if (e.target.className === 'saturation-white') return
+			setFontColorAnchorEl(null)
+		}
+	}
+
 	const handleIconClose = () => {
 		setIconAnchorEl(null)
 	}
 
 	const handleBasemapClose = () => {
 		setBasemapAnchorEl(null)
+	}
+
+	const handlBackgroundColorClose = () => {
+		setBackgroundColorAnchorEl(null)
+	}
+
+	const handlFontColorClose = () => {
+		setFontColorAnchorEl(null)
 	}
 
 	const onIconSelect = e => {
@@ -59,16 +98,26 @@ const MapConfig = ({
 
 	const onSizeChange = e => {
 		onIconSizeChange(e.target.value)
-		console.log(e.target.value)
 	}
 
 	const onBasemapSelect = e => {
-		console.log(e.target.attributes.name.nodeValue)
 		onBasemapChange(e.target.attributes.name.nodeValue)
 	}
 
 	const onOrderChange = () => {
 		onPanelsOrderChange()
+	}
+
+	const onBackgroundColorChange = color => {
+		const { r, g, b, a } = color.rgb
+		const rgbColor = `rgba(${r}, ${g}, ${b}, ${a})`
+		setBackgroundColor(rgbColor)
+	}
+
+	const onFontColorChange = color => {
+		const { r, g, b, a } = color.rgb
+		const rgbColor = `rgba(${r}, ${g}, ${b}, ${a})`
+		setFontColor(rgbColor)
 	}
 
 	const openIconPicker = Boolean(IconAnchorEl)
@@ -77,89 +126,154 @@ const MapConfig = ({
 	const openBasemapPicker = Boolean(BasemapAnchorEl)
 	const basemapId = openBasemapPicker ? 'basemap-picker' : undefined
 
-	return (
-		<div>
-			<StyledBtn aria-describedby={iconId} onClick={handleIconClick}>
-				<PlaceIcon />
-				<Popover
-					id={iconId}
-					open={openIconPicker}
-					anchorEl={IconAnchorEl}
-					onClose={handleIconClose}
-					anchorOrigin={{
-						vertical: 'bottom',
-						horizontal: 'center',
-					}}
-					transformOrigin={{
-						vertical: 'top',
-						horizontal: 'center',
-					}}
-				>
-					<StyledIconWrapper>
-						<img
-							src={InneIcon}
-							onClick={onIconSelect}
-							name='inne_01'
-							alt='inne_01'
-						/>
+	const openBackgroundColorPicker = Boolean(BackgroundColorAnchorEl)
+	const backgroundColorId = openBackgroundColorPicker
+		? 'backgroundColor-picker'
+		: undefined
 
-						<img
-							src={KrainaIcon}
-							onClick={onIconSelect}
-							name='kraina_01'
-							alt='kraina_01'
+	const openFontColorPicker = Boolean(FontColorAnchorEl)
+	const fontColorId = openFontColorPicker ? 'fontColor-picker' : undefined
+
+	return (
+		<>
+			<StyledMap>
+				<StyledBtn aria-describedby={iconId} onClick={handleIconClick}>
+					<PlaceIcon />
+					<Popover
+						id={iconId}
+						open={openIconPicker}
+						anchorEl={IconAnchorEl}
+						onClose={handleIconClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'center',
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'center',
+						}}
+					>
+						<StyledIconWrapper>
+							<img
+								src={InneIcon}
+								onClick={onIconSelect}
+								name='inne_01'
+								alt='inne_01'
+							/>
+
+							<img
+								src={KrainaIcon}
+								onClick={onIconSelect}
+								name='kraina_01'
+								alt='kraina_01'
+							/>
+							<img
+								src={KrolestwoIcon}
+								onClick={onIconSelect}
+								name='krolestwo_01-01'
+								alt='krolestwo_01-01'
+							/>
+							<img
+								src={MiastoIcon}
+								onClick={onIconSelect}
+								name='miasto_01'
+								alt='miasto_01'
+							/>
+							<img
+								src={PanstwoIcon}
+								onClick={onIconSelect}
+								name='panstwo_01'
+								alt='panstwo_01'
+							/>
+							<img
+								src={ProwincjaIcon}
+								onClick={onIconSelect}
+								name='prowincja_01'
+								alt='prowincja_01'
+							/>
+							<img
+								src={WyspaIcon}
+								onClick={onIconSelect}
+								name='wyspa_01'
+								alt='wyspa_01'
+							/>
+							<StyledInput
+								id='icon-size'
+								name='icon-size'
+								label='Icon size'
+								variant='outlined'
+								defaultValue={IconSize}
+								onChange={onSizeChange}
+								// inputProps={{ maxLength: 2 }}
+								size='small'
+								// type='number'
+							/>
+						</StyledIconWrapper>
+					</Popover>
+				</StyledBtn>
+				<StyledBtn aria-describedby={basemapId} onClick={handleBasemapClick}>
+					<MapIcon />
+					<Popover
+						id={basemapId}
+						open={openBasemapPicker}
+						anchorEl={BasemapAnchorEl}
+						onClose={handleBasemapClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'center',
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'center',
+						}}
+					>
+						<StyledBasemapWrapper>
+							<StyledBasemap name='dark' onClick={onBasemapSelect}>
+								Dark
+							</StyledBasemap>
+							<StyledBasemap name='bright' onClick={onBasemapSelect}>
+								Bright
+							</StyledBasemap>
+						</StyledBasemapWrapper>
+					</Popover>
+				</StyledBtn>
+			</StyledMap>
+			<StyledConfig>
+				<StyledBtn onClick={onOrderChange}>
+					<SyncAltIcon />
+				</StyledBtn>
+				<StyledBtn onClick={handleBackgroundColorClick}>
+					<PaletteIcon />
+					<Popover
+						id={backgroundColorId}
+						open={openBackgroundColorPicker}
+						anchorEl={BackgroundColorAnchorEl}
+						onClose={handlBackgroundColorClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'center',
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'center',
+						}}
+					>
+						<ChromePicker
+							onChange={onBackgroundColorChange}
+							color={backgroundColor}
 						/>
-						<img
-							src={KrolestwoIcon}
-							onClick={onIconSelect}
-							name='krolestwo_01-01'
-							alt='krolestwo_01-01'
-						/>
-						<img
-							src={MiastoIcon}
-							onClick={onIconSelect}
-							name='miasto_01'
-							alt='miasto_01'
-						/>
-						<img
-							src={PanstwoIcon}
-							onClick={onIconSelect}
-							name='panstwo_01'
-							alt='panstwo_01'
-						/>
-						<img
-							src={ProwincjaIcon}
-							onClick={onIconSelect}
-							name='prowincja_01'
-							alt='prowincja_01'
-						/>
-						<img
-							src={WyspaIcon}
-							onClick={onIconSelect}
-							name='wyspa_01'
-							alt='wyspa_01'
-						/>
-						<StyledInput
-							id='icon-size'
-							name='icon-size'
-							label='Icon size'
-							variant='outlined'
-							defaultValue={IconSize}
-							onChange={onSizeChange}
-							// inputProps={{ maxLength: 2 }}
-							size='small'
-							// type='number'
-						/>
-					</StyledIconWrapper>
-				</Popover>
-			</StyledBtn>
-			<StyledBtn aria-describedby={basemapId} onClick={handleBasemapClick}>
-				<MapIcon />
+					</Popover>
+				</StyledBtn>
+
+				<StyledBtn onClick={handleFontColorClick}>
+					<FormatColorTextIcon />
+				</StyledBtn>
+
 				<Popover
-					id={basemapId}
-					open={openBasemapPicker}
-					anchorEl={BasemapAnchorEl}
-					onClose={handleBasemapClose}
+					id={fontColorId}
+					open={openFontColorPicker}
+					anchorEl={FontColorAnchorEl}
+					onClose={handlFontColorClose}
 					anchorOrigin={{
 						vertical: 'bottom',
 						horizontal: 'center',
@@ -169,20 +283,10 @@ const MapConfig = ({
 						horizontal: 'center',
 					}}
 				>
-					<StyledBasemapWrapper>
-						<StyledBasemap name='dark' onClick={onBasemapSelect}>
-							Dark
-						</StyledBasemap>
-						<StyledBasemap name='bright' onClick={onBasemapSelect}>
-							Bright
-						</StyledBasemap>
-					</StyledBasemapWrapper>
+					<ChromePicker onChange={onFontColorChange} color={fontColor} />
 				</Popover>
-			</StyledBtn>
-			<StyledBtn onClick={onOrderChange}>
-				<SyncAltIcon />
-			</StyledBtn>
-		</div>
+			</StyledConfig>
+		</>
 	)
 }
 
@@ -191,7 +295,7 @@ export default MapConfig
 const StyledBtn = styled(Button)`
 	&& {
 		${({ theme }) => `
-		margin-right: 20px;
+		// margin-right: 20px;
 		background: ${theme.palette.info.main};
     color: #fff;
 
@@ -264,4 +368,22 @@ const StyledInput = styled(TextField)`
 		}
 `}
 	}
+`
+const StyledColorPicker = styled.div`
+	&& {
+		width: 200px;
+	}
+`
+const StyledMap = styled.div`
+	width: 45%;
+	display: flex;
+	justify-content: space-between;
+
+	margin-bottom: 20px;
+`
+
+const StyledConfig = styled.div`
+	width: 70%;
+	display: flex;
+	justify-content: space-between;
 `

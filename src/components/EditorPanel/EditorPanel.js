@@ -12,6 +12,10 @@ const EditorPanel = ({
 	IconSize,
 	onBasemapChange,
 	onPanelsOrderChange,
+	backgroundColor,
+	setBackgroundColor,
+	fontColor,
+	setFontColor,
 }) => {
 	console.log(data)
 	const [title, setTitle] = useState({
@@ -88,6 +92,10 @@ const EditorPanel = ({
 				IconSize={IconSize}
 				onBasemapChange={onBasemapChange}
 				onPanelsOrderChange={onPanelsOrderChange}
+				backgroundColor={backgroundColor}
+				setBackgroundColor={setBackgroundColor}
+				fontColor={fontColor}
+				setFontColor={setFontColor}
 			/>
 		</Editor>
 	)

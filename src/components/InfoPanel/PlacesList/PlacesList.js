@@ -1,7 +1,7 @@
 import React from 'react'
 import PlaceElement from './PlaceElement/PlaceElement'
 
-const PlacesList = ({ spatialData, imageOpenHandler }) => {
+const PlacesList = ({ spatialData, imageOpenHandler, fontColor }) => {
 	return (
 		<div>
 			{spatialData.features.map(place => (
@@ -9,6 +9,7 @@ const PlacesList = ({ spatialData, imageOpenHandler }) => {
 					spatialData={place}
 					key={place.properties.id}
 					imageOpenHandler={imageOpenHandler}
+					fontColor={fontColor}
 				/>
 			))}
 		</div>
