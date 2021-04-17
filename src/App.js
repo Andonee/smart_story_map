@@ -7,6 +7,7 @@ import EditorPanel from './components/EditorPanel/EditorPanel'
 import Map from './components/Map/Map'
 import ImageModal from './components/UI/ImageModal'
 import styled from 'styled-components'
+import produce from 'immer'
 
 function App() {
 	const [spatialData, setSpatialData] = useState()
@@ -69,18 +70,13 @@ function App() {
 			})
 		}
 	}
+
 	const onPlacesOrderChange = order => {
-		console.log('order', order)
-		setSpatialData(prevState => ({
-			...prevState,
-			data: {
-				...prevState.data,
-				map: {
-					...prevState.data.map,
-					features: order,
-				},
-			},
-		}))
+		setSpatialData(
+			produce(spatialData, draft => {
+				draft.data.map.features = order
+			})
+		)
 	}
 	return (
 		<StyledWrapper>
