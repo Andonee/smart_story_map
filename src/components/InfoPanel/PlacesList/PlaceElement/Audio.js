@@ -13,4 +13,8 @@ export default Audio
 
 const StyledPlayer = styled.audio`
 	padding: 20px 20px;
+
+	&:focus {
+		outline: none;
+	}
 `

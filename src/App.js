@@ -27,7 +27,6 @@ function App() {
 
 	useEffect(() => {
 		axios.get('http://localhost:5000/maps/1').then(res => {
-			console.log(res.data)
 			setSpatialData(res.data)
 			setMapIcon(res.data.data.info.icons.icon)
 			setIconSize(res.data.data.info.icons.size)
@@ -70,6 +69,19 @@ function App() {
 			})
 		}
 	}
+	const onPlacesOrderChange = order => {
+		console.log('order', order)
+		setSpatialData(prevState => ({
+			...prevState,
+			data: {
+				...prevState.data,
+				map: {
+					...prevState.data.map,
+					features: order,
+				},
+			},
+		}))
+	}
 	return (
 		<StyledWrapper>
 			<StyledInfoPanel order={panelsOrder.infoPanel} color={backgroundColor}>
@@ -100,7 +112,7 @@ function App() {
 			>
 				{spatialData && (
 					<EditorPanel
-						data={spatialData.data.info}
+						data={spatialData.data}
 						onIconChange={onIconChange}
 						onIconSizeChange={onIconSizeChange}
 						IconSize={IconSize}
@@ -110,6 +122,7 @@ function App() {
 						setBackgroundColor={setBackgroundColor}
 						fontColor={fontColor}
 						setFontColor={setFontColor}
+						onPlacesOrderChange={onPlacesOrderChange}
 					/>
 				)}
 			</StyledEditorPanel>

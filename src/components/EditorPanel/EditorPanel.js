@@ -4,6 +4,7 @@ import Description from './Description'
 import MapConfig from './MapConfig'
 import Button from '@material-ui/core/Button'
 import styled from 'styled-components'
+import PlaceOrder from './PlaceOrder/PlaceOrder'
 
 const EditorPanel = ({
 	data,
@@ -16,14 +17,14 @@ const EditorPanel = ({
 	setBackgroundColor,
 	fontColor,
 	setFontColor,
+	onPlacesOrderChange,
 }) => {
-	console.log(data)
 	const [title, setTitle] = useState({
-		title: data.title,
+		title: data.info.title,
 		isEdited: false,
 	})
 	const [description, setDescription] = useState({
-		description: data.description,
+		description: data.info.description,
 		isEdited: false,
 	})
 
@@ -97,6 +98,11 @@ const EditorPanel = ({
 				fontColor={fontColor}
 				setFontColor={setFontColor}
 			/>
+			<StyledDivider />
+			<PlaceOrder
+				spatialData={data.map}
+				onPlacesOrderChange={onPlacesOrderChange}
+			/>
 		</Editor>
 	)
 }
@@ -106,7 +112,7 @@ export default EditorPanel
 const Editor = styled.div`
 	&& {
 		${({ theme }) => `
-	height: 100%;
+	height: auto;
 	background: #fff;
 	padding-top: 20px;
 	display: flex;
