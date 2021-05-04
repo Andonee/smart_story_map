@@ -22,6 +22,31 @@ const theme = createMuiTheme({
 			light: '#3f97ea',
 		},
 	},
+
+	overrides: {
+		MuiOutlinedInput: {
+			root: {
+				'& $notchedOutline': {
+					borderColor: '#gssesg',
+					transition: 'all .3s',
+				},
+				'&:hover $notchedOutline': {
+					borderColor: '#2D8DE8',
+				},
+				'&$focused $notchedOutline': {
+					borderColor: '#2D8DE8',
+				},
+			},
+		},
+		MuiFormLabel: {
+			root: {
+				color: '#545454',
+				'&$focused': {
+					color: '#2D8DE8',
+				},
+			},
+		},
+	},
 })
 
 ReactDOM.render(

@@ -81,6 +81,8 @@ const StyledWrapper = styled.div`
 	padding: 5px;
 	height: auto;
 	max-height: 400px;
+	overflow: scroll;
+	overflow-x: hidden;
 `
 const StyledList = styled.div`
 	background: ${props => (props.isDraggingOver ? '#a8fff0' : 'wheat')};

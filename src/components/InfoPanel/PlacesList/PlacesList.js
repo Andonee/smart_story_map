@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PlaceElement from './PlaceElement/PlaceElement'
 
 const PlacesList = ({ spatialData, imageOpenHandler, fontColor }) => {

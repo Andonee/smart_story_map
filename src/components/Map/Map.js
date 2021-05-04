@@ -2,8 +2,17 @@ import React, { useEffect, useState, useCallback } from 'react'
 import useMap from '../../hooks/useMap'
 import { filter as rxFilter } from 'rxjs/operators'
 import styled from 'styled-components'
+import { useMapClick, useMapHover } from '../../hooks/useMapEvents'
 
-const Map = ({ spatialData, mapIcon, setMapInstance, IconSize, Basemap }) => {
+const Map = ({
+	spatialData,
+	mapIcon,
+	setMapInstance,
+	IconSize,
+	Basemap,
+	onAddNewObject,
+	newObject,
+}) => {
 	const [isLoaded, setIsLoaded] = useState(false)
 	const [places, setPlaces] = useState(
 		window.opalSdk.createDataset('places', { data: spatialData })
@@ -91,10 +100,20 @@ const Map = ({ spatialData, mapIcon, setMapInstance, IconSize, Basemap }) => {
 
 	useEffect(() => {
 		if (places) {
-			console.log('setData')
 			places.setData(spatialData)
 		}
 	}, [spatialData, places, icon])
+
+	const onMapClickHandler = e => {
+		if (newObject.addNewObject) {
+			console.log(e)
+			onAddNewObject(e.data)
+		}
+	}
+
+	useMapClick(map, onMapClickHandler)
+
+	// useMapHover(map, onObjectHover)
 
 	return <StyledWrapper id='map'></StyledWrapper>
 }

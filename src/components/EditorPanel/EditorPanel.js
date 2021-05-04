@@ -5,6 +5,7 @@ import MapConfig from './MapConfig'
 import Button from '@material-ui/core/Button'
 import styled from 'styled-components'
 import PlaceOrder from './PlaceOrder/PlaceOrder'
+import produce from 'immer'
 
 const EditorPanel = ({
 	data,
@@ -18,6 +19,9 @@ const EditorPanel = ({
 	fontColor,
 	setFontColor,
 	onPlacesOrderChange,
+	setNewObject,
+	newObject,
+	onPostHandler,
 }) => {
 	const [title, setTitle] = useState({
 		title: data.info.title,
@@ -54,6 +58,14 @@ const EditorPanel = ({
 			...prevState,
 			isEdited: !description.isEdited,
 		}))
+	}
+
+	const onAddNewPlace = () => {
+		setNewObject(
+			produce(newObject, draft => {
+				draft.addNewObject = true
+			})
+		)
 	}
 
 	return (
@@ -103,6 +115,12 @@ const EditorPanel = ({
 				spatialData={data.map}
 				onPlacesOrderChange={onPlacesOrderChange}
 			/>
+			<StyledDivider />
+			<StyledNewPlaceButton onClick={onAddNewPlace}>
+				Add place
+			</StyledNewPlaceButton>
+			<StyledDivider />
+			<StyledNewPlaceButton onClick={onPostHandler}>SAVE</StyledNewPlaceButton>
 		</Editor>
 	)
 }
@@ -154,5 +172,18 @@ const StyledDivider = styled.div`
 		height: 1px;
 		background: #cccccc;
 		margin: 20px 0;
+	}
+`
+const StyledNewPlaceButton = styled(Button)`
+	&& {
+		${({ theme }) => `{
+		width: 90%;
+		background: ${theme.palette.info.main};
+		color: #fff;
+		
+		&:hover {
+			background: ${theme.palette.info.light};
+		}
+	}`}
 	}
 `

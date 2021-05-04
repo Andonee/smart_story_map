@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 const Sidebar = ({ spatialData, imageOpenHandler, fontColor }) => {
 	let renderComponent
+
 	if (spatialData.type === 'story map') {
 		renderComponent = (
 			<PlacesList
