@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import Title from './Title'
 import Description from './Description'
 import MapConfig from './MapConfig'
-import Button from '@material-ui/core/Button'
 import styled from 'styled-components'
 import PlaceOrder from './PlaceOrder/PlaceOrder'
 import produce from 'immer'
+import CostumButton from '../UI/CostumButton'
 
 const EditorPanel = ({
 	data,
@@ -74,14 +74,12 @@ const EditorPanel = ({
 			<StyledTitleWrapper>
 				<Title title={title} onTitleChange={onTitleChange} />
 				<StyledEditBtnWrapper>
-					<StyledEditBtn
-						variant='contained'
-						color='primary'
-						onClick={onTitleEditHandle}
+					<CostumButton
+						text='Edit'
 						size='small'
-					>
-						Edit
-					</StyledEditBtn>
+						variant='contained'
+						onClick={onTitleEditHandle}
+					/>
 				</StyledEditBtnWrapper>
 			</StyledTitleWrapper>
 			<StyledDivider />
@@ -91,14 +89,12 @@ const EditorPanel = ({
 					onDescriptionChange={onDescriptionChange}
 				/>
 				<StyledEditBtnWrapper>
-					<StyledEditBtn
-						variant='contained'
-						color='primary'
-						onClick={onDescriptionEditHandle}
+					<CostumButton
+						text='Edit'
 						size='small'
-					>
-						Edit
-					</StyledEditBtn>
+						variant='contained'
+						onClick={onDescriptionEditHandle}
+					/>
 				</StyledEditBtnWrapper>
 			</StyledTitleWrapper>
 			<StyledDivider />
@@ -120,13 +116,24 @@ const EditorPanel = ({
 				onPlaceEdit={onPlaceEdit}
 			/>
 			<StyledDivider />
-			<StyledNewPlaceButton onClick={onAddNewPlace} size='small'>
-				Add place
-			</StyledNewPlaceButton>
+
+			<CostumButton
+				text='Add place'
+				size='small'
+				variant='contained'
+				onClick={onAddNewPlace}
+				width='90%'
+			/>
+
 			<StyledDivider />
-			<StyledNewPlaceButton onClick={onPostHandler} size='small'>
-				SAVE
-			</StyledNewPlaceButton>
+
+			<CostumButton
+				text='SAVE'
+				size='small'
+				variant='contained'
+				onClick={onPostHandler}
+				width='90%'
+			/>
 		</Editor>
 	)
 }
@@ -135,16 +142,12 @@ export default EditorPanel
 
 const Editor = styled.div`
 	&& {
-		${({ theme }) => `
-	height: auto;
-	background: #fff;
-	padding-top: 20px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	
-
-`}
+		height: auto;
+		background: #fff;
+		padding-top: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 `
 const StyledTitleWrapper = styled.div`
@@ -161,45 +164,11 @@ const StyledEditBtnWrapper = styled.div`
 	}
 `
 
-const StyledEditBtn = styled(Button)`
-	&& {
-		${({ theme }) => `
-		margin-right: 20px;
-		background: ${theme.palette.info.main};
-		
-		& > span {
-			font-size: 12px;
-		}
-		
-
-		&:hover {
-			background: ${theme.palette.info.light};
-		}
-		`}
-	}
-`
 const StyledDivider = styled.div`
 	&& {
 		width: 90%;
 		height: 1px;
 		background: #cccccc;
 		margin: 20px 0;
-	}
-`
-const StyledNewPlaceButton = styled(Button)`
-	&& {
-		${({ theme }) => `{
-		width: 90%;
-		background: ${theme.palette.info.main};
-		color: #fff;
-		
-		& > span {
-			font-size: 12px;
-		}
-		
-		&:hover {
-			background: ${theme.palette.info.light};
-		}
-	}`}
 	}
 `

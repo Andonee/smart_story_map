@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField'
 import styled from 'styled-components'
 import { useForm, Controller } from 'react-hook-form'
-import Button from '@material-ui/core/Button'
+import CostumButton from '../../UI/CostumButton'
 
 const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject }) => {
 	const { register, handleSubmit, getValues, setValue, control } = useForm({
@@ -10,7 +10,6 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject }) => {
 		defaultValues: editedPlace,
 	})
 
-	console.log('EDITED PLACE', editedPlace)
 	const onSubmit = data => {
 		const objectProps = {
 			id: editedPlace.id,
@@ -26,10 +25,8 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject }) => {
 		}
 		if (editedPlace?.id) {
 			onUpdateObject(objectProps)
-			console.log('update', objectProps)
 		} else {
 			onCreateNewObject(objectProps)
-			// console.log('create', objectProps)
 		}
 	}
 
@@ -154,9 +151,21 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject }) => {
 			/>
 			<StyledDivider />
 			{editedPlace?.id ? (
-				<StyledNewPlaceButton type='submit'>EDIT</StyledNewPlaceButton>
+				<CostumButton
+					text='Edit'
+					size='small'
+					variant='contained'
+					type='submit'
+					width='90%'
+				/>
 			) : (
-				<StyledNewPlaceButton type='submit'>CREATE</StyledNewPlaceButton>
+				<CostumButton
+					text='Create'
+					size='small'
+					variant='contained'
+					type='submit'
+					width='90%'
+				/>
 			)}
 		</StyledContainer>
 	)
@@ -192,18 +201,5 @@ const StyledDivider = styled.div`
 		height: 1px;
 		background: #cccccc;
 		margin: 20px 0;
-	}
-`
-const StyledNewPlaceButton = styled(Button)`
-	&& {
-		${({ theme }) => `{
-		width: 90%;
-		background: ${theme.palette.info.main};
-		color: #fff;
-		
-		&:hover {
-			background: ${theme.palette.info.light};
-		}
-	}`}
 	}
 `

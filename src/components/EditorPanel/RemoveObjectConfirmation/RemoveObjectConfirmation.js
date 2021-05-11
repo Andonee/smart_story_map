@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Button from '@material-ui/core/Button'
+import CostumButton from '../../UI/CostumButton'
 
 const RemoveObjectConfirmation = ({ onRemoveObjectHandler }) => {
 	const onClickHandler = e => {
@@ -14,8 +14,18 @@ const RemoveObjectConfirmation = ({ onRemoveObjectHandler }) => {
 			<div>Are you sure you want to remove this object?</div>
 			<StyledDivider />
 			<StyledEditBtnWrapper>
-				<StyledEditBtn onClick={onClickHandler}>Yes</StyledEditBtn>
-				<StyledEditBtn onClick={onClickHandler}>No</StyledEditBtn>
+				<CostumButton
+					text='Yes'
+					size='small'
+					variant='contained'
+					onClick={onClickHandler}
+				/>
+				<CostumButton
+					text='No'
+					size='small'
+					variant='contained'
+					onClick={onClickHandler}
+				/>
 			</StyledEditBtnWrapper>
 		</StyledWrapper>
 	)
@@ -28,11 +38,6 @@ const StyledWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	/* width: 90%; */
-	/* max-width: 95%; */
-	/* height: 90%; */
-	/* max-height: 85%; */
-	/* background: green; */
 	margin-top: 20px;
 `
 const StyledEditBtnWrapper = styled.div`
@@ -44,19 +49,6 @@ const StyledEditBtnWrapper = styled.div`
 	}
 `
 
-const StyledEditBtn = styled(Button)`
-	&& {
-		${({ theme }) => `
-	
-		background: ${theme.palette.info.main};
-    color: #fff;
-
-		&:hover {
-			background: ${theme.palette.info.light};
-		}
-		`}
-	}
-`
 const StyledDivider = styled.div`
 	&& {
 		width: 90%;

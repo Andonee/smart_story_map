@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import Button from '@material-ui/core/Button'
 import PlaceIcon from '@material-ui/icons/Place'
 import MapIcon from '@material-ui/icons/Map'
 import SyncAltIcon from '@material-ui/icons/SyncAlt'
@@ -18,7 +17,7 @@ import WyspaIcon from '../../assets/mapIcons/wyspa_01.svg'
 import { ChromePicker } from 'react-color'
 import PaletteIcon from '@material-ui/icons/Palette'
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText'
-import Paper from '@material-ui/core/Paper'
+import CostumButton from '../UI/CostumButton'
 
 const MapConfig = ({
 	onIconChange,
@@ -137,141 +136,155 @@ const MapConfig = ({
 	return (
 		<>
 			<StyledMap>
-				<StyledBtn
-					aria-describedby={iconId}
-					onClick={handleIconClick}
+				<CostumButton
+					text={<PlaceIcon />}
 					size='small'
-				>
-					<PlaceIcon />
-					<Popover
-						id={iconId}
-						open={openIconPicker}
-						anchorEl={IconAnchorEl}
-						onClose={handleIconClose}
-						anchorOrigin={{
-							vertical: 'bottom',
-							horizontal: 'center',
-						}}
-						transformOrigin={{
-							vertical: 'top',
-							horizontal: 'center',
-						}}
-					>
-						<StyledIconWrapper>
-							<img
-								src={InneIcon}
-								onClick={onIconSelect}
-								name='inne_01'
-								alt='inne_01'
-							/>
+					variant='contained'
+					onClick={handleIconClick}
+				/>
 
-							<img
-								src={KrainaIcon}
-								onClick={onIconSelect}
-								name='kraina_01'
-								alt='kraina_01'
-							/>
-							<img
-								src={KrolestwoIcon}
-								onClick={onIconSelect}
-								name='krolestwo_01-01'
-								alt='krolestwo_01-01'
-							/>
-							<img
-								src={MiastoIcon}
-								onClick={onIconSelect}
-								name='miasto_01'
-								alt='miasto_01'
-							/>
-							<img
-								src={PanstwoIcon}
-								onClick={onIconSelect}
-								name='panstwo_01'
-								alt='panstwo_01'
-							/>
-							<img
-								src={ProwincjaIcon}
-								onClick={onIconSelect}
-								name='prowincja_01'
-								alt='prowincja_01'
-							/>
-							<img
-								src={WyspaIcon}
-								onClick={onIconSelect}
-								name='wyspa_01'
-								alt='wyspa_01'
-							/>
-							<StyledInput
-								id='icon-size'
-								name='icon-size'
-								label='Icon size'
-								variant='outlined'
-								defaultValue={IconSize}
-								onChange={onSizeChange}
-								// inputProps={{ maxLength: 2 }}
-								size='small'
-								// type='number'
-							/>
-						</StyledIconWrapper>
-					</Popover>
-				</StyledBtn>
-				<StyledBtn aria-describedby={basemapId} onClick={handleBasemapClick}>
-					<MapIcon />
-					<Popover
-						id={basemapId}
-						open={openBasemapPicker}
-						anchorEl={BasemapAnchorEl}
-						onClose={handleBasemapClose}
-						anchorOrigin={{
-							vertical: 'bottom',
-							horizontal: 'center',
-						}}
-						transformOrigin={{
-							vertical: 'top',
-							horizontal: 'center',
-						}}
-					>
-						<StyledBasemapWrapper>
-							<StyledBasemap name='dark' onClick={onBasemapSelect}>
-								Dark
-							</StyledBasemap>
-							<StyledBasemap name='bright' onClick={onBasemapSelect}>
-								Bright
-							</StyledBasemap>
-						</StyledBasemapWrapper>
-					</Popover>
-				</StyledBtn>
+				<Popover
+					id={iconId}
+					open={openIconPicker}
+					anchorEl={IconAnchorEl}
+					onClose={handleIconClose}
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center',
+					}}
+					transformOrigin={{
+						vertical: 'top',
+						horizontal: 'center',
+					}}
+				>
+					<StyledIconWrapper>
+						<img
+							src={InneIcon}
+							onClick={onIconSelect}
+							name='inne_01'
+							alt='inne_01'
+						/>
+
+						<img
+							src={KrainaIcon}
+							onClick={onIconSelect}
+							name='kraina_01'
+							alt='kraina_01'
+						/>
+						<img
+							src={KrolestwoIcon}
+							onClick={onIconSelect}
+							name='krolestwo_01-01'
+							alt='krolestwo_01-01'
+						/>
+						<img
+							src={MiastoIcon}
+							onClick={onIconSelect}
+							name='miasto_01'
+							alt='miasto_01'
+						/>
+						<img
+							src={PanstwoIcon}
+							onClick={onIconSelect}
+							name='panstwo_01'
+							alt='panstwo_01'
+						/>
+						<img
+							src={ProwincjaIcon}
+							onClick={onIconSelect}
+							name='prowincja_01'
+							alt='prowincja_01'
+						/>
+						<img
+							src={WyspaIcon}
+							onClick={onIconSelect}
+							name='wyspa_01'
+							alt='wyspa_01'
+						/>
+						<StyledInput
+							id='icon-size'
+							name='icon-size'
+							label='Icon size'
+							variant='outlined'
+							defaultValue={IconSize}
+							onChange={onSizeChange}
+							// inputProps={{ maxLength: 2 }}
+							size='small'
+							// type='number'
+						/>
+					</StyledIconWrapper>
+				</Popover>
+
+				<CostumButton
+					text={<MapIcon />}
+					size='small'
+					variant='contained'
+					onClick={handleBasemapClick}
+				/>
+
+				<Popover
+					id={basemapId}
+					open={openBasemapPicker}
+					anchorEl={BasemapAnchorEl}
+					onClose={handleBasemapClose}
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center',
+					}}
+					transformOrigin={{
+						vertical: 'top',
+						horizontal: 'center',
+					}}
+				>
+					<StyledBasemapWrapper>
+						<StyledBasemap name='dark' onClick={onBasemapSelect}>
+							Dark
+						</StyledBasemap>
+						<StyledBasemap name='bright' onClick={onBasemapSelect}>
+							Bright
+						</StyledBasemap>
+					</StyledBasemapWrapper>
+				</Popover>
 			</StyledMap>
 			<StyledConfig>
-				<StyledBtn onClick={onOrderChange}>
-					<SyncAltIcon />
-				</StyledBtn>
-				<StyledBtn onClick={handleBackgroundColorClick}>
-					<PaletteIcon />
-					<Popover
-						id={backgroundColorId}
-						open={openBackgroundColorPicker}
-						anchorEl={BackgroundColorAnchorEl}
-						onClose={handlBackgroundColorClose}
-						anchorOrigin={{
-							vertical: 'bottom',
-							horizontal: 'center',
-						}}
-						transformOrigin={{
-							vertical: 'top',
-							horizontal: 'center',
-						}}
-					>
-						<ChromePicker
-							onChange={onBackgroundColorChange}
-							color={backgroundColor}
-						/>
-					</Popover>
-				</StyledBtn>
+				<CostumButton
+					text={<SyncAltIcon />}
+					size='small'
+					variant='contained'
+					onClick={onOrderChange}
+				/>
+				<CostumButton
+					text={<PaletteIcon />}
+					size='small'
+					variant='contained'
+					onClick={handleBackgroundColorClick}
+				/>
 
-				<StyledBtn onClick={handleFontColorClick}>
-					<FormatColorTextIcon />
-				</StyledBtn>
+				<Popover
+					id={backgroundColorId}
+					open={openBackgroundColorPicker}
+					anchorEl={BackgroundColorAnchorEl}
+					onClose={handlBackgroundColorClose}
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center',
+					}}
+					transformOrigin={{
+						vertical: 'top',
+						horizontal: 'center',
+					}}
+				>
+					<ChromePicker
+						onChange={onBackgroundColorChange}
+						color={backgroundColor}
+					/>
+				</Popover>
+				<CostumButton
+					text={<FormatColorTextIcon />}
+					size='small'
+					variant='contained'
+					onClick={handleFontColorClick}
+				/>
 
 				<Popover
 					id={fontColorId}
@@ -295,21 +308,6 @@ const MapConfig = ({
 }
 
 export default MapConfig
-
-const StyledBtn = styled(Button)`
-	&& {
-		${({ theme }) => `
-		// margin-right: 20px;
-		background: ${theme.palette.info.main};
-    color: #fff;
-
-
-		&:hover {
-			background: ${theme.palette.info.light};
-		},
-		`}
-	}
-`
 
 const StyledIconWrapper = styled.div`
 	&& {
@@ -372,11 +370,6 @@ const StyledInput = styled(TextField)`
 			}
 		}
 `}
-	}
-`
-const StyledColorPicker = styled.div`
-	&& {
-		width: 200px;
 	}
 `
 const StyledMap = styled.div`
