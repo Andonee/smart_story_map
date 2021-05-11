@@ -22,6 +22,7 @@ const EditorPanel = ({
 	setNewObject,
 	newObject,
 	onPostHandler,
+	onPlaceEdit,
 }) => {
 	const [title, setTitle] = useState({
 		title: data.info.title,
@@ -77,6 +78,7 @@ const EditorPanel = ({
 						variant='contained'
 						color='primary'
 						onClick={onTitleEditHandle}
+						size='small'
 					>
 						Edit
 					</StyledEditBtn>
@@ -93,6 +95,7 @@ const EditorPanel = ({
 						variant='contained'
 						color='primary'
 						onClick={onDescriptionEditHandle}
+						size='small'
 					>
 						Edit
 					</StyledEditBtn>
@@ -114,13 +117,16 @@ const EditorPanel = ({
 			<PlaceOrder
 				spatialData={data.map}
 				onPlacesOrderChange={onPlacesOrderChange}
+				onPlaceEdit={onPlaceEdit}
 			/>
 			<StyledDivider />
-			<StyledNewPlaceButton onClick={onAddNewPlace}>
+			<StyledNewPlaceButton onClick={onAddNewPlace} size='small'>
 				Add place
 			</StyledNewPlaceButton>
 			<StyledDivider />
-			<StyledNewPlaceButton onClick={onPostHandler}>SAVE</StyledNewPlaceButton>
+			<StyledNewPlaceButton onClick={onPostHandler} size='small'>
+				SAVE
+			</StyledNewPlaceButton>
 		</Editor>
 	)
 }
@@ -136,6 +142,7 @@ const Editor = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	
 
 `}
 	}
@@ -159,6 +166,11 @@ const StyledEditBtn = styled(Button)`
 		${({ theme }) => `
 		margin-right: 20px;
 		background: ${theme.palette.info.main};
+		
+		& > span {
+			font-size: 12px;
+		}
+		
 
 		&:hover {
 			background: ${theme.palette.info.light};
@@ -180,6 +192,10 @@ const StyledNewPlaceButton = styled(Button)`
 		width: 90%;
 		background: ${theme.palette.info.main};
 		color: #fff;
+		
+		& > span {
+			font-size: 12px;
+		}
 		
 		&:hover {
 			background: ${theme.palette.info.light};

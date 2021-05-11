@@ -137,7 +137,11 @@ const MapConfig = ({
 	return (
 		<>
 			<StyledMap>
-				<StyledBtn aria-describedby={iconId} onClick={handleIconClick}>
+				<StyledBtn
+					aria-describedby={iconId}
+					onClick={handleIconClick}
+					size='small'
+				>
 					<PlaceIcon />
 					<Popover
 						id={iconId}
@@ -298,6 +302,7 @@ const StyledBtn = styled(Button)`
 		// margin-right: 20px;
 		background: ${theme.palette.info.main};
     color: #fff;
+
 
 		&:hover {
 			background: ${theme.palette.info.light};

@@ -11,6 +11,7 @@ import Map from './components/Map/Map'
 import ImageModal from './components/UI/ImageModal'
 import CostumModal from './components/UI/CostumModal'
 import NewPlace from './components/EditorPanel/NewPlace/NewPlace'
+import RemoveObjectConfirmation from './components/EditorPanel/RemoveObjectConfirmation/RemoveObjectConfirmation'
 
 function App() {
 	const [spatialData, setSpatialData] = useState()
@@ -29,6 +30,7 @@ function App() {
 	const [backgroundColor, setBackgroundColor] = useState('#fff')
 	const [fontColor, setFontColor] = useState('#545454')
 	const [isNewObjectModalOpen, setIsNewObjectModalOpen] = useState(false)
+	const [isRemoveObjectModalOpen, setIsRemoveObjectModalOpen] = useState(false)
 	const [newObject, setNewObject] = useState({
 		addNewObject: false,
 		id: '',
@@ -39,6 +41,11 @@ function App() {
 		image3: '',
 		audio: '',
 		coordinates: [],
+	})
+	const [editedPlace, setEditedPlace] = useState({
+		idx: '',
+		data: {},
+		action: '',
 	})
 
 	useEffect(() => {
@@ -62,6 +69,19 @@ function App() {
 			setIsNewObjectModalOpen(true)
 		}
 	}, [newObject])
+
+	useEffect(() => {
+		if (editedPlace.idx !== '' && editedPlace.action === 'edit') {
+			setIsNewObjectModalOpen(true)
+		}
+	}, [editedPlace])
+
+	useEffect(() => {
+		if (editedPlace.idx !== '' && editedPlace.action === 'remove') {
+			console.log('REMOVE')
+			setIsRemoveObjectModalOpen(true)
+		}
+	}, [editedPlace])
 
 	const imageOpenHandler = e => {
 		const image = e.target.src
@@ -95,6 +115,7 @@ function App() {
 	}
 
 	const onCreateNewObject = props => {
+		const { title, description, photo1, photo2, photo3, video, audio } = props
 		const { id, coordinates } = newObject
 		const createNewObject = {
 			type: 'Feature',
@@ -104,7 +125,13 @@ function App() {
 			},
 			properties: {
 				id,
-				...props,
+				title,
+				description,
+				photo1,
+				photo2,
+				photo3,
+				video,
+				audio,
 			},
 		}
 		console.log(createNewObject)
@@ -121,6 +148,15 @@ function App() {
 				draft.coordinates = []
 			})
 		)
+	}
+
+	const onUpdateObject = props => {
+		setSpatialData(
+			produce(spatialData, draft => {
+				draft.data.map.features[editedPlace.idx].properties = props
+			})
+		)
+		setIsNewObjectModalOpen(false)
 	}
 
 	const onPanelsOrderChange = () => {
@@ -161,13 +197,44 @@ function App() {
 
 	const onModalClose = () => {
 		setIsNewObjectModalOpen(false)
+
 		setNewObject(
-			produce(spatialData, draft => {
+			produce(newObject, draft => {
 				draft.addNewObject = false
 				draft.id = ''
 				draft.coordinates = []
 			})
 		)
+		onRemoveObjectHandler('NO')
+	}
+
+	const onRemoveObjectHandler = action => {
+		if (action === 'NO') {
+			setIsRemoveObjectModalOpen(false)
+			setEditedPlace({
+				idx: '',
+				data: {},
+				action: '',
+			})
+		} else {
+			setIsRemoveObjectModalOpen(false)
+			setSpatialData(
+				produce(spatialData, draft => {
+					draft.data.map.features.splice(editedPlace.idx, 1)
+				})
+			)
+		}
+	}
+
+	const onPlaceEdit = (place, action) => {
+		const idx = spatialData.data.map.features.findIndex(
+			el => el.properties.id === place.id
+		)
+		setEditedPlace({
+			idx: idx,
+			data: spatialData.data.map.features[idx].properties,
+			action: action,
+		})
 	}
 
 	return (
@@ -216,6 +283,7 @@ function App() {
 						setNewObject={setNewObject}
 						newObject={newObject}
 						onPostHandler={onPostHandler}
+						onPlaceEdit={onPlaceEdit}
 					/>
 				)}
 			</StyledEditorPanel>
@@ -225,7 +293,19 @@ function App() {
 				onModalClose={onModalClose}
 				modalIsOpen={isNewObjectModalOpen}
 			>
-				<NewPlace onCreateNewObject={onCreateNewObject} />
+				<NewPlace
+					onCreateNewObject={onCreateNewObject}
+					editedPlace={editedPlace.data}
+					onUpdateObject={onUpdateObject}
+				/>
+			</CostumModal>
+			<CostumModal
+				onModalClose={onModalClose}
+				modalIsOpen={isRemoveObjectModalOpen}
+			>
+				<RemoveObjectConfirmation
+					onRemoveObjectHandler={onRemoveObjectHandler}
+				/>
 			</CostumModal>
 		</StyledWrapper>
 	)

@@ -40,21 +40,15 @@ const StyledInput = styled(TextField)`
 		width: 90%;
 		margin-left: auto;
 		margin-right: auto;
-		& label {
-			color: ${theme.palette.primary.main};
-		}
-		& label.Mui-focused {
-			color:${theme.palette.primary.main};
+		
+		& input {
+			font-size: 12px;
 		}
 
-		& .MuiOutlinedInput-root {
-			color: ${theme.palette.primary.main};
-			& fieldset{
-				border-color:${theme.palette.primary.main};
-			}
-			&:hover fieldset {
-				border-color: ${theme.palette.primary.main};
-			}
-		}
+		&:hover label {
+			transition: all .3s;
+      color: ${theme.palette.info.main}
+    }
+	
 `}
 `

@@ -92,6 +92,7 @@ const StyledCloseBtn = styled(IconButton)`
 	top: 10px;
 	right: 10px;
 	color: ${theme.palette.primary.main};
+	
 
 	&:hover {
 		cursor: pointer,

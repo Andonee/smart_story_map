@@ -94,7 +94,8 @@ const StyledCloseBtn = styled(IconButton)`
 const StyledImg = styled.img`
 	&& {
 		${({ theme }) => `
-		width: 100%;
+		max-width: 100%;
+		max-height: 90vh;
 		${theme.breakpoints.down('sm')} {
 			width: '100%';
 		},

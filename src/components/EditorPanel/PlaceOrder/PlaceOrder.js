@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import Place from './Place'
 
-const PlaceOrder = ({ spatialData, onPlacesOrderChange }) => {
-	console.log(spatialData)
+const PlaceOrder = ({ spatialData, onPlacesOrderChange, onPlaceEdit }) => {
 	const [places, setPlaces] = useState(spatialData.features)
 	const [isReordered, setIsReordered] = useState(false)
 
@@ -14,6 +13,10 @@ const PlaceOrder = ({ spatialData, onPlacesOrderChange }) => {
 			setIsReordered(false)
 		}
 	}, [isReordered, onPlacesOrderChange, places])
+
+	useEffect(() => {
+		setPlaces(spatialData.features)
+	}, [spatialData.features])
 
 	const reorder = (list, startIndex, endIndex) => {
 		const result = Array.from(list)
@@ -44,6 +47,7 @@ const PlaceOrder = ({ spatialData, onPlacesOrderChange }) => {
 		setPlaces(quotes)
 		setIsReordered(true)
 	}
+
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
 			<StyledWrapper>
@@ -60,6 +64,7 @@ const PlaceOrder = ({ spatialData, onPlacesOrderChange }) => {
 										placeName={place}
 										key={place.properties.id}
 										index={idx}
+										onPlaceEdit={onPlaceEdit}
 									/>
 								)
 							})}
