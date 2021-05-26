@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 
 import { nanoid } from 'nanoid'
-import axios from 'axios'
 import styled from 'styled-components'
 import produce from 'immer'
 
@@ -12,6 +11,7 @@ import ImageModal from './components/UI/ImageModal'
 import CostumModal from './components/UI/CostumModal'
 import NewPlace from './components/EditorPanel/NewPlace/NewPlace'
 import RemoveObjectConfirmation from './components/EditorPanel/RemoveObjectConfirmation/RemoveObjectConfirmation'
+import useHttp from './hooks/useHttp'
 
 function App() {
 	const [spatialData, setSpatialData] = useState()
@@ -28,6 +28,7 @@ function App() {
 		editorPanel: 1,
 	})
 	const [backgroundColor, setBackgroundColor] = useState('#fff')
+	const [timelineColor, setTimelineColor] = useState('rgb(33, 150, 243)')
 	const [fontColor, setFontColor] = useState('#545454')
 	const [isNewObjectModalOpen, setIsNewObjectModalOpen] = useState(false)
 	const [isRemoveObjectModalOpen, setIsRemoveObjectModalOpen] = useState(false)
@@ -48,21 +49,16 @@ function App() {
 		action: '',
 	})
 
+	const { error, loading, sendRequest } = useHttp()
+
 	useEffect(() => {
-		axios
-			.get('http://localhost:5000/maps/1')
-			.then(res => {
-				console.log(res)
-				console.log(res.data)
-				setSpatialData(res.data)
-				setMapIcon(res.data.data.info.icons.icon)
-				setIconSize(res.data.data.info.icons.size)
-				setBasemap(res.data.data.info.basemap)
-			})
-			.catch(err => {
-				alert('Something went wrong')
-			})
-	}, [])
+		sendRequest({ url: 'http://localhost:5000/maps/2' }).then(res => {
+			setSpatialData(res.data)
+			setMapIcon(res.data.data.info.icons.icon)
+			setIconSize(res.data.data.info.icons.size)
+			setBasemap(res.data.data.info.basemap)
+		})
+	}, [sendRequest])
 
 	useEffect(() => {
 		if (newObject.id && newObject.coordinates.length === 2) {
@@ -183,13 +179,11 @@ function App() {
 
 	const onPostHandler = async () => {
 		try {
-			const res = await axios({
+			sendRequest({
 				method: 'PATCH',
-				url: `http://localhost:5000/maps/1`,
-				data: spatialData,
-			})
-
-			return res
+				url: `http://localhost:5000/maps/2`,
+				body: spatialData,
+			}).then(res => res)
 		} catch {
 			alert('Something went wrong')
 		}
@@ -239,12 +233,17 @@ function App() {
 
 	return (
 		<StyledWrapper>
-			<StyledInfoPanel order={panelsOrder.infoPanel} color={backgroundColor}>
+			<StyledInfoPanel
+				order={panelsOrder.infoPanel}
+				color={backgroundColor}
+				type={spatialData?.type}
+			>
 				{spatialData && (
 					<InfoPanel
 						spatialData={spatialData}
 						imageOpenHandler={imageOpenHandler}
 						fontColor={fontColor}
+						timelineColor={timelineColor}
 					/>
 				)}
 			</StyledInfoPanel>
@@ -284,6 +283,9 @@ function App() {
 						newObject={newObject}
 						onPostHandler={onPostHandler}
 						onPlaceEdit={onPlaceEdit}
+						setTimelineColor={setTimelineColor}
+						spatialData={spatialData}
+						timelineColor={timelineColor}
 					/>
 				)}
 			</StyledEditorPanel>
@@ -315,7 +317,7 @@ export default App
 
 const StyledInfoPanel = styled.div`
 	&& {
-		width: 350px;
+		width: ${props => (props.type === 'timeline' ? '500px' : '350px')};
 		order: ${props => props.order || -1};
 		background: ${props => props.color || '#fff'};
 	}

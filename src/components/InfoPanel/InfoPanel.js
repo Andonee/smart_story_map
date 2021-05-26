@@ -3,7 +3,12 @@ import PlacesList from './PlacesList/PlacesList'
 import Timeline from './Timeline/Timeline'
 import styled from 'styled-components'
 
-const Sidebar = ({ spatialData, imageOpenHandler, fontColor }) => {
+const Sidebar = ({
+	spatialData,
+	imageOpenHandler,
+	fontColor,
+	timelineColor,
+}) => {
 	let renderComponent
 
 	if (spatialData.type === 'story map') {
@@ -15,7 +20,14 @@ const Sidebar = ({ spatialData, imageOpenHandler, fontColor }) => {
 			/>
 		)
 	} else if (spatialData.type === 'timeline') {
-		renderComponent = <Timeline spatialData={spatialData} />
+		renderComponent = (
+			<Timeline
+				spatialData={spatialData.data.map}
+				imageOpenHandler={imageOpenHandler}
+				timelineColor={timelineColor}
+				fontColor={fontColor}
+			/>
+		)
 	}
 
 	return <StyledWrapper>{renderComponent}</StyledWrapper>
@@ -27,5 +39,6 @@ const StyledWrapper = styled.div`
 	&& {
 		height: 100%;
 		overflow: scroll;
+		/* background: black; */
 	}
 `

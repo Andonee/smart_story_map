@@ -5,6 +5,7 @@ import MapIcon from '@material-ui/icons/Map'
 import SyncAltIcon from '@material-ui/icons/SyncAlt'
 import Popover from '@material-ui/core/Popover'
 import TextField from '@material-ui/core/TextField'
+import TimelineIcon from '@material-ui/icons/Timeline'
 
 import InneIcon from '../../assets/mapIcons/inne_01.svg'
 import KrainaIcon from '../../assets/mapIcons/kraina_01.svg'
@@ -29,12 +30,15 @@ const MapConfig = ({
 	setBackgroundColor,
 	fontColor,
 	setFontColor,
+	setTimelineColor,
+	spatialData,
+	timelineColor,
 }) => {
 	const [IconAnchorEl, setIconAnchorEl] = React.useState(null)
 	const [BasemapAnchorEl, setBasemapAnchorEl] = React.useState(null)
-	const [BackgroundColorAnchorEl, setBackgroundColorAnchorEl] = React.useState(
-		null
-	)
+	const [BackgroundColorAnchorEl, setBackgroundColorAnchorEl] =
+		React.useState(null)
+	const [TimelineColorAnchorEl, setTimelineColorAnchorEl] = React.useState(null)
 	const [FontColorAnchorEl, setFontColorAnchorEl] = React.useState(null)
 
 	const handleIconClick = e => {
@@ -65,6 +69,15 @@ const MapConfig = ({
 		}
 	}
 
+	const handlTimelineColorClick = e => {
+		if (!BackgroundColorAnchorEl) {
+			setTimelineColorAnchorEl(e.currentTarget)
+		} else {
+			if (e.target.className === 'gb(33, 150, 243)') return
+			setTimelineColorAnchorEl(null)
+		}
+	}
+
 	const handleFontColorClick = e => {
 		if (!FontColorAnchorEl) {
 			setFontColorAnchorEl(e.currentTarget)
@@ -84,6 +97,10 @@ const MapConfig = ({
 
 	const handlBackgroundColorClose = () => {
 		setBackgroundColorAnchorEl(null)
+	}
+
+	const handlTimelineColorClose = () => {
+		setTimelineColorAnchorEl(null)
 	}
 
 	const handlFontColorClose = () => {
@@ -119,6 +136,12 @@ const MapConfig = ({
 		setFontColor(rgbColor)
 	}
 
+	const onTimelineColorChange = color => {
+		const { r, g, b, a } = color.rgb
+		const rgbColor = `rgba(${r}, ${g}, ${b}, ${a})`
+		setTimelineColor(rgbColor)
+	}
+
 	const openIconPicker = Boolean(IconAnchorEl)
 	const iconId = openIconPicker ? 'icon-picker' : undefined
 
@@ -126,8 +149,12 @@ const MapConfig = ({
 	const basemapId = openBasemapPicker ? 'basemap-picker' : undefined
 
 	const openBackgroundColorPicker = Boolean(BackgroundColorAnchorEl)
+	const openTimelineColorPicker = Boolean(TimelineColorAnchorEl)
 	const backgroundColorId = openBackgroundColorPicker
 		? 'backgroundColor-picker'
+		: undefined
+	const timelineColorId = openTimelineColorPicker
+		? 'timelineColor-picker'
 		: undefined
 
 	const openFontColorPicker = Boolean(FontColorAnchorEl)
@@ -135,7 +162,7 @@ const MapConfig = ({
 
 	return (
 		<>
-			<StyledMap>
+			<StyledConfig>
 				<CostumButton
 					text={<PlaceIcon />}
 					size='small'
@@ -245,14 +272,40 @@ const MapConfig = ({
 						</StyledBasemap>
 					</StyledBasemapWrapper>
 				</Popover>
-			</StyledMap>
-			<StyledConfig>
 				<CostumButton
 					text={<SyncAltIcon />}
 					size='small'
 					variant='contained'
 					onClick={onOrderChange}
 				/>
+			</StyledConfig>
+			<StyledMap>
+				<CostumButton
+					text={<TimelineIcon />}
+					size='small'
+					variant='contained'
+					onClick={handlTimelineColorClick}
+				/>
+
+				<Popover
+					id={timelineColorId}
+					open={openTimelineColorPicker}
+					anchorEl={TimelineColorAnchorEl}
+					onClose={handlTimelineColorClose}
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center',
+					}}
+					transformOrigin={{
+						vertical: 'top',
+						horizontal: 'center',
+					}}
+				>
+					<ChromePicker
+						onChange={onTimelineColorChange}
+						color={timelineColor}
+					/>
+				</Popover>
 				<CostumButton
 					text={<PaletteIcon />}
 					size='small'
@@ -302,7 +355,7 @@ const MapConfig = ({
 				>
 					<ChromePicker onChange={onFontColorChange} color={fontColor} />
 				</Popover>
-			</StyledConfig>
+			</StyledMap>
 		</>
 	)
 }

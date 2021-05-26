@@ -23,6 +23,9 @@ const EditorPanel = ({
 	newObject,
 	onPostHandler,
 	onPlaceEdit,
+	setTimelineColor,
+	spatialData,
+	timelineColor,
 }) => {
 	const [title, setTitle] = useState({
 		title: data.info.title,
@@ -108,6 +111,9 @@ const EditorPanel = ({
 				setBackgroundColor={setBackgroundColor}
 				fontColor={fontColor}
 				setFontColor={setFontColor}
+				setTimelineColor={setTimelineColor}
+				spatialData={spatialData}
+				timelineColor={timelineColor}
 			/>
 			<StyledDivider />
 			<PlaceOrder
