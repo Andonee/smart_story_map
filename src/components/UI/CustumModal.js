@@ -6,7 +6,7 @@ import Fade from '@material-ui/core/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import IconButton from '@material-ui/core/IconButton'
 
-const CostumModal = ({ onModalClose, modalIsOpen, children }) => {
+const CustumModal = ({ onModalClose, modalIsOpen, children }) => {
 	const [open, setOpen] = useState(modalIsOpen)
 
 	useEffect(() => {
@@ -28,8 +28,7 @@ const CostumModal = ({ onModalClose, modalIsOpen, children }) => {
 			BackdropComponent={Backdrop}
 			BackdropProps={{
 				timeout: 500,
-			}}
-		>
+			}}>
 			<Fade in={open}>
 				<StyledPaper>
 					<StyledCloseBtn onClick={handleClose} size='small'>
@@ -42,7 +41,7 @@ const CostumModal = ({ onModalClose, modalIsOpen, children }) => {
 	)
 }
 
-export default CostumModal
+export default CustumModal
 
 const StyledModal = styled(Modal)`
 	display: flex;
@@ -92,7 +91,7 @@ const StyledCloseBtn = styled(IconButton)`
 	top: 10px;
 	right: 10px;
 	color: ${theme.palette.primary.main};
-	
+
 
 	&:hover {
 		cursor: pointer,

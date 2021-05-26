@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Draggable } from 'react-beautiful-dnd'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
+import CostumTooltip from '../../UI/CostumTooltip'
 
 const Place = ({ placeName, index, onPlaceEdit }) => {
 	const onPlaceEditHandler = () => {
@@ -20,16 +21,19 @@ const Place = ({ placeName, index, onPlaceEdit }) => {
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}
-					isDragging={snapshot.isDragging}
-				>
+					isDragging={snapshot.isDragging}>
 					{placeName.properties.title}
 					<StyledIconsWrapper>
-						<StyledEditBtn onClick={onPlaceEditHandler}>
-							<EditIcon style={{ width: '15px' }} />
-						</StyledEditBtn>
-						<StyledEditBtn onClick={onPlaceRemoveHandler}>
-							<DeleteIcon style={{ width: '15px' }} />
-						</StyledEditBtn>
+						<CostumTooltip title='Edit'>
+							<StyledEditBtn onClick={onPlaceEditHandler}>
+								<EditIcon style={{ width: '15px' }} />
+							</StyledEditBtn>
+						</CostumTooltip>
+						<CostumTooltip title='Remove'>
+							<StyledEditBtn onClick={onPlaceRemoveHandler}>
+								<DeleteIcon style={{ width: '15px' }} />
+							</StyledEditBtn>
+						</CostumTooltip>
 					</StyledIconsWrapper>
 				</StyledPlace>
 			)}
