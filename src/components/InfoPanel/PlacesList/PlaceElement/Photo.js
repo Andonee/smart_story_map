@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const Photo = ({ photo, open }) => {
 	return (
 		<StyledWrapper>
-			<StyledIcon />
+			{/* <StyledIcon /> */}
 			<StyledImg src={photo} onClick={open} />
 		</StyledWrapper>
 	)

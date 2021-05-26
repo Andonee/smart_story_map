@@ -5,7 +5,7 @@ import MapConfig from './MapConfig'
 import styled from 'styled-components'
 import PlaceOrder from './PlaceOrder/PlaceOrder'
 import produce from 'immer'
-import CostumButton from '../UI/CostumButton'
+import CustumButton from '../UI/CustumButton'
 
 const EditorPanel = ({
 	data,
@@ -26,6 +26,12 @@ const EditorPanel = ({
 	setTimelineColor,
 	spatialData,
 	timelineColor,
+	timeAxisColor,
+	setTimeAxisColor,
+	timelineIconBorderColor,
+	setTimelineIconBorderColor,
+	timelineIconColor,
+	setTimelineIconColor,
 }) => {
 	const [title, setTitle] = useState({
 		title: data.info.title,
@@ -77,7 +83,7 @@ const EditorPanel = ({
 			<StyledTitleWrapper>
 				<Title title={title} onTitleChange={onTitleChange} />
 				<StyledEditBtnWrapper>
-					<CostumButton
+					<CustumButton
 						text='Edit'
 						size='small'
 						variant='contained'
@@ -92,7 +98,7 @@ const EditorPanel = ({
 					onDescriptionChange={onDescriptionChange}
 				/>
 				<StyledEditBtnWrapper>
-					<CostumButton
+					<CustumButton
 						text='Edit'
 						size='small'
 						variant='contained'
@@ -114,6 +120,12 @@ const EditorPanel = ({
 				setTimelineColor={setTimelineColor}
 				spatialData={spatialData}
 				timelineColor={timelineColor}
+				timeAxisColor={timeAxisColor}
+				setTimeAxisColor={setTimeAxisColor}
+				setTimelineIconBorderColor={setTimelineIconBorderColor}
+				timelineIconBorderColor={timelineIconBorderColor}
+				timelineIconColor={timelineIconColor}
+				setTimelineIconColor={setTimelineIconColor}
 			/>
 			<StyledDivider />
 			<PlaceOrder
@@ -123,7 +135,7 @@ const EditorPanel = ({
 			/>
 			<StyledDivider />
 
-			<CostumButton
+			<CustumButton
 				text='Add place'
 				size='small'
 				variant='contained'
@@ -133,7 +145,7 @@ const EditorPanel = ({
 
 			<StyledDivider />
 
-			<CostumButton
+			<CustumButton
 				text='SAVE'
 				size='small'
 				variant='contained'

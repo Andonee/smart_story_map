@@ -8,6 +8,9 @@ const Sidebar = ({
 	imageOpenHandler,
 	fontColor,
 	timelineColor,
+	timeAxisColor,
+	timelineIconBorderColor,
+	timelineIconColor
 }) => {
 	let renderComponent
 
@@ -26,6 +29,9 @@ const Sidebar = ({
 				imageOpenHandler={imageOpenHandler}
 				timelineColor={timelineColor}
 				fontColor={fontColor}
+				timeAxisColor={timeAxisColor}
+				timelineIconBorderColor={timelineIconBorderColor}
+				timelineIconColor={timelineIconColor}
 			/>
 		)
 	}

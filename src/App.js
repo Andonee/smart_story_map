@@ -8,7 +8,7 @@ import InfoPanel from './components/InfoPanel/InfoPanel'
 import EditorPanel from './components/EditorPanel/EditorPanel'
 import Map from './components/Map/Map'
 import ImageModal from './components/UI/ImageModal'
-import CostumModal from './components/UI/CostumModal'
+import CustumModal from './components/UI/CustumModal'
 import NewPlace from './components/EditorPanel/NewPlace/NewPlace'
 import RemoveObjectConfirmation from './components/EditorPanel/RemoveObjectConfirmation/RemoveObjectConfirmation'
 import useHttp from './hooks/useHttp'
@@ -28,8 +28,13 @@ function App() {
 		editorPanel: 1,
 	})
 	const [backgroundColor, setBackgroundColor] = useState('#fff')
-	const [timelineColor, setTimelineColor] = useState('rgb(33, 150, 243)')
+	const [timeAxisColor, setTimeAxisColor] = useState('rgb(33, 150, 243)')
+	const [timelineIconBorderColor, setTimelineIconBorderColor] =
+		useState('rgb(255, 255, 255)')
+	const [timelineIconColor, setTimelineIconColor] =
+		useState('rgb(255, 255, 255)')
 	const [fontColor, setFontColor] = useState('#545454')
+	const [timelineColor, setTimelineColor] = useState('rgb(33, 150, 243')
 	const [isNewObjectModalOpen, setIsNewObjectModalOpen] = useState(false)
 	const [isRemoveObjectModalOpen, setIsRemoveObjectModalOpen] = useState(false)
 	const [newObject, setNewObject] = useState({
@@ -52,7 +57,7 @@ function App() {
 	const { error, loading, sendRequest } = useHttp()
 
 	useEffect(() => {
-		sendRequest({ url: 'http://localhost:5000/maps/2' }).then(res => {
+		sendRequest({ url: 'http://localhost:5001/maps/2' }).then(res => {
 			setSpatialData(res.data)
 			setMapIcon(res.data.data.info.icons.icon)
 			setIconSize(res.data.data.info.icons.size)
@@ -181,7 +186,7 @@ function App() {
 		try {
 			sendRequest({
 				method: 'PATCH',
-				url: `http://localhost:5000/maps/2`,
+				url: `http://localhost:5001/maps/2`,
 				body: spatialData,
 			}).then(res => res)
 		} catch {
@@ -236,14 +241,16 @@ function App() {
 			<StyledInfoPanel
 				order={panelsOrder.infoPanel}
 				color={backgroundColor}
-				type={spatialData?.type}
-			>
+				type={spatialData?.type}>
 				{spatialData && (
 					<InfoPanel
 						spatialData={spatialData}
 						imageOpenHandler={imageOpenHandler}
 						fontColor={fontColor}
 						timelineColor={timelineColor}
+						timeAxisColor={timeAxisColor}
+						timelineIconBorderColor={timelineIconBorderColor}
+						timelineIconColor={timelineIconColor}
 					/>
 				)}
 			</StyledInfoPanel>
@@ -264,8 +271,7 @@ function App() {
 
 			<StyledEditorPanel
 				order={panelsOrder.editorPanel}
-				color={backgroundColor}
-			>
+				color={backgroundColor}>
 				{spatialData && (
 					<EditorPanel
 						data={spatialData.data}
@@ -286,29 +292,33 @@ function App() {
 						setTimelineColor={setTimelineColor}
 						spatialData={spatialData}
 						timelineColor={timelineColor}
+						timeAxisColor={timeAxisColor}
+						setTimeAxisColor={setTimeAxisColor}
+						setTimelineIconBorderColor={setTimelineIconBorderColor}
+						timelineIconBorderColor={timelineIconBorderColor}
+						timelineIconColor={timelineIconColor}
+						setTimelineIconColor={setTimelineIconColor}
 					/>
 				)}
 			</StyledEditorPanel>
 
 			<ImageModal isOpen={isImageModalOpen} setIsOpen={setIsImageModalOpen} />
-			<CostumModal
+			<CustumModal
 				onModalClose={onModalClose}
-				modalIsOpen={isNewObjectModalOpen}
-			>
+				modalIsOpen={isNewObjectModalOpen}>
 				<NewPlace
 					onCreateNewObject={onCreateNewObject}
 					editedPlace={editedPlace.data}
 					onUpdateObject={onUpdateObject}
 				/>
-			</CostumModal>
-			<CostumModal
+			</CustumModal>
+			<CustumModal
 				onModalClose={onModalClose}
-				modalIsOpen={isRemoveObjectModalOpen}
-			>
+				modalIsOpen={isRemoveObjectModalOpen}>
 				<RemoveObjectConfirmation
 					onRemoveObjectHandler={onRemoveObjectHandler}
 				/>
-			</CostumModal>
+			</CustumModal>
 		</StyledWrapper>
 	)
 }

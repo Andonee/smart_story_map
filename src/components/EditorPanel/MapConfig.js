@@ -6,6 +6,9 @@ import SyncAltIcon from '@material-ui/icons/SyncAlt'
 import Popover from '@material-ui/core/Popover'
 import TextField from '@material-ui/core/TextField'
 import TimelineIcon from '@material-ui/icons/Timeline'
+import FormatColorFillIcon from '@material-ui/icons/FormatColorFill'
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
 
 import InneIcon from '../../assets/mapIcons/inne_01.svg'
 import KrainaIcon from '../../assets/mapIcons/kraina_01.svg'
@@ -18,7 +21,7 @@ import WyspaIcon from '../../assets/mapIcons/wyspa_01.svg'
 import { ChromePicker } from 'react-color'
 import PaletteIcon from '@material-ui/icons/Palette'
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText'
-import CostumButton from '../UI/CostumButton'
+import CustumButton from '../UI/CustumButton'
 
 const MapConfig = ({
 	onIconChange,
@@ -31,8 +34,14 @@ const MapConfig = ({
 	fontColor,
 	setFontColor,
 	setTimelineColor,
-	spatialData,
 	timelineColor,
+	timeAxisColor,
+	setTimeAxisColor,
+	timelineIconBorderColor,
+	setTimelineIconBorderColor,
+	timelineIconColor,
+	setTimelineIconColor,
+	spatialData,
 }) => {
 	const [IconAnchorEl, setIconAnchorEl] = React.useState(null)
 	const [BasemapAnchorEl, setBasemapAnchorEl] = React.useState(null)
@@ -40,6 +49,12 @@ const MapConfig = ({
 		React.useState(null)
 	const [TimelineColorAnchorEl, setTimelineColorAnchorEl] = React.useState(null)
 	const [FontColorAnchorEl, setFontColorAnchorEl] = React.useState(null)
+	const [AxisColorAnchorEl, setAxisColorAnchorEl] = React.useState(null)
+	const [IconColorAnchorEl, setIconColorAnchorEl] = React.useState(null)
+	const [IconColorBorderAnchorEl, setIconColorBorderAnchorEl] =
+		React.useState(null)
+
+	console.log('spatialData', spatialData)
 
 	const handleIconClick = e => {
 		setIconAnchorEl(e.currentTarget)
@@ -73,7 +88,7 @@ const MapConfig = ({
 		if (!BackgroundColorAnchorEl) {
 			setTimelineColorAnchorEl(e.currentTarget)
 		} else {
-			if (e.target.className === 'gb(33, 150, 243)') return
+			if (e.target.className === 'rgb(33, 150, 243)') return
 			setTimelineColorAnchorEl(null)
 		}
 	}
@@ -84,6 +99,33 @@ const MapConfig = ({
 		} else {
 			if (e.target.className === 'saturation-white') return
 			setFontColorAnchorEl(null)
+		}
+	}
+
+	const handleAxisColorClick = e => {
+		if (!AxisColorAnchorEl) {
+			setAxisColorAnchorEl(e.currentTarget)
+		} else {
+			if (e.target.className === 'rgb(33, 150, 243)') return
+			setAxisColorAnchorEl(null)
+		}
+	}
+
+	const handleIconColorBorderClick = e => {
+		if (!IconColorBorderAnchorEl) {
+			setIconColorBorderAnchorEl(e.currentTarget)
+		} else {
+			if (e.target.className === 'rgb(255, 255, 255)') return
+			setIconColorBorderAnchorEl(null)
+		}
+	}
+
+	const handleIconColorClick = e => {
+		if (!IconColorAnchorEl) {
+			setIconColorAnchorEl(e.currentTarget)
+		} else {
+			if (e.target.className === 'rgb(255, 255, 255)') return
+			setIconColorAnchorEl(null)
 		}
 	}
 
@@ -105,6 +147,18 @@ const MapConfig = ({
 
 	const handlFontColorClose = () => {
 		setFontColorAnchorEl(null)
+	}
+
+	const handlAxisColorClose = () => {
+		setAxisColorAnchorEl(null)
+	}
+
+	const handlIconColorBorderClose = () => {
+		setIconColorBorderAnchorEl(null)
+	}
+
+	const handlIconColorClose = () => {
+		setIconColorAnchorEl(null)
 	}
 
 	const onIconSelect = e => {
@@ -142,6 +196,24 @@ const MapConfig = ({
 		setTimelineColor(rgbColor)
 	}
 
+	const onAxisColorChange = color => {
+		const { r, g, b, a } = color.rgb
+		const rgbColor = `rgba(${r}, ${g}, ${b}, ${a})`
+		setTimeAxisColor(rgbColor)
+	}
+
+	const onIconColorBorderChange = color => {
+		const { r, g, b, a } = color.rgb
+		const rgbColor = `rgba(${r}, ${g}, ${b}, ${a})`
+		setTimelineIconBorderColor(rgbColor)
+	}
+
+	const onIconColorChange = color => {
+		const { r, g, b, a } = color.rgb
+		const rgbColor = `rgba(${r}, ${g}, ${b}, ${a})`
+		setTimelineIconColor(rgbColor)
+	}
+
 	const openIconPicker = Boolean(IconAnchorEl)
 	const iconId = openIconPicker ? 'icon-picker' : undefined
 
@@ -150,11 +222,23 @@ const MapConfig = ({
 
 	const openBackgroundColorPicker = Boolean(BackgroundColorAnchorEl)
 	const openTimelineColorPicker = Boolean(TimelineColorAnchorEl)
+	const openAxisColorPicker = Boolean(AxisColorAnchorEl)
+	const openIconColorPicker = Boolean(IconColorAnchorEl)
+	const openIconColorBorderPicker = Boolean(IconColorBorderAnchorEl)
+
 	const backgroundColorId = openBackgroundColorPicker
 		? 'backgroundColor-picker'
 		: undefined
 	const timelineColorId = openTimelineColorPicker
 		? 'timelineColor-picker'
+		: undefined
+
+	const axisColorId = openAxisColorPicker ? 'axisColor-picker' : undefined
+
+	const iconColorId = openIconColorPicker ? 'iconColor-picker' : undefined
+
+	const iconColorBorderId = openIconColorBorderPicker
+		? 'iconColorBorder-picker'
 		: undefined
 
 	const openFontColorPicker = Boolean(FontColorAnchorEl)
@@ -163,11 +247,12 @@ const MapConfig = ({
 	return (
 		<>
 			<StyledConfig>
-				<CostumButton
+				<CustumButton
 					text={<PlaceIcon />}
 					size='small'
 					variant='contained'
 					onClick={handleIconClick}
+					tooltip='Change Icon'
 				/>
 
 				<Popover
@@ -182,8 +267,7 @@ const MapConfig = ({
 					transformOrigin={{
 						vertical: 'top',
 						horizontal: 'center',
-					}}
-				>
+					}}>
 					<StyledIconWrapper>
 						<img
 							src={InneIcon}
@@ -242,11 +326,12 @@ const MapConfig = ({
 					</StyledIconWrapper>
 				</Popover>
 
-				<CostumButton
+				<CustumButton
 					text={<MapIcon />}
 					size='small'
 					variant='contained'
 					onClick={handleBasemapClick}
+					tooltip='Change basemap'
 				/>
 
 				<Popover
@@ -261,8 +346,7 @@ const MapConfig = ({
 					transformOrigin={{
 						vertical: 'top',
 						horizontal: 'center',
-					}}
-				>
+					}}>
 					<StyledBasemapWrapper>
 						<StyledBasemap name='dark' onClick={onBasemapSelect}>
 							Dark
@@ -272,45 +356,50 @@ const MapConfig = ({
 						</StyledBasemap>
 					</StyledBasemapWrapper>
 				</Popover>
-				<CostumButton
+				<CustumButton
 					text={<SyncAltIcon />}
 					size='small'
 					variant='contained'
 					onClick={onOrderChange}
+					tooltip='Switch'
 				/>
 			</StyledConfig>
 			<StyledMap>
-				<CostumButton
-					text={<TimelineIcon />}
-					size='small'
-					variant='contained'
-					onClick={handlTimelineColorClick}
-				/>
-
-				<Popover
-					id={timelineColorId}
-					open={openTimelineColorPicker}
-					anchorEl={TimelineColorAnchorEl}
-					onClose={handlTimelineColorClose}
-					anchorOrigin={{
-						vertical: 'bottom',
-						horizontal: 'center',
-					}}
-					transformOrigin={{
-						vertical: 'top',
-						horizontal: 'center',
-					}}
-				>
-					<ChromePicker
-						onChange={onTimelineColorChange}
-						color={timelineColor}
-					/>
-				</Popover>
-				<CostumButton
-					text={<PaletteIcon />}
+				{spatialData.type === 'timeline' && (
+					<>
+						<CustumButton
+							text={<PaletteIcon />}
+							size='small'
+							variant='contained'
+							onClick={handlTimelineColorClick}
+							tooltip='Change timeline color'
+						/>
+						<Popover
+							id={timelineColorId}
+							open={openTimelineColorPicker}
+							anchorEl={TimelineColorAnchorEl}
+							onClose={handlTimelineColorClose}
+							anchorOrigin={{
+								vertical: 'bottom',
+								horizontal: 'center',
+							}}
+							transformOrigin={{
+								vertical: 'top',
+								horizontal: 'center',
+							}}>
+							<ChromePicker
+								onChange={onTimelineColorChange}
+								color={timelineColor}
+							/>
+						</Popover>
+					</>
+				)}
+				<CustumButton
+					text={<FormatColorFillIcon />}
 					size='small'
 					variant='contained'
 					onClick={handleBackgroundColorClick}
+					tooltip='Change sidebar color'
 				/>
 
 				<Popover
@@ -325,18 +414,18 @@ const MapConfig = ({
 					transformOrigin={{
 						vertical: 'top',
 						horizontal: 'center',
-					}}
-				>
+					}}>
 					<ChromePicker
 						onChange={onBackgroundColorChange}
 						color={backgroundColor}
 					/>
 				</Popover>
-				<CostumButton
+				<CustumButton
 					text={<FormatColorTextIcon />}
 					size='small'
 					variant='contained'
 					onClick={handleFontColorClick}
+					tooltip='Change text color'
 				/>
 
 				<Popover
@@ -351,11 +440,91 @@ const MapConfig = ({
 					transformOrigin={{
 						vertical: 'top',
 						horizontal: 'center',
-					}}
-				>
+					}}>
 					<ChromePicker onChange={onFontColorChange} color={fontColor} />
 				</Popover>
 			</StyledMap>
+			{spatialData.type === 'timeline' && (
+				<StyledMap>
+					<CustumButton
+						text={<TimelineIcon />}
+						size='small'
+						variant='contained'
+						onClick={handleAxisColorClick}
+						tooltip='Change timeline color'
+					/>
+
+					<Popover
+						id={axisColorId}
+						open={openAxisColorPicker}
+						anchorEl={AxisColorAnchorEl}
+						onClose={handlAxisColorClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'center',
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'center',
+						}}>
+						<ChromePicker onChange={onAxisColorChange} color={timeAxisColor} />
+					</Popover>
+
+					<CustumButton
+						text={<FiberManualRecordIcon />}
+						size='small'
+						variant='contained'
+						onClick={handleIconColorClick}
+						tooltip='Change timeline icon color'
+					/>
+
+					<Popover
+						id={iconColorId}
+						open={openIconColorPicker}
+						anchorEl={IconColorAnchorEl}
+						onClose={handlIconColorClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'center',
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'center',
+						}}>
+						<ChromePicker
+							onChange={onIconColorChange}
+							color={timelineIconColor}
+						/>
+					</Popover>
+
+					<CustumButton
+						text={<RadioButtonUncheckedIcon />}
+						size='small'
+						variant='contained'
+						onClick={handleIconColorBorderClick}
+						tooltip='Change timeline icon border color'
+					/>
+
+					<Popover
+						id={iconColorBorderId}
+						open={openIconColorBorderPicker}
+						anchorEl={IconColorBorderAnchorEl}
+						onClose={handlIconColorBorderClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'center',
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'center',
+						}}>
+						<ChromePicker
+							onChange={onIconColorBorderChange}
+							color={timelineIconBorderColor}
+						/>
+					</Popover>
+				</StyledMap>
+			)}
 		</>
 	)
 }
@@ -426,11 +595,11 @@ const StyledInput = styled(TextField)`
 	}
 `
 const StyledMap = styled.div`
-	width: 45%;
+	width: 70%;
 	display: flex;
 	justify-content: space-between;
 
-	margin-bottom: 20px;
+	margin-top: 20px;
 `
 
 const StyledConfig = styled.div`

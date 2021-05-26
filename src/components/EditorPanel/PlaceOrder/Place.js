@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Draggable } from 'react-beautiful-dnd'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
-import CostumTooltip from '../../UI/CostumTooltip'
+import CustumTooltip from '../../UI/CustumTooltip'
 
 const Place = ({ placeName, index, onPlaceEdit }) => {
 	const onPlaceEditHandler = () => {
@@ -24,16 +24,16 @@ const Place = ({ placeName, index, onPlaceEdit }) => {
 					isDragging={snapshot.isDragging}>
 					{placeName.properties.title}
 					<StyledIconsWrapper>
-						<CostumTooltip title='Edit'>
+						<CustumTooltip title='Edit'>
 							<StyledEditBtn onClick={onPlaceEditHandler}>
 								<EditIcon style={{ width: '15px' }} />
 							</StyledEditBtn>
-						</CostumTooltip>
-						<CostumTooltip title='Remove'>
+						</CustumTooltip>
+						<CustumTooltip title='Remove'>
 							<StyledEditBtn onClick={onPlaceRemoveHandler}>
 								<DeleteIcon style={{ width: '15px' }} />
 							</StyledEditBtn>
-						</CostumTooltip>
+						</CustumTooltip>
 					</StyledIconsWrapper>
 				</StyledPlace>
 			)}
