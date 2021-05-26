@@ -12,6 +12,8 @@ import CustumModal from './components/UI/CustumModal'
 import NewPlace from './components/EditorPanel/NewPlace/NewPlace'
 import RemoveObjectConfirmation from './components/EditorPanel/RemoveObjectConfirmation/RemoveObjectConfirmation'
 import useHttp from './hooks/useHttp'
+import Spinner from './components/UI/Spinner'
+import FetchDataError from './components/UI/FetchDataError'
 
 function App() {
 	const [spatialData, setSpatialData] = useState()
@@ -58,10 +60,15 @@ function App() {
 
 	useEffect(() => {
 		sendRequest({ url: 'http://localhost:5001/maps/2' }).then(res => {
-			setSpatialData(res.data)
-			setMapIcon(res.data.data.info.icons.icon)
-			setIconSize(res.data.data.info.icons.size)
-			setBasemap(res.data.data.info.basemap)
+			console.log('RES', res)
+			if (res?.status === 200) {
+				setSpatialData(res.data)
+				setMapIcon(res.data.data.info.icons.icon)
+				setIconSize(res.data.data.info.icons.size)
+				setBasemap(res.data.data.info.basemap)
+			} else {
+				setSpatialData('Error')
+			}
 		})
 	}, [sendRequest])
 
@@ -238,87 +245,94 @@ function App() {
 
 	return (
 		<StyledWrapper>
-			<StyledInfoPanel
-				order={panelsOrder.infoPanel}
-				color={backgroundColor}
-				type={spatialData?.type}>
-				{spatialData && (
-					<InfoPanel
-						spatialData={spatialData}
-						imageOpenHandler={imageOpenHandler}
-						fontColor={fontColor}
-						timelineColor={timelineColor}
-						timeAxisColor={timeAxisColor}
-						timelineIconBorderColor={timelineIconBorderColor}
-						timelineIconColor={timelineIconColor}
+			{!spatialData && <Spinner />}
+			{error && <FetchDataError />}
+			{spatialData?.data && (
+				<>
+					{' '}
+					<StyledInfoPanel
+						order={panelsOrder.infoPanel}
+						color={backgroundColor}
+						type={spatialData?.type}>
+						{spatialData && (
+							<InfoPanel
+								spatialData={spatialData}
+								imageOpenHandler={imageOpenHandler}
+								fontColor={fontColor}
+								timelineColor={timelineColor}
+								timeAxisColor={timeAxisColor}
+								timelineIconBorderColor={timelineIconBorderColor}
+								timelineIconColor={timelineIconColor}
+							/>
+						)}
+					</StyledInfoPanel>
+					<StyledMap>
+						{spatialData && Basemap && (
+							<Map
+								spatialData={spatialData.data.map}
+								mapIcon={mapIcon}
+								setMapInstance={setMapInstance}
+								IconSize={IconSize}
+								Basemap={Basemap}
+								onAddNewObject={onAddNewObject}
+								newObject={newObject}
+							/>
+						)}
+					</StyledMap>
+					<StyledEditorPanel
+						order={panelsOrder.editorPanel}
+						color={backgroundColor}>
+						{spatialData && (
+							<EditorPanel
+								data={spatialData.data}
+								onIconChange={onIconChange}
+								onIconSizeChange={onIconSizeChange}
+								IconSize={IconSize}
+								onBasemapChange={onBasemapChange}
+								onPanelsOrderChange={onPanelsOrderChange}
+								backgroundColor={backgroundColor}
+								setBackgroundColor={setBackgroundColor}
+								fontColor={fontColor}
+								setFontColor={setFontColor}
+								onPlacesOrderChange={onPlacesOrderChange}
+								setNewObject={setNewObject}
+								newObject={newObject}
+								onPostHandler={onPostHandler}
+								onPlaceEdit={onPlaceEdit}
+								setTimelineColor={setTimelineColor}
+								spatialData={spatialData}
+								timelineColor={timelineColor}
+								timeAxisColor={timeAxisColor}
+								setTimeAxisColor={setTimeAxisColor}
+								setTimelineIconBorderColor={setTimelineIconBorderColor}
+								timelineIconBorderColor={timelineIconBorderColor}
+								timelineIconColor={timelineIconColor}
+								setTimelineIconColor={setTimelineIconColor}
+							/>
+						)}
+					</StyledEditorPanel>
+					<ImageModal
+						isOpen={isImageModalOpen}
+						setIsOpen={setIsImageModalOpen}
 					/>
-				)}
-			</StyledInfoPanel>
-
-			<StyledMap>
-				{spatialData && Basemap && (
-					<Map
-						spatialData={spatialData.data.map}
-						mapIcon={mapIcon}
-						setMapInstance={setMapInstance}
-						IconSize={IconSize}
-						Basemap={Basemap}
-						onAddNewObject={onAddNewObject}
-						newObject={newObject}
-					/>
-				)}
-			</StyledMap>
-
-			<StyledEditorPanel
-				order={panelsOrder.editorPanel}
-				color={backgroundColor}>
-				{spatialData && (
-					<EditorPanel
-						data={spatialData.data}
-						onIconChange={onIconChange}
-						onIconSizeChange={onIconSizeChange}
-						IconSize={IconSize}
-						onBasemapChange={onBasemapChange}
-						onPanelsOrderChange={onPanelsOrderChange}
-						backgroundColor={backgroundColor}
-						setBackgroundColor={setBackgroundColor}
-						fontColor={fontColor}
-						setFontColor={setFontColor}
-						onPlacesOrderChange={onPlacesOrderChange}
-						setNewObject={setNewObject}
-						newObject={newObject}
-						onPostHandler={onPostHandler}
-						onPlaceEdit={onPlaceEdit}
-						setTimelineColor={setTimelineColor}
-						spatialData={spatialData}
-						timelineColor={timelineColor}
-						timeAxisColor={timeAxisColor}
-						setTimeAxisColor={setTimeAxisColor}
-						setTimelineIconBorderColor={setTimelineIconBorderColor}
-						timelineIconBorderColor={timelineIconBorderColor}
-						timelineIconColor={timelineIconColor}
-						setTimelineIconColor={setTimelineIconColor}
-					/>
-				)}
-			</StyledEditorPanel>
-
-			<ImageModal isOpen={isImageModalOpen} setIsOpen={setIsImageModalOpen} />
-			<CustumModal
-				onModalClose={onModalClose}
-				modalIsOpen={isNewObjectModalOpen}>
-				<NewPlace
-					onCreateNewObject={onCreateNewObject}
-					editedPlace={editedPlace.data}
-					onUpdateObject={onUpdateObject}
-				/>
-			</CustumModal>
-			<CustumModal
-				onModalClose={onModalClose}
-				modalIsOpen={isRemoveObjectModalOpen}>
-				<RemoveObjectConfirmation
-					onRemoveObjectHandler={onRemoveObjectHandler}
-				/>
-			</CustumModal>
+					<CustumModal
+						onModalClose={onModalClose}
+						modalIsOpen={isNewObjectModalOpen}>
+						<NewPlace
+							onCreateNewObject={onCreateNewObject}
+							editedPlace={editedPlace.data}
+							onUpdateObject={onUpdateObject}
+						/>
+					</CustumModal>
+					<CustumModal
+						onModalClose={onModalClose}
+						modalIsOpen={isRemoveObjectModalOpen}>
+						<RemoveObjectConfirmation
+							onRemoveObjectHandler={onRemoveObjectHandler}
+						/>
+					</CustumModal>
+				</>
+			)}
 		</StyledWrapper>
 	)
 }
