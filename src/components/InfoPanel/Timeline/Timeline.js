@@ -11,6 +11,7 @@ import PlaceDescription from '../PlacesList/PlaceElement/PlaceDescription'
 import Video from '../PlacesList/PlaceElement/Video'
 import Link from '../PlacesList/PlaceElement/Link'
 import Audio from '../PlacesList/PlaceElement/Audio'
+import Date from '../PlacesList/PlaceElement/Date'
 import TimelineIcon from '@material-ui/icons/Timeline'
 import styled from 'styled-components'
 
@@ -22,6 +23,7 @@ const Timeline = ({ spatialData, imageOpenHandler, panelStyles }) => {
 		timelineIconBorderColor,
 		timelineIconColor,
 	} = panelStyles
+
 	console.log('spatialData', spatialData)
 	return (
 		<StyledTimeline layout='1-column-left' color={timeAxisColor}>
@@ -37,11 +39,10 @@ const Timeline = ({ spatialData, imageOpenHandler, panelStyles }) => {
 					link,
 				} = place.properties
 				return (
-					<VerticalTimelineElement
+					<StyledTimelineElement
 						className='vertical-timeline-element--work'
 						contentStyle={{ background: `${timelineColor}`, color: '#fff' }}
 						contentArrowStyle={{ borderRight: `7px solid  ${timelineColor}` }}
-						date='2011 - 2021'
 						iconStyle={{
 							background: `${timelineColor}`,
 							color: `${timelineIconColor}`,
@@ -66,7 +67,8 @@ const Timeline = ({ spatialData, imageOpenHandler, panelStyles }) => {
 						{link && <Link link={link} fontColor={`${fontColor}`} />}
 						{audio && <Divider variant='middle' />}
 						{audio && <Audio audio={audio} />}
-					</VerticalTimelineElement>
+						<Date date='14-02-2021' fontColor={`${fontColor}`} />
+					</StyledTimelineElement>
 				)
 			})}
 		</StyledTimeline>
@@ -76,6 +78,9 @@ const Timeline = ({ spatialData, imageOpenHandler, panelStyles }) => {
 export default Timeline
 
 const StyledTimeline = styled(VerticalTimeline)`
+	width: 80%;
+	margin-left: auto;
+	margin-right: 10px;
 	&:before {
 		content: '';
 		position: absolute;
@@ -85,4 +90,8 @@ const StyledTimeline = styled(VerticalTimeline)`
 		width: 4px;
 		background: ${props => props.color};
 	}
+`
+
+const StyledTimelineElement = styled(VerticalTimelineElement)`
+	position: relative;
 `

@@ -285,7 +285,10 @@ export default App
 
 const StyledInfoPanel = styled.div`
 	&& {
-		width: ${props => (props.type === 'timeline' ? '500px' : '350px')};
+		width: ${props => (props.type === 'timeline' ? '600px' : '400px')};
+		${
+			'' /* max-width: ${props => (props.type === 'timeline' ? '50%' : '50%')}; */
+		}
 		order: ${props => props.order || -1};
 		background: ${props => props.color || '#fff'};
 	}
