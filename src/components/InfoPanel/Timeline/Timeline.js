@@ -14,15 +14,15 @@ import Audio from '../PlacesList/PlaceElement/Audio'
 import TimelineIcon from '@material-ui/icons/Timeline'
 import styled from 'styled-components'
 
-const Timeline = ({
-	spatialData,
-	imageOpenHandler,
-	timelineColor,
-	fontColor,
-	timeAxisColor,
-	timelineIconBorderColor,
-	timelineIconColor,
-}) => {
+const Timeline = ({ spatialData, imageOpenHandler, panelStyles }) => {
+	const {
+		fontColor,
+		timelineColor,
+		timeAxisColor,
+		timelineIconBorderColor,
+		timelineIconColor,
+	} = panelStyles
+	console.log('spatialData', spatialData)
 	return (
 		<StyledTimeline layout='1-column-left' color={timeAxisColor}>
 			{spatialData.features.map(place => {
@@ -41,7 +41,7 @@ const Timeline = ({
 						className='vertical-timeline-element--work'
 						contentStyle={{ background: `${timelineColor}`, color: '#fff' }}
 						contentArrowStyle={{ borderRight: `7px solid  ${timelineColor}` }}
-						date='2011 - present'
+						date='2011 - 2021'
 						iconStyle={{
 							background: `${timelineColor}`,
 							color: `${timelineIconColor}`,

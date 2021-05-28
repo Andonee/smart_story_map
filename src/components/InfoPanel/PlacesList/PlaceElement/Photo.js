@@ -1,5 +1,5 @@
 import React from 'react'
-import VisibilityIcon from '@material-ui/icons/Visibility'
+// import VisibilityIcon from '@material-ui/icons/Visibility'
 import styled from 'styled-components'
 
 const Photo = ({ photo, open }) => {
@@ -25,9 +25,9 @@ const StyledImg = styled.img`
 		background: transparentize;
 	}
 `
-const StyledIcon = styled(VisibilityIcon)`
-	position: absolute;
-	color: #fff;
-	top: 5px;
-	left: 5px;
-`
+// const StyledIcon = styled(VisibilityIcon)`
+// 	position: absolute;
+// 	color: #fff;
+// 	top: 5px;
+// 	left: 5px;
+// `

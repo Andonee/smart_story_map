@@ -6,43 +6,34 @@ import styled from 'styled-components'
 import PlaceOrder from './PlaceOrder/PlaceOrder'
 import produce from 'immer'
 import CustumButton from '../UI/CustumButton'
+import { timelineReducerActions } from '../../store/timelineReducer'
+import dispatchMatcher from '../../utils/dispatchMatcher'
 
 const EditorPanel = ({
-	data,
-	onIconChange,
-	onIconSizeChange,
-	IconSize,
-	onBasemapChange,
-	onPanelsOrderChange,
-	backgroundColor,
-	setBackgroundColor,
-	fontColor,
-	setFontColor,
-	onPlacesOrderChange,
 	setNewObject,
 	newObject,
 	onPostHandler,
 	onPlaceEdit,
-	setTimelineColor,
-	spatialData,
-	timelineColor,
-	timeAxisColor,
-	setTimeAxisColor,
-	timelineIconBorderColor,
-	setTimelineIconBorderColor,
-	timelineIconColor,
-	setTimelineIconColor,
+	dispatchAppData,
+	appData,
+	mapInstance,
 }) => {
 	const [title, setTitle] = useState({
-		title: data.info.title,
+		title: appData.spatialData.data.info.title,
 		isEdited: false,
 	})
 	const [description, setDescription] = useState({
-		description: data.info.description,
+		description: appData.spatialData.data.info.description,
 		isEdited: false,
 	})
 
 	const onTitleChange = e => {
+		dispatchMatcher(
+			dispatchAppData,
+			timelineReducerActions.SET_TITLE,
+			e.target.value
+		)
+
 		setTitle(prevState => ({
 			...prevState,
 			title: e.target.value,
@@ -50,6 +41,12 @@ const EditorPanel = ({
 	}
 
 	const onDescriptionChange = e => {
+		dispatchMatcher(
+			dispatchAppData,
+			timelineReducerActions.SET_DESCRIPTION,
+			e.target.value
+		)
+
 		setDescription(prevState => ({
 			...prevState,
 			description: e.target.value,
@@ -108,30 +105,15 @@ const EditorPanel = ({
 			</StyledTitleWrapper>
 			<StyledDivider />
 			<MapConfig
-				onIconChange={onIconChange}
-				onIconSizeChange={onIconSizeChange}
-				IconSize={IconSize}
-				onBasemapChange={onBasemapChange}
-				onPanelsOrderChange={onPanelsOrderChange}
-				backgroundColor={backgroundColor}
-				setBackgroundColor={setBackgroundColor}
-				fontColor={fontColor}
-				setFontColor={setFontColor}
-				setTimelineColor={setTimelineColor}
-				spatialData={spatialData}
-				timelineColor={timelineColor}
-				timeAxisColor={timeAxisColor}
-				setTimeAxisColor={setTimeAxisColor}
-				setTimelineIconBorderColor={setTimelineIconBorderColor}
-				timelineIconBorderColor={timelineIconBorderColor}
-				timelineIconColor={timelineIconColor}
-				setTimelineIconColor={setTimelineIconColor}
+				dispatchAppData={dispatchAppData}
+				appData={appData}
+				mapInstance={mapInstance}
 			/>
 			<StyledDivider />
 			<PlaceOrder
-				spatialData={data.map}
-				onPlacesOrderChange={onPlacesOrderChange}
+				spatialData={appData.spatialData.data.map}
 				onPlaceEdit={onPlaceEdit}
+				dispatchAppData={dispatchAppData}
 			/>
 			<StyledDivider />
 

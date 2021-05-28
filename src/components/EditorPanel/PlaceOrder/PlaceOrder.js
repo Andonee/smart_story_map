@@ -2,17 +2,23 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import Place from './Place'
+import { timelineReducerActions } from '../../../store/timelineReducer'
+import dispatchMatcher from '../../../utils/dispatchMatcher'
 
-const PlaceOrder = ({ spatialData, onPlacesOrderChange, onPlaceEdit }) => {
+const PlaceOrder = ({ spatialData, dispatchAppData, onPlaceEdit }) => {
 	const [places, setPlaces] = useState(spatialData.features)
 	const [isReordered, setIsReordered] = useState(false)
 
 	useEffect(() => {
 		if (isReordered) {
-			onPlacesOrderChange(places)
+			dispatchMatcher(
+				dispatchAppData,
+				timelineReducerActions.SET_PLACES_ORDER,
+				places
+			)
 			setIsReordered(false)
 		}
-	}, [isReordered, onPlacesOrderChange, places])
+	}, [isReordered, dispatchAppData, places])
 
 	useEffect(() => {
 		setPlaces(spatialData.features)
@@ -56,8 +62,7 @@ const PlaceOrder = ({ spatialData, onPlacesOrderChange, onPlaceEdit }) => {
 						<StyledList
 							ref={provided.innerRef}
 							{...provided.droppableProps}
-							isDraggingOver={snapshot.isDraggingOver}
-						>
+							isDraggingOver={snapshot.isDraggingOver}>
 							{places.map((place, idx) => {
 								return (
 									<Place

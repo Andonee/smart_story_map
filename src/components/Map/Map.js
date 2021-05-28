@@ -2,27 +2,18 @@ import React, { useEffect, useState, useCallback } from 'react'
 import useMap from '../../hooks/useMap'
 import { filter as rxFilter } from 'rxjs/operators'
 import styled from 'styled-components'
-import { useMapClick, useMapHover } from '../../hooks/useMapEvents'
+import { useMapClick } from '../../hooks/useMapEvents'
 
-const Map = ({
-	spatialData,
-	mapIcon,
-	setMapInstance,
-	IconSize,
-	Basemap,
-	onAddNewObject,
-	newObject,
-}) => {
+const Map = ({ setMapInstance, onAddNewObject, newObject, appData }) => {
 	const [isLoaded, setIsLoaded] = useState(false)
-	const [places, setPlaces] = useState(
-		window.opalSdk.createDataset('places', { data: spatialData })
+	const [places] = useState(
+		window.opalSdk.createDataset('places', { data: appData.map })
 	)
 	const [icon, setIcon] = useState()
 	const [sizeIcon, setSizeIcon] = useState()
 	const [iconIsChanged, setIconIsChanged] = useState(false)
 
-	console.log(mapIcon, IconSize)
-	let map = useMap('map', Basemap)
+	let map = useMap('map', appData.info.basemap)
 
 	useEffect(() => {
 		if (!map) return
@@ -36,31 +27,24 @@ const Map = ({
 			setIsLoaded(false)
 			subsription.unsubscribe()
 		}
-	}, [map, mapIcon, icon, Basemap])
+	}, [map, appData.info.icons.icon, icon, appData.info.basemap, setMapInstance])
 
 	useEffect(() => {
 		if (map) {
-			setIcon(mapIcon)
+			setIcon(appData.info.icons.icon)
 			// map.layer('places').remove()
 			// addData()
 			setIconIsChanged(true)
 		}
-	}, [mapIcon, map])
+	}, [appData.info.icons.icon, map])
 
 	useEffect(() => {
 		if (map) {
-			setSizeIcon(parseFloat(IconSize))
+			console.log('iconSize', appData.info.icons.size)
+			setSizeIcon(parseFloat(appData.info.icons.size) / 10)
 			setIconIsChanged(true)
 		}
-	}, [IconSize, map])
-
-	useEffect(() => {
-		if (iconIsChanged) {
-			addData()
-			setIconIsChanged(false)
-		}
-		setIconIsChanged(false)
-	}, [iconIsChanged])
+	}, [appData.info.icons.size, map])
 
 	const addData = useCallback(() => {
 		// console.log('asasdsdasd', sizeIcon)
@@ -77,6 +61,14 @@ const Map = ({
 			},
 		})
 	}, [map, places, icon, sizeIcon])
+
+	useEffect(() => {
+		if (iconIsChanged) {
+			addData()
+			setIconIsChanged(false)
+		}
+		setIconIsChanged(false)
+	}, [iconIsChanged, addData])
 
 	useEffect(() => {
 		if (!isLoaded) return
@@ -100,9 +92,9 @@ const Map = ({
 
 	useEffect(() => {
 		if (places) {
-			places.setData(spatialData)
+			places.setData(appData.map)
 		}
-	}, [spatialData, places, icon])
+	}, [appData, places, icon])
 
 	const onMapClickHandler = e => {
 		if (newObject.addNewObject) {

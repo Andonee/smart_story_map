@@ -23,26 +23,10 @@ import PaletteIcon from '@material-ui/icons/Palette'
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText'
 import CustumButton from '../UI/CustumButton'
 
-const MapConfig = ({
-	onIconChange,
-	onIconSizeChange,
-	IconSize,
-	onBasemapChange,
-	onPanelsOrderChange,
-	backgroundColor,
-	setBackgroundColor,
-	fontColor,
-	setFontColor,
-	setTimelineColor,
-	timelineColor,
-	timeAxisColor,
-	setTimeAxisColor,
-	timelineIconBorderColor,
-	setTimelineIconBorderColor,
-	timelineIconColor,
-	setTimelineIconColor,
-	spatialData,
-}) => {
+import { timelineReducerActions } from '../../store/timelineReducer'
+import dispatchMatcher from '../../utils/dispatchMatcher'
+
+const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 	const [IconAnchorEl, setIconAnchorEl] = React.useState(null)
 	const [BasemapAnchorEl, setBasemapAnchorEl] = React.useState(null)
 	const [BackgroundColorAnchorEl, setBackgroundColorAnchorEl] =
@@ -54,7 +38,19 @@ const MapConfig = ({
 	const [IconColorBorderAnchorEl, setIconColorBorderAnchorEl] =
 		React.useState(null)
 
-	console.log('spatialData', spatialData)
+	console.log('appData', appData)
+
+	const { icons: userIcons, size: iconSize } =
+		appData.spatialData.data.info.icons
+	const {
+		fontColor,
+		timelineColor,
+		timeAxisColor,
+		timelineIconBorderColor,
+		timelineIconColor,
+		backgroundColor,
+		panelsOrder,
+	} = appData.spatialData.data.style
 
 	const handleIconClick = e => {
 		setIconAnchorEl(e.currentTarget)
@@ -161,65 +157,41 @@ const MapConfig = ({
 		setIconColorAnchorEl(null)
 	}
 
-	const onIconSelect = e => {
-		onIconChange(e.target.name)
-		setIconAnchorEl(null)
-	}
+	const onChange = (value, type) => {
+		let propValue
 
-	const onSizeChange = e => {
-		onIconSizeChange(e.target.value)
-	}
+		if (value.rgb) {
+			const { r, g, b, a } = value.rgb
+			propValue = `rgba(${r}, ${g}, ${b}, ${a})`
+		} else if (value.name === 'icon') {
+			mapInstance.layer('places').remove()
+			propValue = value.id
+		} else if (value.name === 'icon-size') {
+			mapInstance.layer('places').remove()
+			propValue = value.value
+		} else if (value.name === 'panels') {
+			if (panelsOrder.infoPanel === -1 && panelsOrder.editorPanel === 1) {
+				propValue = {
+					infoPanel: 1,
+					editorPanel: -1,
+				}
+			} else {
+				propValue = {
+					infoPanel: -1,
+					editorPanel: 1,
+				}
+			}
+		} else if (value.attributes.name.nodeValue === 'basemap') {
+			propValue = value.id
+		}
 
-	const onBasemapSelect = e => {
-		onBasemapChange(e.target.attributes.name.nodeValue)
-	}
-
-	const onOrderChange = () => {
-		onPanelsOrderChange()
-	}
-
-	const onBackgroundColorChange = color => {
-		const { r, g, b, a } = color.rgb
-		const rgbColor = `rgba(${r}, ${g}, ${b}, ${a})`
-		setBackgroundColor(rgbColor)
-	}
-
-	const onFontColorChange = color => {
-		const { r, g, b, a } = color.rgb
-		const rgbColor = `rgba(${r}, ${g}, ${b}, ${a})`
-		setFontColor(rgbColor)
-	}
-
-	const onTimelineColorChange = color => {
-		const { r, g, b, a } = color.rgb
-		const rgbColor = `rgba(${r}, ${g}, ${b}, ${a})`
-		setTimelineColor(rgbColor)
-	}
-
-	const onAxisColorChange = color => {
-		const { r, g, b, a } = color.rgb
-		const rgbColor = `rgba(${r}, ${g}, ${b}, ${a})`
-		setTimeAxisColor(rgbColor)
-	}
-
-	const onIconColorBorderChange = color => {
-		const { r, g, b, a } = color.rgb
-		const rgbColor = `rgba(${r}, ${g}, ${b}, ${a})`
-		setTimelineIconBorderColor(rgbColor)
-	}
-
-	const onIconColorChange = color => {
-		const { r, g, b, a } = color.rgb
-		const rgbColor = `rgba(${r}, ${g}, ${b}, ${a})`
-		setTimelineIconColor(rgbColor)
+		dispatchMatcher(dispatchAppData, type, propValue)
 	}
 
 	const openIconPicker = Boolean(IconAnchorEl)
 	const iconId = openIconPicker ? 'icon-picker' : undefined
-
 	const openBasemapPicker = Boolean(BasemapAnchorEl)
 	const basemapId = openBasemapPicker ? 'basemap-picker' : undefined
-
 	const openBackgroundColorPicker = Boolean(BackgroundColorAnchorEl)
 	const openTimelineColorPicker = Boolean(TimelineColorAnchorEl)
 	const openAxisColorPicker = Boolean(AxisColorAnchorEl)
@@ -271,57 +243,64 @@ const MapConfig = ({
 					<StyledIconWrapper>
 						<img
 							src={InneIcon}
-							onClick={onIconSelect}
-							name='inne_01'
+							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
+							id='inne_01'
 							alt='inne_01'
+							name='icon'
 						/>
 
 						<img
 							src={KrainaIcon}
-							onClick={onIconSelect}
-							name='kraina_01'
+							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
+							id='kraina_01'
 							alt='kraina_01'
+							name='icon'
 						/>
 						<img
 							src={KrolestwoIcon}
-							onClick={onIconSelect}
-							name='krolestwo_01-01'
+							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
+							id='krolestwo_01-01'
 							alt='krolestwo_01-01'
+							name='icon'
 						/>
 						<img
 							src={MiastoIcon}
-							onClick={onIconSelect}
-							name='miasto_01'
+							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
+							id='miasto_01'
 							alt='miasto_01'
+							name='icon'
 						/>
 						<img
 							src={PanstwoIcon}
-							onClick={onIconSelect}
-							name='panstwo_01'
+							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
+							id='panstwo_01'
 							alt='panstwo_01'
+							name='icon'
 						/>
 						<img
 							src={ProwincjaIcon}
-							onClick={onIconSelect}
-							name='prowincja_01'
+							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
+							id='prowincja_01'
 							alt='prowincja_01'
+							name='icon'
 						/>
 						<img
 							src={WyspaIcon}
-							onClick={onIconSelect}
-							name='wyspa_01'
+							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
+							id='wyspa_01'
 							alt='wyspa_01'
+							name='icon'
 						/>
 						<StyledInput
 							id='icon-size'
 							name='icon-size'
 							label='Icon size'
 							variant='outlined'
-							defaultValue={IconSize}
-							onChange={onSizeChange}
-							// inputProps={{ maxLength: 2 }}
+							defaultValue={iconSize}
+							onChange={e =>
+								onChange(e.target, timelineReducerActions.SET_ICON_SIZE)
+							}
 							size='small'
-							// type='number'
 						/>
 					</StyledIconWrapper>
 				</Popover>
@@ -348,10 +327,20 @@ const MapConfig = ({
 						horizontal: 'center',
 					}}>
 					<StyledBasemapWrapper>
-						<StyledBasemap name='dark' onClick={onBasemapSelect}>
+						<StyledBasemap
+							id='dark'
+							name='basemap'
+							onClick={e =>
+								onChange(e.target, timelineReducerActions.SET_BASEMAP)
+							}>
 							Dark
 						</StyledBasemap>
-						<StyledBasemap name='bright' onClick={onBasemapSelect}>
+						<StyledBasemap
+							id='bright'
+							name='basemap'
+							onClick={e =>
+								onChange(e.target, timelineReducerActions.SET_BASEMAP)
+							}>
 							Bright
 						</StyledBasemap>
 					</StyledBasemapWrapper>
@@ -360,12 +349,17 @@ const MapConfig = ({
 					text={<SyncAltIcon />}
 					size='small'
 					variant='contained'
-					onClick={onOrderChange}
+					onClick={e =>
+						onChange(
+							{ name: 'panels' },
+							timelineReducerActions.SET_PANELS_ORDER
+						)
+					}
 					tooltip='Switch'
 				/>
 			</StyledConfig>
 			<StyledMap>
-				{spatialData.type === 'timeline' && (
+				{appData.spatialData.type === 'timeline' && (
 					<>
 						<CustumButton
 							text={<PaletteIcon />}
@@ -388,7 +382,9 @@ const MapConfig = ({
 								horizontal: 'center',
 							}}>
 							<ChromePicker
-								onChange={onTimelineColorChange}
+								onChange={color =>
+									onChange(color, timelineReducerActions.SET_TIMELINE_COLOR)
+								}
 								color={timelineColor}
 							/>
 						</Popover>
@@ -416,7 +412,9 @@ const MapConfig = ({
 						horizontal: 'center',
 					}}>
 					<ChromePicker
-						onChange={onBackgroundColorChange}
+						onChange={color =>
+							onChange(color, timelineReducerActions.SET_BACKGROUND_COLOR)
+						}
 						color={backgroundColor}
 					/>
 				</Popover>
@@ -441,10 +439,15 @@ const MapConfig = ({
 						vertical: 'top',
 						horizontal: 'center',
 					}}>
-					<ChromePicker onChange={onFontColorChange} color={fontColor} />
+					<ChromePicker
+						onChange={color =>
+							onChange(color, timelineReducerActions.SET_FONT_COLOR)
+						}
+						color={fontColor}
+					/>
 				</Popover>
 			</StyledMap>
-			{spatialData.type === 'timeline' && (
+			{appData.spatialData.type === 'timeline' && (
 				<StyledMap>
 					<CustumButton
 						text={<TimelineIcon />}
@@ -467,7 +470,12 @@ const MapConfig = ({
 							vertical: 'top',
 							horizontal: 'center',
 						}}>
-						<ChromePicker onChange={onAxisColorChange} color={timeAxisColor} />
+						<ChromePicker
+							onChange={color =>
+								onChange(color, timelineReducerActions.SET_TIMEAXIS)
+							}
+							color={timeAxisColor}
+						/>
 					</Popover>
 
 					<CustumButton
@@ -492,7 +500,9 @@ const MapConfig = ({
 							horizontal: 'center',
 						}}>
 						<ChromePicker
-							onChange={onIconColorChange}
+							onChange={color =>
+								onChange(color, timelineReducerActions.SET_ICON_COLOR)
+							}
 							color={timelineIconColor}
 						/>
 					</Popover>
@@ -519,7 +529,9 @@ const MapConfig = ({
 							horizontal: 'center',
 						}}>
 						<ChromePicker
-							onChange={onIconColorBorderChange}
+							onChange={color =>
+								onChange(color, timelineReducerActions.SET_ICON_BORDER)
+							}
 							color={timelineIconBorderColor}
 						/>
 					</Popover>

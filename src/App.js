@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { nanoid } from 'nanoid'
 import styled from 'styled-components'
 import produce from 'immer'
+import { useImmerReducer } from 'use-immer'
 
 import InfoPanel from './components/InfoPanel/InfoPanel'
 import EditorPanel from './components/EditorPanel/EditorPanel'
@@ -14,29 +15,18 @@ import RemoveObjectConfirmation from './components/EditorPanel/RemoveObjectConfi
 import useHttp from './hooks/useHttp'
 import Spinner from './components/UI/Spinner'
 import FetchDataError from './components/UI/FetchDataError'
+import timelineReducer, {
+	timelineInitialState,
+	timelineReducerActions,
+} from './store/timelineReducer'
+import dispatchMatcher from './utils/dispatchMatcher'
 
 function App() {
-	const [spatialData, setSpatialData] = useState()
 	const [mapInstance, setMapInstance] = useState()
 	const [isImageModalOpen, setIsImageModalOpen] = useState({
 		isOpen: false,
 		img: '',
 	})
-	const [mapIcon, setMapIcon] = useState()
-	const [IconSize, setIconSize] = useState()
-	const [Basemap, setBasemap] = useState()
-	const [panelsOrder, setPanelsOrder] = useState({
-		infoPanel: -1,
-		editorPanel: 1,
-	})
-	const [backgroundColor, setBackgroundColor] = useState('#fff')
-	const [timeAxisColor, setTimeAxisColor] = useState('rgb(33, 150, 243)')
-	const [timelineIconBorderColor, setTimelineIconBorderColor] =
-		useState('rgb(255, 255, 255)')
-	const [timelineIconColor, setTimelineIconColor] =
-		useState('rgb(255, 255, 255)')
-	const [fontColor, setFontColor] = useState('#545454')
-	const [timelineColor, setTimelineColor] = useState('rgb(33, 150, 243')
 	const [isNewObjectModalOpen, setIsNewObjectModalOpen] = useState(false)
 	const [isRemoveObjectModalOpen, setIsRemoveObjectModalOpen] = useState(false)
 	const [newObject, setNewObject] = useState({
@@ -55,22 +45,28 @@ function App() {
 		data: {},
 		action: '',
 	})
+	const [appData, dispatchAppData] = useImmerReducer(
+		timelineReducer,
+		timelineInitialState
+	)
 
-	const { error, loading, sendRequest } = useHttp()
+	const { error, sendRequest } = useHttp()
 
 	useEffect(() => {
 		sendRequest({ url: 'http://localhost:5001/maps/2' }).then(res => {
 			console.log('RES', res)
+			dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_DATA)
 			if (res?.status === 200) {
-				setSpatialData(res.data)
-				setMapIcon(res.data.data.info.icons.icon)
-				setIconSize(res.data.data.info.icons.size)
-				setBasemap(res.data.data.info.basemap)
+				dispatchMatcher(
+					dispatchAppData,
+					timelineReducerActions.FETCH_SUCCESS,
+					res.data
+				)
 			} else {
-				setSpatialData('Error')
+				dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_ERROR)
 			}
 		})
-	}, [sendRequest])
+	}, [sendRequest, dispatchAppData])
 
 	useEffect(() => {
 		if (newObject.id && newObject.coordinates.length === 2) {
@@ -97,20 +93,6 @@ function App() {
 			isOpen: true,
 			img: image,
 		})
-	}
-
-	const onIconChange = icon => {
-		mapInstance.layer('places').remove()
-		setMapIcon(icon)
-	}
-
-	const onIconSizeChange = size => {
-		mapInstance.layer('places').remove()
-		setIconSize(size)
-	}
-
-	const onBasemapChange = basemap => {
-		setBasemap(basemap)
 	}
 
 	const onAddNewObject = props => {
@@ -144,11 +126,13 @@ function App() {
 		}
 		console.log(createNewObject)
 		setIsNewObjectModalOpen(false)
-		setSpatialData(
-			produce(spatialData, draft => {
-				draft.data.map.features = [...draft.data.map.features, createNewObject]
-			})
+
+		dispatchMatcher(
+			dispatchAppData,
+			timelineReducerActions.ADD_PLACE,
+			createNewObject
 		)
+
 		setNewObject(
 			produce(newObject, draft => {
 				draft.addNewObject = false
@@ -159,34 +143,16 @@ function App() {
 	}
 
 	const onUpdateObject = props => {
-		setSpatialData(
-			produce(spatialData, draft => {
-				draft.data.map.features[editedPlace.idx].properties = props
-			})
+		const edited = {
+			id: editedPlace.idx,
+			value: props,
+		}
+		dispatchMatcher(
+			dispatchAppData,
+			timelineReducerActions.UPDATE_PLACE,
+			edited
 		)
 		setIsNewObjectModalOpen(false)
-	}
-
-	const onPanelsOrderChange = () => {
-		if (panelsOrder.infoPanel === -1 && panelsOrder.editorPanel === 1) {
-			setPanelsOrder({
-				infoPanel: 1,
-				editorPanel: -1,
-			})
-		} else {
-			setPanelsOrder({
-				infoPanel: -1,
-				editorPanel: 1,
-			})
-		}
-	}
-
-	const onPlacesOrderChange = order => {
-		setSpatialData(
-			produce(spatialData, draft => {
-				draft.data.map.features = order
-			})
-		)
 	}
 
 	const onPostHandler = async () => {
@@ -194,7 +160,7 @@ function App() {
 			sendRequest({
 				method: 'PATCH',
 				url: `http://localhost:5001/maps/2`,
-				body: spatialData,
+				body: appData.spatialData,
 			}).then(res => res)
 		} catch {
 			alert('Something went wrong')
@@ -224,93 +190,71 @@ function App() {
 			})
 		} else {
 			setIsRemoveObjectModalOpen(false)
-			setSpatialData(
-				produce(spatialData, draft => {
-					draft.data.map.features.splice(editedPlace.idx, 1)
-				})
+
+			dispatchMatcher(
+				dispatchAppData,
+				timelineReducerActions.DELETE_PLACE,
+				editedPlace.id
 			)
 		}
 	}
 
 	const onPlaceEdit = (place, action) => {
-		const idx = spatialData.data.map.features.findIndex(
+		const idx = appData.spatialData.data.map.features.findIndex(
 			el => el.properties.id === place.id
 		)
 		setEditedPlace({
 			idx: idx,
-			data: spatialData.data.map.features[idx].properties,
+			data: appData.spatialData.data.map.features[idx].properties,
 			action: action,
 		})
 	}
 
 	return (
 		<StyledWrapper>
-			{!spatialData && <Spinner />}
+			{appData.isLoading && <Spinner />}
 			{error && <FetchDataError />}
-			{spatialData?.data && (
+			{!appData.isLoading && (
 				<>
-					{' '}
 					<StyledInfoPanel
-						order={panelsOrder.infoPanel}
-						color={backgroundColor}
-						type={spatialData?.type}>
-						{spatialData && (
+						order={appData.spatialData?.data?.style.panelsOrder.infoPanel}
+						color={appData.spatialData?.data?.style.backgroundColor}
+						type={appData.spatialData?.type}>
+						{appData.spatialData.data && (
 							<InfoPanel
-								spatialData={spatialData}
+								spatialData={appData.spatialData}
 								imageOpenHandler={imageOpenHandler}
-								fontColor={fontColor}
-								timelineColor={timelineColor}
-								timeAxisColor={timeAxisColor}
-								timelineIconBorderColor={timelineIconBorderColor}
-								timelineIconColor={timelineIconColor}
 							/>
 						)}
 					</StyledInfoPanel>
 					<StyledMap>
-						{spatialData && Basemap && (
-							<Map
-								spatialData={spatialData.data.map}
-								mapIcon={mapIcon}
-								setMapInstance={setMapInstance}
-								IconSize={IconSize}
-								Basemap={Basemap}
-								onAddNewObject={onAddNewObject}
-								newObject={newObject}
-							/>
-						)}
+						{appData.spatialData.data?.map.features &&
+							appData.spatialData.data?.info.basemap && (
+								<Map
+									setMapInstance={setMapInstance}
+									onAddNewObject={onAddNewObject}
+									newObject={newObject}
+									appData={appData.spatialData.data}
+								/>
+							)}
 					</StyledMap>
-					<StyledEditorPanel
-						order={panelsOrder.editorPanel}
-						color={backgroundColor}>
-						{spatialData && (
-							<EditorPanel
-								data={spatialData.data}
-								onIconChange={onIconChange}
-								onIconSizeChange={onIconSizeChange}
-								IconSize={IconSize}
-								onBasemapChange={onBasemapChange}
-								onPanelsOrderChange={onPanelsOrderChange}
-								backgroundColor={backgroundColor}
-								setBackgroundColor={setBackgroundColor}
-								fontColor={fontColor}
-								setFontColor={setFontColor}
-								onPlacesOrderChange={onPlacesOrderChange}
-								setNewObject={setNewObject}
-								newObject={newObject}
-								onPostHandler={onPostHandler}
-								onPlaceEdit={onPlaceEdit}
-								setTimelineColor={setTimelineColor}
-								spatialData={spatialData}
-								timelineColor={timelineColor}
-								timeAxisColor={timeAxisColor}
-								setTimeAxisColor={setTimeAxisColor}
-								setTimelineIconBorderColor={setTimelineIconBorderColor}
-								timelineIconBorderColor={timelineIconBorderColor}
-								timelineIconColor={timelineIconColor}
-								setTimelineIconColor={setTimelineIconColor}
-							/>
-						)}
-					</StyledEditorPanel>
+					{appData.spatialData.data && (
+						<>
+							<StyledEditorPanel
+								order={appData.spatialData.data.style.panelsOrder.editorPanel}
+								color={appData.spatialData.data.style.backgroundColor}>
+								<EditorPanel
+									setNewObject={setNewObject}
+									newObject={newObject}
+									onPostHandler={onPostHandler}
+									onPlaceEdit={onPlaceEdit}
+									dispatchAppData={dispatchAppData}
+									appData={appData}
+									mapInstance={mapInstance}
+								/>
+							</StyledEditorPanel>
+						</>
+					)}
 					<ImageModal
 						isOpen={isImageModalOpen}
 						setIsOpen={setIsImageModalOpen}

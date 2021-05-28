@@ -3,14 +3,14 @@ import PlacesList from './PlacesList/PlacesList'
 import Timeline from './Timeline/Timeline'
 import styled from 'styled-components'
 
-const Sidebar = ({
+const InfoPanel = ({
 	spatialData,
 	imageOpenHandler,
 	fontColor,
 	timelineColor,
 	timeAxisColor,
 	timelineIconBorderColor,
-	timelineIconColor
+	timelineIconColor,
 }) => {
 	let renderComponent
 
@@ -26,6 +26,7 @@ const Sidebar = ({
 		renderComponent = (
 			<Timeline
 				spatialData={spatialData.data.map}
+				panelStyles={spatialData.data.style}
 				imageOpenHandler={imageOpenHandler}
 				timelineColor={timelineColor}
 				fontColor={fontColor}
@@ -39,7 +40,7 @@ const Sidebar = ({
 	return <StyledWrapper>{renderComponent}</StyledWrapper>
 }
 
-export default Sidebar
+export default InfoPanel
 
 const StyledWrapper = styled.div`
 	&& {
