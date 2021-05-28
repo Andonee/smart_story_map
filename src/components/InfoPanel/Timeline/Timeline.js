@@ -37,6 +37,7 @@ const Timeline = ({ spatialData, imageOpenHandler, panelStyles }) => {
 					description,
 					video,
 					link,
+					date,
 				} = place.properties
 				return (
 					<StyledTimelineElement
@@ -67,7 +68,7 @@ const Timeline = ({ spatialData, imageOpenHandler, panelStyles }) => {
 						{link && <Link link={link} fontColor={`${fontColor}`} />}
 						{audio && <Divider variant='middle' />}
 						{audio && <Audio audio={audio} />}
-						<Date date='14-02-2021' fontColor={`${fontColor}`} />
+						{date && <Date date={date} fontColor={`${fontColor}`} />}
 					</StyledTimelineElement>
 				)
 			})}

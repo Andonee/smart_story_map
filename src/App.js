@@ -105,7 +105,8 @@ function App() {
 	}
 
 	const onCreateNewObject = props => {
-		const { title, description, photo1, photo2, photo3, video, audio } = props
+		const { title, description, photo1, photo2, photo3, video, audio, date } =
+			props
 		const { id, coordinates } = newObject
 		const createNewObject = {
 			type: 'Feature',
@@ -123,6 +124,9 @@ function App() {
 				video,
 				audio,
 			},
+		}
+		if (appData.spatialData.type === 'timeline') {
+			createNewObject.properties.date = date
 		}
 		console.log(createNewObject)
 		setIsNewObjectModalOpen(false)
@@ -266,6 +270,7 @@ function App() {
 							onCreateNewObject={onCreateNewObject}
 							editedPlace={editedPlace.data}
 							onUpdateObject={onUpdateObject}
+							type={appData.spatialData.type}
 						/>
 					</CustumModal>
 					<CustumModal

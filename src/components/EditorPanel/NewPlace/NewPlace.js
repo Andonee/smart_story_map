@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useForm, Controller } from 'react-hook-form'
 import CustumButton from '../../UI/CustumButton'
 
-const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject }) => {
+const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 	const { register, handleSubmit, getValues, setValue, control } = useForm({
 		mode: 'onChange',
 		reValidateMode: 'onChange',
@@ -22,6 +22,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject }) => {
 			photo3: data.photo3?.target ? data.photo3.target.value : data.photo3,
 			video: data.video?.target ? data.video.target.value : data.video,
 			audio: data.audio?.target ? data.audio.target.value : data.audio,
+			date: data.date?.target ? data.date.target.value : data.date,
 		}
 		if (editedPlace?.id) {
 			onUpdateObject(objectProps)
@@ -149,6 +150,26 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject }) => {
 				name='audio'
 				control={control}
 			/>
+			{type === 'timeline' && (
+				<>
+					<StyledDivider />
+					<Controller
+						render={() => (
+							<StyledInput
+								id='date'
+								{...register('date')}
+								label='Date'
+								variant='outlined'
+								size='small'
+								defaultValue={getValues().date ? getValues().date : ''}
+								onChange={val => setValue('date', val)}
+							/>
+						)}
+						name='date'
+						control={control}
+					/>
+				</>
+			)}
 			<StyledDivider />
 			{editedPlace?.id ? (
 				<CustumButton
