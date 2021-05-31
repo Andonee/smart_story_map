@@ -14,9 +14,10 @@ const Title = ({ description, onDescriptionChange }) => {
 					multiline
 					defaultValue={description.description}
 					onChange={onDescriptionChange}
-					inputProps={{ maxLength: 500 }}
+					inputProps={{ maxLength: 1500 }}
 					size='small'
 					rows={5}
+					expanded={description.isEdited}
 				/>
 			) : (
 				<StyledDescription>{description.description}</StyledDescription>
@@ -30,6 +31,10 @@ export default Title
 const StyledWrapper = styled.div`
 	height: 150px;
 	display: flex;
+	overflow: ${props => props.expanded && 'scroll'};
+	overflow-x: hidden;
+	margin: 5px 0;
+	padding-top: 5px;
 `
 
 const StyledDescription = styled.div`
@@ -38,7 +43,8 @@ const StyledDescription = styled.div`
 `
 
 const StyledInput = styled(TextField)`
-	${({ theme }) => `
+	&& {
+		${({ theme }) => `
 		width: 90%;
 		margin-left: auto;
 		margin-right: auto;
@@ -53,4 +59,5 @@ const StyledInput = styled(TextField)`
     }
 
 `}
+	}
 `

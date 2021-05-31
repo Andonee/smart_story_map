@@ -11,10 +11,13 @@ import Map from './components/Map/Map'
 import ImageModal from './components/UI/ImageModal'
 import CustomModal from './components/UI/CustomModal'
 import NewPlace from './components/EditorPanel/NewPlace/NewPlace'
-import RemoveObjectConfirmation from './components/EditorPanel/RemoveObjectConfirmation/RemoveObjectConfirmation'
-import useHttp from './hooks/useHttp'
 import Spinner from './components/UI/Spinner'
 import FetchDataError from './components/UI/FetchDataError'
+import MapTitle from './components/UI/MapTitle'
+import MapDescription from './components/UI/MapDescription'
+
+import RemoveObjectConfirmation from './components/EditorPanel/RemoveObjectConfirmation/RemoveObjectConfirmation'
+import useHttp from './hooks/useHttp'
 import timelineReducer, {
 	timelineInitialState,
 	timelineReducerActions,
@@ -221,9 +224,9 @@ function App() {
 			{!appData.isLoading && (
 				<>
 					<StyledInfoPanel
-						order={appData.spatialData?.data?.style.panelsOrder.infoPanel}
-						color={appData.spatialData?.data?.style.backgroundColor}
-						type={appData.spatialData?.type}>
+						order={appData.spatialData.data?.style.panelsOrder.infoPanel}
+						color={appData.spatialData.data?.style.backgroundColor}
+						type={appData.spatialData.type}>
 						{appData.spatialData.data && (
 							<InfoPanel
 								spatialData={appData.spatialData}
@@ -234,12 +237,20 @@ function App() {
 					<StyledMap>
 						{appData.spatialData.data?.map.features &&
 							appData.spatialData.data?.info.basemap && (
-								<Map
-									setMapInstance={setMapInstance}
-									onAddNewObject={onAddNewObject}
-									newObject={newObject}
-									appData={appData.spatialData.data}
-								/>
+								<>
+									{appData.spatialData.data?.info.title && (
+										<MapTitle title={appData.spatialData.data?.info.title} />
+									)}
+									<MapDescription
+										description={appData.spatialData.data?.info.description}
+									/>
+									<Map
+										setMapInstance={setMapInstance}
+										onAddNewObject={onAddNewObject}
+										newObject={newObject}
+										appData={appData.spatialData.data}
+									/>
+								</>
 							)}
 					</StyledMap>
 					{appData.spatialData.data && (
@@ -309,6 +320,7 @@ const StyledEditorPanel = styled.div`
 `
 const StyledMap = styled.div`
 	&& {
+		position: relative;
 		flex-grow: 1;
 		order: 0;
 	}
