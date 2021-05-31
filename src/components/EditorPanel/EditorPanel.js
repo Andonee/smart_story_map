@@ -5,9 +5,10 @@ import MapConfig from './MapConfig'
 import styled from 'styled-components'
 import PlaceOrder from './PlaceOrder/PlaceOrder'
 import produce from 'immer'
-import CustumButton from '../UI/CustumButton'
+import CustomButton from '../UI/CustomButton'
 import { timelineReducerActions } from '../../store/timelineReducer'
 import dispatchMatcher from '../../utils/dispatchMatcher'
+import ErrorBoundary from '../UI/ErrorBoundary'
 
 const EditorPanel = ({
 	setNewObject,
@@ -78,62 +79,71 @@ const EditorPanel = ({
 	return (
 		<Editor>
 			<StyledTitleWrapper>
-				<Title title={title} onTitleChange={onTitleChange} />
-				<StyledEditBtnWrapper>
-					<CustumButton
-						text='Edit'
-						size='small'
-						variant='contained'
-						onClick={onTitleEditHandle}
-					/>
-				</StyledEditBtnWrapper>
+				<ErrorBoundary>
+					<Title title={title} onTitleChange={onTitleChange} />
+					<StyledEditBtnWrapper>
+						<CustomButton
+							text='Edit'
+							size='small'
+							variant='contained'
+							onClick={onTitleEditHandle}
+						/>
+					</StyledEditBtnWrapper>
+				</ErrorBoundary>
 			</StyledTitleWrapper>
 			<StyledDivider />
 			<StyledTitleWrapper>
-				<Description
-					description={description}
-					onDescriptionChange={onDescriptionChange}
-				/>
-				<StyledEditBtnWrapper>
-					<CustumButton
-						text='Edit'
-						size='small'
-						variant='contained'
-						onClick={onDescriptionEditHandle}
+				<ErrorBoundary>
+					<Description
+						description={description}
+						onDescriptionChange={onDescriptionChange}
 					/>
-				</StyledEditBtnWrapper>
+					<StyledEditBtnWrapper>
+						<CustomButton
+							text='Edit'
+							size='small'
+							variant='contained'
+							onClick={onDescriptionEditHandle}
+						/>
+					</StyledEditBtnWrapper>
+				</ErrorBoundary>
 			</StyledTitleWrapper>
 			<StyledDivider />
-			<MapConfig
-				dispatchAppData={dispatchAppData}
-				appData={appData}
-				mapInstance={mapInstance}
-			/>
+			<ErrorBoundary>
+				<MapConfig
+					dispatchAppData={dispatchAppData}
+					appData={appData}
+					mapInstance={mapInstance}
+				/>
+			</ErrorBoundary>
 			<StyledDivider />
-			<PlaceOrder
-				spatialData={appData.spatialData.data.map}
-				onPlaceEdit={onPlaceEdit}
-				dispatchAppData={dispatchAppData}
-			/>
+			<ErrorBoundary>
+				<PlaceOrder
+					spatialData={appData.spatialData.data.map}
+					onPlaceEdit={onPlaceEdit}
+					dispatchAppData={dispatchAppData}
+				/>
+			</ErrorBoundary>
 			<StyledDivider />
-
-			<CustumButton
-				text='Add place'
-				size='small'
-				variant='contained'
-				onClick={onAddNewPlace}
-				width='90%'
-			/>
-
+			<ErrorBoundary>
+				<CustomButton
+					text='Add place'
+					size='small'
+					variant='contained'
+					onClick={onAddNewPlace}
+					width='90%'
+				/>
+			</ErrorBoundary>
 			<StyledDivider />
-
-			<CustumButton
-				text='SAVE'
-				size='small'
-				variant='contained'
-				onClick={onPostHandler}
-				width='90%'
-			/>
+			<ErrorBoundary>
+				<CustomButton
+					text='SAVE'
+					size='small'
+					variant='contained'
+					onClick={onPostHandler}
+					width='90%'
+				/>
+			</ErrorBoundary>
 		</Editor>
 	)
 }

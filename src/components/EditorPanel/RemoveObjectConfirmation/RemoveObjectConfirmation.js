@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import CustumButton from '../../UI/CustumButton'
+import CustomButton from '../../UI/CustomButton'
 
 const RemoveObjectConfirmation = ({ onRemoveObjectHandler }) => {
 	const onClickHandler = e => {
@@ -14,13 +14,13 @@ const RemoveObjectConfirmation = ({ onRemoveObjectHandler }) => {
 			<div>Are you sure you want to remove this object?</div>
 			<StyledDivider />
 			<StyledEditBtnWrapper>
-				<CustumButton
+				<CustomButton
 					text='Yes'
 					size='small'
 					variant='contained'
 					onClick={onClickHandler}
 				/>
-				<CustumButton
+				<CustomButton
 					text='No'
 					size='small'
 					variant='contained'

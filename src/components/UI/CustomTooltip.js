@@ -1,7 +1,7 @@
 import React from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 
-const CustumTooltip = ({ title, children }) => {
+const CustomTooltip = ({ title, children }) => {
 	return (
 		<Tooltip arrow title={title} placement='left'>
 			{children}
@@ -9,4 +9,4 @@ const CustumTooltip = ({ title, children }) => {
 	)
 }
 
-export default CustumTooltip
+export default CustomTooltip

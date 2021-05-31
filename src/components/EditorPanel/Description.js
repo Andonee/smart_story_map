@@ -42,7 +42,7 @@ const StyledInput = styled(TextField)`
 		width: 90%;
 		margin-left: auto;
 		margin-right: auto;
-		
+
 		& textarea {
 			font-size: 12px;
 		}
@@ -51,6 +51,6 @@ const StyledInput = styled(TextField)`
 			transition: all .3s;
       color: ${theme.palette.info.main}
     }
-	
+
 `}
 `

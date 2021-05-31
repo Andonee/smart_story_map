@@ -21,7 +21,7 @@ import WyspaIcon from '../../assets/mapIcons/wyspa_01.svg'
 import { ChromePicker } from 'react-color'
 import PaletteIcon from '@material-ui/icons/Palette'
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText'
-import CustumButton from '../UI/CustumButton'
+import CustomButton from '../UI/CustomButton'
 
 import { timelineReducerActions } from '../../store/timelineReducer'
 import dispatchMatcher from '../../utils/dispatchMatcher'
@@ -219,7 +219,7 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 	return (
 		<>
 			<StyledConfig>
-				<CustumButton
+				<CustomButton
 					text={<PlaceIcon />}
 					size='small'
 					variant='contained'
@@ -305,7 +305,7 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 					</StyledIconWrapper>
 				</Popover>
 
-				<CustumButton
+				<CustomButton
 					text={<MapIcon />}
 					size='small'
 					variant='contained'
@@ -345,7 +345,7 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 						</StyledBasemap>
 					</StyledBasemapWrapper>
 				</Popover>
-				<CustumButton
+				<CustomButton
 					text={<SyncAltIcon />}
 					size='small'
 					variant='contained'
@@ -361,7 +361,7 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 			<StyledMap>
 				{appData.spatialData.type === 'timeline' && (
 					<>
-						<CustumButton
+						<CustomButton
 							text={<PaletteIcon />}
 							size='small'
 							variant='contained'
@@ -390,7 +390,7 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 						</Popover>
 					</>
 				)}
-				<CustumButton
+				<CustomButton
 					text={<FormatColorFillIcon />}
 					size='small'
 					variant='contained'
@@ -418,7 +418,7 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 						color={backgroundColor}
 					/>
 				</Popover>
-				<CustumButton
+				<CustomButton
 					text={<FormatColorTextIcon />}
 					size='small'
 					variant='contained'
@@ -449,7 +449,7 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 			</StyledMap>
 			{appData.spatialData.type === 'timeline' && (
 				<StyledMap>
-					<CustumButton
+					<CustomButton
 						text={<TimelineIcon />}
 						size='small'
 						variant='contained'
@@ -478,7 +478,7 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 						/>
 					</Popover>
 
-					<CustumButton
+					<CustomButton
 						text={<FiberManualRecordIcon />}
 						size='small'
 						variant='contained'
@@ -507,7 +507,7 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 						/>
 					</Popover>
 
-					<CustumButton
+					<CustomButton
 						text={<RadioButtonUncheckedIcon />}
 						size='small'
 						variant='contained'

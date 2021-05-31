@@ -9,7 +9,7 @@ import InfoPanel from './components/InfoPanel/InfoPanel'
 import EditorPanel from './components/EditorPanel/EditorPanel'
 import Map from './components/Map/Map'
 import ImageModal from './components/UI/ImageModal'
-import CustumModal from './components/UI/CustumModal'
+import CustomModal from './components/UI/CustomModal'
 import NewPlace from './components/EditorPanel/NewPlace/NewPlace'
 import RemoveObjectConfirmation from './components/EditorPanel/RemoveObjectConfirmation/RemoveObjectConfirmation'
 import useHttp from './hooks/useHttp'
@@ -263,7 +263,7 @@ function App() {
 						isOpen={isImageModalOpen}
 						setIsOpen={setIsImageModalOpen}
 					/>
-					<CustumModal
+					<CustomModal
 						onModalClose={onModalClose}
 						modalIsOpen={isNewObjectModalOpen}>
 						<NewPlace
@@ -272,14 +272,14 @@ function App() {
 							onUpdateObject={onUpdateObject}
 							type={appData.spatialData.type}
 						/>
-					</CustumModal>
-					<CustumModal
+					</CustomModal>
+					<CustomModal
 						onModalClose={onModalClose}
 						modalIsOpen={isRemoveObjectModalOpen}>
 						<RemoveObjectConfirmation
 							onRemoveObjectHandler={onRemoveObjectHandler}
 						/>
-					</CustumModal>
+					</CustomModal>
 				</>
 			)}
 		</StyledWrapper>

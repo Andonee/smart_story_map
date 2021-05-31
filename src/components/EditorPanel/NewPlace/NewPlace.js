@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField'
 import styled from 'styled-components'
 import { useForm, Controller } from 'react-hook-form'
-import CustumButton from '../../UI/CustumButton'
+import CustomButton from '../../UI/CustomButton'
 
 const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 	const { register, handleSubmit, getValues, setValue, control } = useForm({
@@ -172,7 +172,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 			)}
 			<StyledDivider />
 			{editedPlace?.id ? (
-				<CustumButton
+				<CustomButton
 					text='Edit'
 					size='small'
 					variant='contained'
@@ -180,7 +180,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 					width='90%'
 				/>
 			) : (
-				<CustumButton
+				<CustomButton
 					text='Create'
 					size='small'
 					variant='contained'

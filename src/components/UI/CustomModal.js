@@ -5,8 +5,9 @@ import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import IconButton from '@material-ui/core/IconButton'
+import ErrorBoundary from './ErrorBoundary'
 
-const CustumModal = ({ onModalClose, modalIsOpen, children }) => {
+const CustomModal = ({ onModalClose, modalIsOpen, children }) => {
 	const [open, setOpen] = useState(modalIsOpen)
 
 	useEffect(() => {
@@ -34,32 +35,20 @@ const CustumModal = ({ onModalClose, modalIsOpen, children }) => {
 					<StyledCloseBtn onClick={handleClose} size='small'>
 						<CloseIcon onClick={handleClose} />
 					</StyledCloseBtn>
-					{children}
+					<ErrorBoundary>{children}</ErrorBoundary>
 				</StyledPaper>
 			</Fade>
 		</StyledModal>
 	)
 }
 
-export default CustumModal
+export default CustomModal
 
 const StyledModal = styled(Modal)`
 	display: flex;
 	align-items: center;
 	justify-content: center;
 `
-// const StyledPaper = styled.div`
-// 	background-color: #fff;
-// 	border: 2px solid #000;
-// 	box-shadow: gray;
-// 	padding: 5px 10px;
-// 	width: 600px;
-// 	max-width: 90%;
-// 	max-height: 90%;
-// 	overflow: scroll;
-// 	overflow-x: hidden;
-// `
-
 const StyledPaper = styled.div`
 	&& {
 		${({ theme }) => `

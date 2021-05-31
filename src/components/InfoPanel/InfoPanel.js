@@ -2,6 +2,7 @@ import React from 'react'
 import PlacesList from './PlacesList/PlacesList'
 import Timeline from './Timeline/Timeline'
 import styled from 'styled-components'
+import ErrorBoundary from '../UI/ErrorBoundary'
 
 const InfoPanel = ({
 	spatialData,
@@ -37,7 +38,11 @@ const InfoPanel = ({
 		)
 	}
 
-	return <StyledWrapper>{renderComponent}</StyledWrapper>
+	return (
+		<StyledWrapper>
+			<ErrorBoundary>{renderComponent}</ErrorBoundary>
+		</StyledWrapper>
+	)
 }
 
 export default InfoPanel

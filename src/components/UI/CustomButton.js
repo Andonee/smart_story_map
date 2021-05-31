@@ -1,9 +1,9 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import styled from 'styled-components'
-import CustumTooltip from './CustumTooltip'
+import CustomTooltip from './CustomTooltip'
 
-const CustumButton = ({
+const CustomButton = ({
 	text,
 	width,
 	size,
@@ -15,33 +15,33 @@ const CustumButton = ({
 	return (
 		<>
 			{tooltip ? (
-				<CustumTooltip title={tooltip}>
-					<StyledCustumButton
+				<CustomTooltip title={tooltip}>
+					<StyledCustomButton
 						width={width}
 						size={size}
 						variant={variant}
 						onClick={onClick}
 						type={type}>
 						{text}
-					</StyledCustumButton>
-				</CustumTooltip>
+					</StyledCustomButton>
+				</CustomTooltip>
 			) : (
-				<StyledCustumButton
+				<StyledCustomButton
 					width={width}
 					size={size}
 					variant={variant}
 					onClick={onClick}
 					type={type}>
 					{text}
-				</StyledCustumButton>
+				</StyledCustomButton>
 			)}
 		</>
 	)
 }
 
-export default CustumButton
+export default CustomButton
 
-const StyledCustumButton = styled(Button)`
+const StyledCustomButton = styled(Button)`
 	&& {
 		width: ${props => props.width};
 		color: #fff;
