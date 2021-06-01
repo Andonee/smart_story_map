@@ -75,6 +75,11 @@ const timelineReducer = (state, action) => {
 			return
 		}
 
+		case timelineReducerActions.SET_FONT: {
+			state.spatialData.data.style.font = action.payload
+			return
+		}
+
 		case timelineReducerActions.SET_TIMELINE_COLOR: {
 			state.spatialData.data.style.timelineColor = action.payload
 			return
@@ -135,6 +140,7 @@ export const timelineReducerActions = {
 	SET_TIMELINE_COLOR: 'SET_TIMELINE_COLOR',
 	SET_BACKGROUND_COLOR: 'SET_BACKGROUND_COLOR',
 	SET_PLACES_ORDER: 'SET_PLACES_ORDER',
+	SET_FONT: 'SET_FONT',
 	UPDATE_PLACE: 'UPDATE_PLACE',
 	DELETE_PLACE: 'DELETE_PLACE',
 }

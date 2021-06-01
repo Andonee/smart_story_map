@@ -60,6 +60,15 @@ function App() {
 			console.log('RES', res)
 			dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_DATA)
 			if (res?.status === 200) {
+				const font = res.data.data.style.font.family
+				const link = document.createElement('link')
+				link.rel = 'stylesheet'
+				link.href = `https://fonts.googleapis.com/css2?family=${font}&display=swap`
+				document.getElementsByTagName('head')[0].appendChild(link)
+				document.getElementsByTagName(
+					'body'
+				)[0].style.fontFamily = `${res.data.data.style.font.family}`
+
 				dispatchMatcher(
 					dispatchAppData,
 					timelineReducerActions.FETCH_SUCCESS,
@@ -218,7 +227,7 @@ function App() {
 	}
 
 	return (
-		<StyledWrapper>
+		<StyledWrapper className='apply-font'>
 			{appData.isLoading && <Spinner />}
 			{error && <FetchDataError />}
 			{!appData.isLoading && (

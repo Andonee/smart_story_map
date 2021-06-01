@@ -22,6 +22,7 @@ import { ChromePicker } from 'react-color'
 import PaletteIcon from '@material-ui/icons/Palette'
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText'
 import CustomButton from '../UI/CustomButton'
+import FontSelector from './FontSelector'
 
 import { timelineReducerActions } from '../../store/timelineReducer'
 import dispatchMatcher from '../../utils/dispatchMatcher'
@@ -439,6 +440,10 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 						vertical: 'top',
 						horizontal: 'center',
 					}}>
+					<FontSelector
+						dispatchAppData={dispatchAppData}
+						font={appData.spatialData.data.style.font}
+					/>
 					<ChromePicker
 						onChange={color =>
 							onChange(color, timelineReducerActions.SET_FONT_COLOR)
