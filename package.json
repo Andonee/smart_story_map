@@ -16,11 +16,13 @@
     "react": "^17.0.1",
     "react-beautiful-dnd": "^13.1.0",
     "react-color": "^2.19.3",
+    "react-device-detect": "^1.17.0",
     "react-dom": "^17.0.1",
     "react-hook-form": "^7.2.3",
     "react-scripts": "4.0.3",
     "react-vertical-timeline-component": "^3.3.3",
     "rxjs": "^6.6.7",
+    "swiper": "^6.7.0",
     "use-immer": "^0.5.2",
     "web-vitals": "^1.0.1"
   },

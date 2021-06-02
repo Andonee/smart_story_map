@@ -42,3 +42,7 @@ body,
 ::-webkit-scrollbar-thumb:hover {
 	background-color: #a8bbbf;
 }
+
+.vertical-timeline-element--work:last-of-type {
+	margin-bottom: 80vh !important;
+}
