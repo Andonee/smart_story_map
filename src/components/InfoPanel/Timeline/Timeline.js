@@ -50,7 +50,8 @@ const Timeline = ({ spatialData, imageOpenHandler, panelStyles }) => {
 							boxShadow: `0px 0px 0px 4px ${timelineIconBorderColor}`,
 						}}
 						icon={<TimelineIcon />}
-						key={place.properties.id}>
+						key={place.properties.id}
+						id={place.properties.id}>
 						{photo1 && <Photo photo={photo1} open={imageOpenHandler} />}
 						{photo2 && <Photo photo={photo2} open={imageOpenHandler} />}
 						{photo3 && <Photo photo={photo3} open={imageOpenHandler} />}
@@ -93,6 +94,4 @@ const StyledTimeline = styled(VerticalTimeline)`
 	}
 `
 
-const StyledTimelineElement = styled(VerticalTimelineElement)`
-	position: relative;
-`
+const StyledTimelineElement = styled(VerticalTimelineElement)``

@@ -3,6 +3,7 @@ import PlacesList from './PlacesList/PlacesList'
 import Timeline from './Timeline/Timeline'
 import styled from 'styled-components'
 import ErrorBoundary from '../UI/ErrorBoundary'
+import { CallMerge } from '@material-ui/icons'
 
 const InfoPanel = ({
 	spatialData,
@@ -12,6 +13,7 @@ const InfoPanel = ({
 	timeAxisColor,
 	timelineIconBorderColor,
 	timelineIconColor,
+	onScrollHandler,
 }) => {
 	let renderComponent
 
@@ -39,7 +41,7 @@ const InfoPanel = ({
 	}
 
 	return (
-		<StyledWrapper>
+		<StyledWrapper onScroll={onScrollHandler}>
 			<ErrorBoundary>{renderComponent}</ErrorBoundary>
 		</StyledWrapper>
 	)

@@ -7,6 +7,7 @@ import { useImmerReducer } from 'use-immer'
 
 import InfoPanel from './components/InfoPanel/InfoPanel'
 import EditorPanel from './components/EditorPanel/EditorPanel'
+import MobilePanel from './components/MobilePanel/MobilePanel'
 import Map from './components/Map/Map'
 import ImageModal from './components/UI/ImageModal'
 import CustomModal from './components/UI/CustomModal'
@@ -23,6 +24,7 @@ import timelineReducer, {
 	timelineReducerActions,
 } from './store/timelineReducer'
 import dispatchMatcher from './utils/dispatchMatcher'
+import { isMobile } from 'react-device-detect'
 
 function App() {
 	const [mapInstance, setMapInstance] = useState()
@@ -52,11 +54,13 @@ function App() {
 		timelineReducer,
 		timelineInitialState
 	)
+	const [selectedPlace, setSelectedPlace] = useState()
+	const [visiblePlace, setVisiblePlace] = useState([])
 
 	const { error, sendRequest } = useHttp()
 
 	useEffect(() => {
-		sendRequest({ url: 'http://localhost:5001/maps/2' }).then(res => {
+		sendRequest({ url: 'http://localhost:5001/maps/1' }).then(res => {
 			console.log('RES', res)
 			dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_DATA)
 			if (res?.status === 200) {
@@ -226,23 +230,77 @@ function App() {
 		})
 	}
 
+	const isElementOnScreen = id => {
+		var element = document.getElementById(id)
+		var bounds = element.getBoundingClientRect()
+		return bounds.top < window.innerHeight && bounds.bottom > 0
+	}
+	const onScrollFlyTo = () => {
+		if (visiblePlace.length === 0) {
+			mapInstance.flyTo({
+				center: [visiblePlace[0], visiblePlace[1]],
+				zoom: 16,
+			})
+		} else {
+			mapInstance.flyTo({
+				center: [visiblePlace[0][0], visiblePlace[0][1]],
+				zoom: 16,
+			})
+		}
+	}
+
+	const onScrollHandler = () => {
+		let visiblePlaces = []
+		appData.spatialData.data.map.features.map(place => {
+			let id = place.properties.id
+			if (isElementOnScreen(id)) {
+				visiblePlaces.push(place.geometry.coordinates)
+				console.log('visiplePlace', visiblePlaces)
+				setVisiblePlace(visiblePlaces)
+				onScrollFlyTo()
+			}
+			return null
+		})
+	}
+
+	const onObjectClickHandler = object => {
+		console.log(object)
+		mapInstance.flyTo({
+			center: object[0].geometry.coordinates,
+			zoom: 16,
+		})
+
+		if (!isMobile) {
+			console.log('scroll to')
+			document.getElementById(`${object[0].properties.id}`).scrollIntoView({
+				behavior: 'smooth',
+			})
+		} else {
+			console.log('Kopytko')
+			setSelectedPlace(object[0])
+		}
+	}
+
 	return (
 		<StyledWrapper className='apply-font'>
 			{appData.isLoading && <Spinner />}
 			{error && <FetchDataError />}
 			{!appData.isLoading && (
 				<>
-					<StyledInfoPanel
-						order={appData.spatialData.data?.style.panelsOrder.infoPanel}
-						color={appData.spatialData.data?.style.backgroundColor}
-						type={appData.spatialData.type}>
-						{appData.spatialData.data && (
-							<InfoPanel
-								spatialData={appData.spatialData}
-								imageOpenHandler={imageOpenHandler}
-							/>
-						)}
-					</StyledInfoPanel>
+					{!isMobile && (
+						<StyledInfoPanel
+							order={appData.spatialData.data?.style.panelsOrder.infoPanel}
+							color={appData.spatialData.data?.style.backgroundColor}
+							type={appData.spatialData.type}>
+							{appData.spatialData.data && (
+								<InfoPanel
+									spatialData={appData.spatialData}
+									imageOpenHandler={imageOpenHandler}
+									onScrollHandler={onScrollHandler}
+								/>
+							)}
+						</StyledInfoPanel>
+					)}
 					<StyledMap>
 						{appData.spatialData.data?.map.features &&
 							appData.spatialData.data?.info.basemap && (
@@ -258,26 +316,35 @@ function App() {
 										onAddNewObject={onAddNewObject}
 										newObject={newObject}
 										appData={appData.spatialData.data}
+										onObjectClickHandler={onObjectClickHandler}
 									/>
 								</>
 							)}
 					</StyledMap>
 					{appData.spatialData.data && (
 						<>
-							<StyledEditorPanel
-								order={appData.spatialData.data.style.panelsOrder.editorPanel}
-								color={appData.spatialData.data.style.backgroundColor}>
-								<EditorPanel
-									setNewObject={setNewObject}
-									newObject={newObject}
-									onPostHandler={onPostHandler}
-									onPlaceEdit={onPlaceEdit}
-									dispatchAppData={dispatchAppData}
-									appData={appData}
-									mapInstance={mapInstance}
-								/>
-							</StyledEditorPanel>
+							{!isMobile && (
+								<StyledEditorPanel
+									order={appData.spatialData.data.style.panelsOrder.editorPanel}
+									color={appData.spatialData.data.style.backgroundColor}>
+									<EditorPanel
+										setNewObject={setNewObject}
+										newObject={newObject}
+										onPostHandler={onPostHandler}
+										onPlaceEdit={onPlaceEdit}
+										dispatchAppData={dispatchAppData}
+										appData={appData}
+										mapInstance={mapInstance}
+									/>
+								</StyledEditorPanel>
+							)}
 						</>
+					)}
+					{isMobile && (
+						<MobilePanel
+							spatialData={appData.spatialData}
+							imageOpenHandler={imageOpenHandler}
+						/>
 					)}
 					<ImageModal
 						isOpen={isImageModalOpen}

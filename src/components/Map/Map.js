@@ -2,9 +2,15 @@ import React, { useEffect, useState, useCallback } from 'react'
 import useMap from '../../hooks/useMap'
 import { filter as rxFilter } from 'rxjs/operators'
 import styled from 'styled-components'
-import { useMapClick } from '../../hooks/useMapEvents'
+import { useMapClick, useMapHover } from '../../hooks/useMapEvents'
 
-const Map = ({ setMapInstance, onAddNewObject, newObject, appData }) => {
+const Map = ({
+	setMapInstance,
+	onAddNewObject,
+	newObject,
+	appData,
+	onObjectClickHandler,
+}) => {
 	const [isLoaded, setIsLoaded] = useState(false)
 	const [places] = useState(
 		window.opalSdk.createDataset('places', { data: appData.map })
@@ -98,14 +104,41 @@ const Map = ({ setMapInstance, onAddNewObject, newObject, appData }) => {
 
 	const onMapClickHandler = e => {
 		if (newObject.addNewObject) {
-			console.log(e)
 			onAddNewObject(e.data)
+		} else {
+			const layers = ['places']
+
+			const { x, y } = e.data.point
+			const iconCoords = [
+				[x - 2, y - 2],
+				[x + 2, y + 2],
+			]
+
+			const target = map.query(iconCoords, { layers })
+
+			console.log(target)
+			onObjectClickHandler(target)
+		}
+	}
+
+	const onObjectHover = e => {
+		const layers = ['places']
+		const { x, y } = e.data.point
+		const iconCoords = [
+			[x - 2, y - 2],
+			[x + 2, y + 2],
+		]
+		const target = map.query(iconCoords, { layers })
+		if (target.length > 0) {
+			map.canvas.style.cursor = 'pointer'
+		} else {
+			map.canvas.style.cursor = 'default'
 		}
 	}
 
 	useMapClick(map, onMapClickHandler)
 
-	// useMapHover(map, onObjectHover)
+	useMapHover(map, onObjectHover)
 
 	return <StyledWrapper id='map'></StyledWrapper>
 }

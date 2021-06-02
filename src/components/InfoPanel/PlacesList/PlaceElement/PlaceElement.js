@@ -10,11 +10,11 @@ import Audio from './Audio'
 import styled from 'styled-components'
 
 const PlaceElement = ({ spatialData, imageOpenHandler, fontColor }) => {
-	const { photo1, photo2, photo3, title, audio, description, video, link } =
+	const { photo1, photo2, photo3, title, audio, description, video, link, id } =
 		spatialData.properties
 
 	return (
-		<StyledWrapper>
+		<StyledWrapper id={id}>
 			{photo1 && <Photo photo={photo1} open={imageOpenHandler} />}
 			{photo2 && <Photo photo={photo2} open={imageOpenHandler} />}
 			{photo3 && <Photo photo={photo3} open={imageOpenHandler} />}
@@ -37,4 +37,8 @@ export default PlaceElement
 
 const StyledWrapper = styled.div`
 	margin-bottom: 100px;
+
+	&:last-of-type {
+		margin-bottom: 80vh;
+	}
 `
