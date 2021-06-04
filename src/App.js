@@ -259,8 +259,12 @@ function App() {
 				onScrollFlyTo()
 
 				const visibleElement = document.getElementById(id)
-				console.log('visibleElement', visibleElement)
-				visibleElement.style.opacity = 1
+				if (id !== appData.spatialData.data.map.features[0].properties.id) {
+					visibleElement.classList.add('show')
+				}
+			} else if (!isElementOnScreen(id)) {
+				const invisibleElement = document.getElementById(id)
+				invisibleElement.classList.remove('show')
 			}
 			return null
 		})

@@ -37,7 +37,10 @@ export default PlaceElement
 
 const StyledWrapper = styled.div`
 	margin-bottom: 100px;
-	opacity: 0.4;
+
+	& + & {
+		transform: translateX(-100%);
+	}
 
 	&:last-of-type {
 		margin-bottom: 90vh;

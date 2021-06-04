@@ -46,3 +46,17 @@ body,
 .vertical-timeline-element--work:last-of-type {
 	margin-bottom: 80vh !important;
 }
+
+.show {
+	animation: onShow 1s;
+	transform: translateX(0) !important;
+}
+
+@keyframes onShow {
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
