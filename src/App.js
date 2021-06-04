@@ -60,7 +60,7 @@ function App() {
 	const { error, sendRequest } = useHttp()
 
 	useEffect(() => {
-		sendRequest({ url: 'http://localhost:5001/maps/1' }).then(res => {
+		sendRequest({ url: 'http://localhost:5001/maps/2' }).then(res => {
 			console.log('RES', res)
 			dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_DATA)
 			if (res?.status === 200) {
@@ -256,7 +256,21 @@ function App() {
 			if (isElementOnScreen(id)) {
 				visiblePlaces.push(place.geometry.coordinates)
 				setVisiblePlace(visiblePlaces)
-				onScrollFlyTo()
+				if (!selectedPlace) {
+					onScrollFlyTo()
+				} else {
+					const panel = document.getElementById('info-panel')
+					panel.onscroll = function (e) {
+						const htmlCollection = e.target.children[0].children
+						const elementsArray = Array.from(htmlCollection)
+
+						elementsArray.forEach(el => {
+							if (selectedPlace.properties.id === el.id) {
+								onScrollFlyTo()
+							}
+						})
+					}
+				}
 
 				const visibleElement = document.getElementById(id)
 				if (id !== appData.spatialData.data.map.features[0].properties.id) {
@@ -280,6 +294,7 @@ function App() {
 			document.getElementById(`${object[0].properties.id}`).scrollIntoView({
 				behavior: 'smooth',
 			})
+			setSelectedPlace(object[0])
 		} else {
 			setSelectedPlace(object[0])
 		}
