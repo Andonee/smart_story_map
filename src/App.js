@@ -255,28 +255,28 @@ function App() {
 			let id = place.properties.id
 			if (isElementOnScreen(id)) {
 				visiblePlaces.push(place.geometry.coordinates)
-				console.log('visiplePlace', visiblePlaces)
 				setVisiblePlace(visiblePlaces)
 				onScrollFlyTo()
+
+				const visibleElement = document.getElementById(id)
+				console.log('visibleElement', visibleElement)
+				visibleElement.style.opacity = 1
 			}
 			return null
 		})
 	}
 
 	const onObjectClickHandler = object => {
-		console.log(object)
-		mapInstance.flyTo({
-			center: object[0].geometry.coordinates,
-			zoom: 16,
-		})
+		// mapInstance.flyTo({
+		// 	center: object[0].geometry.coordinates,
+		// 	zoom: 16,
+		// })
 
 		if (!isMobile) {
-			console.log('scroll to')
 			document.getElementById(`${object[0].properties.id}`).scrollIntoView({
 				behavior: 'smooth',
 			})
 		} else {
-			console.log('Kopytko')
 			setSelectedPlace(object[0])
 		}
 	}
@@ -344,6 +344,7 @@ function App() {
 						<MobilePanel
 							spatialData={appData.spatialData}
 							imageOpenHandler={imageOpenHandler}
+							selectedPlace={selectedPlace}
 						/>
 					)}
 					<ImageModal

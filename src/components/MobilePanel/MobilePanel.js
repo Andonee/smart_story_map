@@ -7,13 +7,30 @@ import SwiperInfo from './SwiperInfo'
 
 SwiperCore.use(Pagination)
 
-const MobilePanel = ({ spatialData, imageOpenHandler }) => {
+const MobilePanel = ({ spatialData, imageOpenHandler, selectedPlace }) => {
 	const [open, setOpen] = useState(false)
 	const [currentSwipe, setCurrentSwipe] = useState(null)
+	const sliderRef = useRef(null)
 
 	useEffect(() => {
 		onSlideChange()
 	}, [])
+
+	useEffect(() => {
+		if (!selectedPlace) return
+		// console.log(selectedPlace)
+		// const currentEl = document.querySelector('.swiper-slide-active')
+		// currentEl?.classList.remove('swiper-slide-active')
+
+		// console.log('sliderRef.current', sliderRef.current)
+		console.log('SLIDES', slides)
+		const slideIdx = slides.findIndex(
+			el => el.props.children === selectedPlace.properties.title
+		)
+		// console.log('slideIdx', slideIdx)
+		sliderRef.current.swiper.slideTo(slideIdx)
+		// console.log('slideREF', sliderRef)
+	}, [selectedPlace])
 
 	console.log('spatialllllll', spatialData)
 	const slides = []
@@ -33,8 +50,6 @@ const MobilePanel = ({ spatialData, imageOpenHandler }) => {
 	// 	})
 	// }
 
-	const sliderRef = useRef(null)
-
 	const onSlideChange = () => {
 		// console.log(sliderRef)
 		// sliderRef.current.slideTo(2)
@@ -43,7 +58,7 @@ const MobilePanel = ({ spatialData, imageOpenHandler }) => {
 			const currentEl = document.querySelector('.swiper-slide-active')
 			console.log('CURRENT', currentEl)
 
-			const currentValue = currentEl.innerHTML
+			const currentValue = currentEl?.innerHTML
 			console.log('currentValue', currentValue)
 
 			const currentSwipe = spatialData.data?.map.features.find(

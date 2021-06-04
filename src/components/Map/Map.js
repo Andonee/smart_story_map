@@ -110,8 +110,8 @@ const Map = ({
 
 			const { x, y } = e.data.point
 			const iconCoords = [
-				[x - 2, y - 2],
-				[x + 2, y + 2],
+				[x - 5, y - 5],
+				[x + 5, y + 5],
 			]
 
 			const target = map.query(iconCoords, { layers })
@@ -125,8 +125,8 @@ const Map = ({
 		const layers = ['places']
 		const { x, y } = e.data.point
 		const iconCoords = [
-			[x - 2, y - 2],
-			[x + 2, y + 2],
+			[x - 5, y - 5],
+			[x + 5, y + 5],
 		]
 		const target = map.query(iconCoords, { layers })
 		if (target.length > 0) {

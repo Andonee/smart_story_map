@@ -37,8 +37,9 @@ export default PlaceElement
 
 const StyledWrapper = styled.div`
 	margin-bottom: 100px;
+	opacity: 0.4;
 
 	&:last-of-type {
-		margin-bottom: 80vh;
+		margin-bottom: 90vh;
 	}
 `
