@@ -23,15 +23,23 @@ const timelineReducer = (state, action) => {
 			return
 		}
 		case timelineReducerActions.SET_ICON: {
-			state.spatialData.data.info.icons.icon = action.payload
+			state.spatialData.data.style.selectedIcon.id = action.payload.id
+			state.spatialData.data.style.selectedIcon.name = action.payload.name
+			state.spatialData.data.style.selectedIcon.icon =
+				action.payload.src.split(',')[1]
+			return
+		}
+		case timelineReducerActions.UPLOAD_ICON: {
+			// state.spatialData.data.style.selectedIcon.size = action.payload
+			console.log('action.payload', action.payload)
 			return
 		}
 		case timelineReducerActions.SET_ICON_SIZE: {
-			state.spatialData.data.info.icons.size = action.payload
+			state.spatialData.data.style.selectedIcon.size = action.payload
 			return
 		}
 		case timelineReducerActions.SET_BASEMAP: {
-			state.spatialData.data.info.basemap = action.payload
+			state.spatialData.data.style.basemap = action.payload
 			return
 		}
 
@@ -127,6 +135,7 @@ export const timelineReducerActions = {
 	FETCH_SUCCESS: 'FETCH_SUCCESS',
 	FETCH_ERROR: 'FETCH_ERROR',
 	SET_ICON: 'SET_ICON',
+	UPLOAD_ICON: 'UPLOAD_ICON',
 	SET_ICON_SIZE: 'SET_ICON_SIZE',
 	SET_BASEMAP: 'SET_BASEMAP',
 	SET_PANELS_ORDER: 'SET_PANELS_ORDER',

@@ -7,7 +7,7 @@ const CustomButton = ({
 	text,
 	width,
 	size,
-	variant,
+	variant = 'contained',
 	onClick,
 	type,
 	tooltip,

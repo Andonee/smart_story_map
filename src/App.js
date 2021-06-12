@@ -98,7 +98,6 @@ function App() {
 
 	useEffect(() => {
 		if (editedPlace.idx !== '' && editedPlace.action === 'remove') {
-			console.log('REMOVE')
 			setIsRemoveObjectModalOpen(true)
 		}
 	}, [editedPlace])
@@ -322,7 +321,7 @@ function App() {
 					)}
 					<StyledMap>
 						{appData.spatialData.data?.map.features &&
-							appData.spatialData.data?.info.basemap && (
+							appData.spatialData.data?.style.basemap && (
 								<>
 									{appData.spatialData.data?.info.title && (
 										<MapTitle title={appData.spatialData.data?.info.title} />

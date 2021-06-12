@@ -18,8 +18,9 @@ const Map = ({
 	const [icon, setIcon] = useState()
 	const [sizeIcon, setSizeIcon] = useState()
 	const [iconIsChanged, setIconIsChanged] = useState(false)
+	const [selectedIconName, setSelectedIconName] = useState()
 
-	let map = useMap('map', appData.info.basemap)
+	let map = useMap('map', appData.style.basemap)
 
 	useEffect(() => {
 		if (!map) return
@@ -33,24 +34,29 @@ const Map = ({
 			setIsLoaded(false)
 			subsription.unsubscribe()
 		}
-	}, [map, appData.info.icons.icon, icon, appData.info.basemap, setMapInstance])
+	}, [
+		map,
+		// appData.style.selectedIcon.icon,
+		// appData.style.icons,
+		// icon,
+		// appData.style.basemap,
+		setMapInstance,
+	])
 
 	useEffect(() => {
 		if (map) {
-			setIcon(appData.info.icons.icon)
-			// map.layer('places').remove()
-			// addData()
+			setIcon(appData.style.selectedIcon.icon)
+			setSelectedIconName(appData.style.selectedIcon.name)
 			setIconIsChanged(true)
 		}
-	}, [appData.info.icons.icon, map])
+	}, [appData.style.selectedIcon.icon, map])
 
 	useEffect(() => {
 		if (map) {
-			console.log('iconSize', appData.info.icons.size)
-			setSizeIcon(parseFloat(appData.info.icons.size) / 10)
+			setSizeIcon(parseFloat(appData.style.selectedIcon.size) / 10)
 			setIconIsChanged(true)
 		}
-	}, [appData.info.icons.size, map])
+	}, [appData.style.selectedIcon.size, map])
 
 	const addData = useCallback(() => {
 		// console.log('asasdsdasd', sizeIcon)
@@ -63,14 +69,16 @@ const Map = ({
 				'icon-allow-overlap': true,
 				'text-allow-overlap': true,
 				'icon-size': sizeIcon,
-				'icon-image': `${icon}`,
+				'icon-image': selectedIconName,
 			},
 		})
 	}, [map, places, icon, sizeIcon])
 
 	useEffect(() => {
 		if (iconIsChanged) {
-			addData()
+			console.log('ICON IS CHANGED', iconIsChanged)
+			setTimeout(() => addData(), 2000)
+			// addData()
 			setIconIsChanged(false)
 		}
 		setIconIsChanged(false)
@@ -80,21 +88,24 @@ const Map = ({
 		if (!isLoaded) return
 		// Add icon to map
 
-		// console.log(map.images().list())
-		// fetch('https://upload.wikimedia.org/wikipedia/commons/7/7c/201408_cat.png')
-		// 	.then(response => response.arrayBuffer())
-		// 	.then(data => {
-		// 		const blob = new window.Blob([new Uint8Array(data)], {
-		// 			type: 'image/png',
-		// 		})
-		// 		return window.createImageBitmap(blob)
-		// 	})
-		// 	.then(image => map.images().add('catPrezesa', image))
-		// 	.then(() => {
-		// 		console.log(map.images().list())
-		// 	})
+		const encoded = atob(icon)
+
+		const imageWidth = encoded
+			.split(' ')
+			.filter(el => el.includes('width'))[0]
+			.slice(7, -1)
+
+		const imageHeight = encoded
+			.split(' ')
+			.filter(el => el.includes('height'))[0]
+			.slice(8, -1)
+
+		let img = new Image(`${imageWidth}`, `${imageHeight}`)
+		img.src = `data:image/svg+xml;base64,${icon}`
+		img.onload = () => map.images().add(selectedIconName, img)
+
 		addData()
-	}, [addData, isLoaded, icon])
+	}, [addData, isLoaded, icon, map])
 
 	useEffect(() => {
 		if (places) {

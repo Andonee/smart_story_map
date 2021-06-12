@@ -4,7 +4,6 @@ import CustomButton from '../../UI/CustomButton'
 
 const RemoveObjectConfirmation = ({ onRemoveObjectHandler }) => {
 	const onClickHandler = e => {
-		console.log(e.target.innerText)
 		const action = e.target.innerText
 
 		onRemoveObjectHandler(action)

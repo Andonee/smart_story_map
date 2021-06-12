@@ -4,12 +4,11 @@ import PlaceIcon from '@material-ui/icons/Place'
 import MapIcon from '@material-ui/icons/Map'
 import SyncAltIcon from '@material-ui/icons/SyncAlt'
 import Popover from '@material-ui/core/Popover'
-import TextField from '@material-ui/core/TextField'
 import TimelineIcon from '@material-ui/icons/Timeline'
 import FormatColorFillIcon from '@material-ui/icons/FormatColorFill'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
-
+import TextField from '@material-ui/core/TextField'
 import InneIcon from '../../assets/mapIcons/inne_01.svg'
 import KrainaIcon from '../../assets/mapIcons/kraina_01.svg'
 import KrolestwoIcon from '../../assets/mapIcons/krolestwo_01-01.svg'
@@ -23,9 +22,11 @@ import PaletteIcon from '@material-ui/icons/Palette'
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText'
 import CustomButton from '../UI/CustomButton'
 import FontSelector from './FontSelector'
+import IconSelector from './IconSelector'
 
 import { timelineReducerActions } from '../../store/timelineReducer'
 import dispatchMatcher from '../../utils/dispatchMatcher'
+import hotel from '../../assets/icons/hotel.svg'
 
 const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 	const [IconAnchorEl, setIconAnchorEl] = React.useState(null)
@@ -42,7 +43,7 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 	console.log('appData', appData)
 
 	const { icons: userIcons, size: iconSize } =
-		appData.spatialData.data.info.icons
+		appData.spatialData.data.style.icons
 	const {
 		fontColor,
 		timelineColor,
@@ -164,9 +165,9 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 		if (value.rgb) {
 			const { r, g, b, a } = value.rgb
 			propValue = `rgba(${r}, ${g}, ${b}, ${a})`
-		} else if (value.name === 'icon') {
+		} else if (value.src?.includes('data:image/svg+xml;base64')) {
 			mapInstance.layer('places').remove()
-			propValue = value.id
+			propValue = value
 		} else if (value.name === 'icon-size') {
 			mapInstance.layer('places').remove()
 			propValue = value.value
@@ -241,69 +242,11 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 						vertical: 'top',
 						horizontal: 'center',
 					}}>
-					<StyledIconWrapper>
-						<img
-							src={InneIcon}
-							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
-							id='inne_01'
-							alt='inne_01'
-							name='icon'
-						/>
-
-						<img
-							src={KrainaIcon}
-							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
-							id='kraina_01'
-							alt='kraina_01'
-							name='icon'
-						/>
-						<img
-							src={KrolestwoIcon}
-							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
-							id='krolestwo_01-01'
-							alt='krolestwo_01-01'
-							name='icon'
-						/>
-						<img
-							src={MiastoIcon}
-							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
-							id='miasto_01'
-							alt='miasto_01'
-							name='icon'
-						/>
-						<img
-							src={PanstwoIcon}
-							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
-							id='panstwo_01'
-							alt='panstwo_01'
-							name='icon'
-						/>
-						<img
-							src={ProwincjaIcon}
-							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
-							id='prowincja_01'
-							alt='prowincja_01'
-							name='icon'
-						/>
-						<img
-							src={WyspaIcon}
-							onClick={e => onChange(e.target, timelineReducerActions.SET_ICON)}
-							id='wyspa_01'
-							alt='wyspa_01'
-							name='icon'
-						/>
-						<StyledInput
-							id='icon-size'
-							name='icon-size'
-							label='Icon size'
-							variant='outlined'
-							defaultValue={iconSize}
-							onChange={e =>
-								onChange(e.target, timelineReducerActions.SET_ICON_SIZE)
-							}
-							size='small'
-						/>
-					</StyledIconWrapper>
+					<IconSelector
+						icons={appData.spatialData.data.style}
+						onChange={onChange}
+						action={timelineReducerActions}
+					/>
 				</Popover>
 
 				<CustomButton
