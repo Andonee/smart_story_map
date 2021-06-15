@@ -1,22 +1,59 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
+import dispatchMatcher from '../../utils/dispatchMatcher'
+import { encode } from 'js-base64'
 
-const IconSelector = ({ icons, onChange, action }) => {
+const IconSelector = ({ icons, onChange, action, dispatchAppData }) => {
+	const [tooLargeIcon, setTooLargeIcon] = useState(false)
+	const [selectedIcon, setSelectedIcon] = useState(icons.selectedIcon.id)
+	const svg_uploader = useRef()
+
+	const onIconSelectHandler = e => {
+		onChange(e.target, action.SET_ICON)
+		setSelectedIcon(e.target.id)
+	}
+
 	const onIconUpload = e => {
-		console.log(e.target)
+		const file = e.target.files[0]
+
+		const { name } = file
+
+		let reader = new FileReader()
+
+		reader.addEventListener('load', e => {
+			// Limit file size to 0.5 kB
+			if (file.size > 524288) {
+				setTooLargeIcon(true)
+				svg_uploader.current.value = ''
+			} else {
+				const encoded = encode(e.target.result)
+
+				const newIcon = {
+					name: name,
+					icon: encoded,
+				}
+				dispatchMatcher(dispatchAppData, action.UPLOAD_ICON, newIcon)
+				setTooLargeIcon(false)
+			}
+		})
+		reader.readAsText(file)
 	}
 
 	return (
 		<StyledIconsPickerWrapper>
 			<StyledIconsWrapper>
 				{icons.icons.map(icon => (
-					<img
+					<StyledImg
+						key={icon.id}
 						src={`data:image/svg+xml;base64,${icon.icon}`}
-						onClick={e => onChange(e.target, action.SET_ICON)}
+						onClick={onIconSelectHandler}
 						id={icon.id}
 						alt={icon.name}
 						name={icon.name}
+						selected={icon.id === icons.selectedIcon.id ? true : false}
 					/>
 				))}
 			</StyledIconsWrapper>
@@ -29,6 +66,18 @@ const IconSelector = ({ icons, onChange, action }) => {
 				onChange={e => onChange(e.target, action.SET_ICON_SIZE)}
 				size='small'
 			/>
+			<Button variant='contained' component='label'>
+				<AddCircleOutlineIcon />
+				<input
+					accept='image/svg+xml'
+					type='file'
+					hidden
+					onChange={onIconUpload}
+					id='icon-uploader'
+					ref={svg_uploader}
+				/>
+			</Button>
+			{tooLargeIcon && <p>This file is too large</p>}
 		</StyledIconsPickerWrapper>
 	)
 }
@@ -88,4 +137,8 @@ const StyledInput = styled(TextField)`
 		}
 `}
 	}
+`
+
+const StyledImg = styled.img`
+	background: ${props => props.selected && '#e0e0e0'};
 `

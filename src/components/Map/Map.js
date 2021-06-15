@@ -3,6 +3,7 @@ import useMap from '../../hooks/useMap'
 import { filter as rxFilter } from 'rxjs/operators'
 import styled from 'styled-components'
 import { useMapClick, useMapHover } from '../../hooks/useMapEvents'
+import { decode } from 'js-base64'
 
 const Map = ({
 	setMapInstance,
@@ -88,14 +89,14 @@ const Map = ({
 		if (!isLoaded) return
 		// Add icon to map
 
-		const encoded = atob(icon)
+		const decoded = decode(icon)
 
-		const imageWidth = encoded
+		const imageWidth = decoded
 			.split(' ')
 			.filter(el => el.includes('width'))[0]
 			.slice(7, -1)
 
-		const imageHeight = encoded
+		const imageHeight = decoded
 			.split(' ')
 			.filter(el => el.includes('height'))[0]
 			.slice(8, -1)

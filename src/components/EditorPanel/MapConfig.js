@@ -9,13 +9,6 @@ import FormatColorFillIcon from '@material-ui/icons/FormatColorFill'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
 import TextField from '@material-ui/core/TextField'
-import InneIcon from '../../assets/mapIcons/inne_01.svg'
-import KrainaIcon from '../../assets/mapIcons/kraina_01.svg'
-import KrolestwoIcon from '../../assets/mapIcons/krolestwo_01-01.svg'
-import MiastoIcon from '../../assets/mapIcons/miasto_01.svg'
-import PanstwoIcon from '../../assets/mapIcons/panstwo_01.svg'
-import ProwincjaIcon from '../../assets/mapIcons/prowincja_01.svg'
-import WyspaIcon from '../../assets/mapIcons/wyspa_01.svg'
 
 import { ChromePicker } from 'react-color'
 import PaletteIcon from '@material-ui/icons/Palette'
@@ -26,7 +19,6 @@ import IconSelector from './IconSelector'
 
 import { timelineReducerActions } from '../../store/timelineReducer'
 import dispatchMatcher from '../../utils/dispatchMatcher'
-import hotel from '../../assets/icons/hotel.svg'
 
 const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 	const [IconAnchorEl, setIconAnchorEl] = React.useState(null)
@@ -42,8 +34,6 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 
 	console.log('appData', appData)
 
-	const { icons: userIcons, size: iconSize } =
-		appData.spatialData.data.style.icons
 	const {
 		fontColor,
 		timelineColor,
@@ -246,6 +236,7 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 						icons={appData.spatialData.data.style}
 						onChange={onChange}
 						action={timelineReducerActions}
+						dispatchAppData={dispatchAppData}
 					/>
 				</Popover>
 

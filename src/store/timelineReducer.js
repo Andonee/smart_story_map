@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid'
+
 export const timelineInitialState = {
 	spatialData: {},
 	isLoading: false,
@@ -30,8 +32,18 @@ const timelineReducer = (state, action) => {
 			return
 		}
 		case timelineReducerActions.UPLOAD_ICON: {
-			// state.spatialData.data.style.selectedIcon.size = action.payload
-			console.log('action.payload', action.payload)
+			const newIcon = {
+				id: nanoid(8),
+				mapId: state.spatialData.id,
+				name: action.payload.name,
+				icon: action.payload.icon,
+			}
+			state.spatialData.data.style.icons = [
+				...state.spatialData.data.style.icons,
+				newIcon,
+			]
+			console.log('action.payload', newIcon)
+
 			return
 		}
 		case timelineReducerActions.SET_ICON_SIZE: {
