@@ -34,6 +34,7 @@ function App() {
 	})
 	const [isNewObjectModalOpen, setIsNewObjectModalOpen] = useState(false)
 	const [isRemoveObjectModalOpen, setIsRemoveObjectModalOpen] = useState(false)
+	const [isRemoveIconModalOpen, setIsRemoveIconModalOpen] = useState(false)
 	const [newObject, setNewObject] = useState({
 		addNewObject: false,
 		id: '',
@@ -218,6 +219,35 @@ function App() {
 		}
 	}
 
+	const onRemoveIconHandler = action => {
+		if (action === 'NO') {
+			setIsRemoveIconModalOpen(false)
+		} else {
+			setIsRemoveIconModalOpen(false)
+
+			mapInstance.layer('places').remove()
+
+			dispatchMatcher(
+				dispatchAppData,
+				timelineReducerActions.DELETE_ICON,
+				appData.spatialData.data.style.selectedIcon.id
+			)
+
+			const defaultIcon = {
+				id: '1',
+				mapId: appData.spatialData.id,
+				name: 'inne',
+				src: 'data:image/svg+xml;base64,PHN2ZyBpZD0iV2Fyc3R3YV8xIiBkYXRhLW5hbWU9IldhcnN0d2EgMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMzguODA3NSIgaGVpZ2h0PSI1OC44MTEzIiB2aWV3Qm94PSIwIDAgMzguODA3NSA1OC44MTEzIj48dGl0bGU+aW5uZV8wMTwvdGl0bGU+PGNpcmNsZSBjeD0iNS45MjUyIiBjeT0iNS4yNDcyIiByPSIzLjY2ODciIGZpbGw9IiM2ZDZkNmQiLz48cmVjdCB4PSI1LjEyNzciIHk9IjcuOTQ0NSIgd2lkdGg9IjEuNzU0NiIgaGVpZ2h0PSI0OS4yODgzIiByeD0iMC44NzczIiByeT0iMC44NzczIiBmaWxsPSIjNmQ2ZDZkIi8+PHBhdGggZD0iTTM2LjU1MSwyMS44NDMzYy4wMDMtMS45ODE3LTMuODg3Ni0yLjY2LTUuOTgxMS01LjIwMjItMS41NjIxLTEuODk2Ny0xLjE5NjgtNS45NjM0LTEuMTk2OC01Ljk2MzRINi43MjI4TDYuNjQsMjEuODI3NGgwVjIxLjg2aDBsLjA4MjYsMTEuMTdoMjIuNjVzLS4zNjUzLTQuMDY2NywxLjE5NjgtNS45NjM1YzIuMDkzNS0yLjU0MjIsNS45ODQxLTMuMjIsNS45ODExLTUuMjAyMloiIGZpbGw9IiM2ZDZkNmQiLz48cGF0aCBkPSJNMTguNTQ4MiwyNC45OTUzbDQuMjE4NiwyLjU0NjMtMS4xMTk1LTQuNzk4OSwzLjcyNzItMy4yMjg5LTQuOTA4MS0uNDE2NC0xLjkxODItNC41MjU4TDE2LjYzLDE5LjA5NzRsLTQuOTA4MS40MTY0LDMuNzI3MSwzLjIyODktMS4xMiw0Ljc5ODlaIiBmaWxsPSIjZmZmNmU5Ii8+PC9zdmc+',
+			}
+
+			dispatchMatcher(
+				dispatchAppData,
+				timelineReducerActions.SET_ICON,
+				defaultIcon
+			)
+		}
+	}
+
 	const onPlaceEdit = (place, action) => {
 		const idx = appData.spatialData.data.map.features.findIndex(
 			el => el.properties.id === place.id
@@ -353,6 +383,7 @@ function App() {
 										dispatchAppData={dispatchAppData}
 										appData={appData}
 										mapInstance={mapInstance}
+										setIsRemoveIconModalOpen={setIsRemoveIconModalOpen}
 									/>
 								</StyledEditorPanel>
 							)}
@@ -383,7 +414,16 @@ function App() {
 						onModalClose={onModalClose}
 						modalIsOpen={isRemoveObjectModalOpen}>
 						<RemoveObjectConfirmation
-							onRemoveObjectHandler={onRemoveObjectHandler}
+							confirmationHandler={onRemoveObjectHandler}
+							content='Are you sure you want to remove this object?'
+						/>
+					</CustomModal>
+					<CustomModal
+						onModalClose={onModalClose}
+						modalIsOpen={isRemoveIconModalOpen}>
+						<RemoveObjectConfirmation
+							confirmationHandler={onRemoveIconHandler}
+							content='Are you sure you want to remove this icon?'
 						/>
 					</CustomModal>
 				</>

@@ -3,17 +3,38 @@ import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import dispatchMatcher from '../../utils/dispatchMatcher'
 import { encode } from 'js-base64'
 
-const IconSelector = ({ icons, onChange, action, dispatchAppData }) => {
+const IconSelector = ({
+	icons,
+	onChange,
+	action,
+	dispatchAppData,
+	setIsRemoveIconModalOpen,
+}) => {
 	const [tooLargeIcon, setTooLargeIcon] = useState(false)
 	const [selectedIcon, setSelectedIcon] = useState(icons.selectedIcon.id)
+	const [defaultIconsRemoveInfo, setDefaultIconsRemoveInfo] = useState(false)
 	const svg_uploader = useRef()
 
 	const onIconSelectHandler = e => {
-		onChange(e.target, action.SET_ICON)
-		setSelectedIcon(e.target.id)
+		if (e.target.id !== selectedIcon) {
+			onChange(e.target, action.SET_ICON)
+			setSelectedIcon(e.target.id)
+			setDefaultIconsRemoveInfo(false)
+			setTooLargeIcon(false)
+		}
+	}
+
+	const onRemoveIconConfirmation = () => {
+		if (selectedIcon.length > 2) {
+			setIsRemoveIconModalOpen(true)
+			setSelectedIcon('1')
+		} else {
+			setDefaultIconsRemoveInfo(true)
+		}
 	}
 
 	const onIconUpload = e => {
@@ -25,6 +46,7 @@ const IconSelector = ({ icons, onChange, action, dispatchAppData }) => {
 
 		reader.addEventListener('load', e => {
 			// Limit file size to 0.5 kB
+
 			if (file.size > 524288) {
 				setTooLargeIcon(true)
 				svg_uploader.current.value = ''
@@ -57,6 +79,7 @@ const IconSelector = ({ icons, onChange, action, dispatchAppData }) => {
 					/>
 				))}
 			</StyledIconsWrapper>
+
 			<StyledInput
 				id='icon-size'
 				name='icon-size'
@@ -66,18 +89,30 @@ const IconSelector = ({ icons, onChange, action, dispatchAppData }) => {
 				onChange={e => onChange(e.target, action.SET_ICON_SIZE)}
 				size='small'
 			/>
-			<Button variant='contained' component='label'>
-				<AddCircleOutlineIcon />
-				<input
-					accept='image/svg+xml'
-					type='file'
-					hidden
-					onChange={onIconUpload}
-					id='icon-uploader'
-					ref={svg_uploader}
-				/>
-			</Button>
-			{tooLargeIcon && <p>This file is too large</p>}
+			{tooLargeIcon && <StyledInfo>This file is too large</StyledInfo>}
+			{defaultIconsRemoveInfo && (
+				<StyledInfo>You can't remove default icons</StyledInfo>
+			)}
+			<StyledButtonsWrapper>
+				<StyledButton variant='contained' component='label' color='#2D8DE8'>
+					<AddCircleOutlineIcon style={{ color: '#fff' }} />
+					<input
+						accept='image/svg+xml'
+						type='file'
+						hidden
+						onChange={onIconUpload}
+						id='icon-uploader'
+						ref={svg_uploader}
+					/>
+				</StyledButton>
+
+				<StyledButton
+					variant='contained'
+					onClick={onRemoveIconConfirmation}
+					color='#de1919'>
+					<DeleteForeverIcon style={{ color: '#fff' }} />
+				</StyledButton>
+			</StyledButtonsWrapper>
 		</StyledIconsPickerWrapper>
 	)
 }
@@ -95,7 +130,13 @@ const StyledIconsWrapper = styled.div`
 		${({ theme }) => `
 
   display: flex;
-  justify-content: space-between;
+	flex-wrap: wrap;
+	width: 100%;
+	min-width: 200px;
+	padding: 5px;
+	max-height: 200px;
+	overflow: scroll;
+  justify-content: start;
   margin-bottom: 15px;
 	& > img {
 		height: 42px;
@@ -116,7 +157,7 @@ const StyledIconsWrapper = styled.div`
 const StyledInput = styled(TextField)`
 	&& {
 		${({ theme }) => `
-		width: 50%;
+		width: 90%;
 		margin-left: auto;
 		margin-right: auto;
 		& label {
@@ -141,4 +182,22 @@ const StyledInput = styled(TextField)`
 
 const StyledImg = styled.img`
 	background: ${props => props.selected && '#e0e0e0'};
+`
+const StyledInfo = styled.p`
+	color: #de1919;
+	text-align: center;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+`
+const StyledButtonsWrapper = styled.div`
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin-top: 20px;
+`
+const StyledButton = styled(Button)`
+	&& {
+		background: ${props => props.color};
+	}
 `

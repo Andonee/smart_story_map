@@ -2,15 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import CustomButton from '../../UI/CustomButton'
 
-const RemoveObjectConfirmation = ({ onRemoveObjectHandler }) => {
+const RemoveObjectConfirmation = ({ confirmationHandler, content }) => {
 	const onClickHandler = e => {
 		const action = e.target.innerText
 
-		onRemoveObjectHandler(action)
+		confirmationHandler(action)
 	}
 	return (
 		<StyledWrapper>
-			<div>Are you sure you want to remove this object?</div>
+			<div>{content}</div>
 			<StyledDivider />
 			<StyledEditBtnWrapper>
 				<CustomButton

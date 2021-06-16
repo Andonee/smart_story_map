@@ -42,8 +42,14 @@ const timelineReducer = (state, action) => {
 				...state.spatialData.data.style.icons,
 				newIcon,
 			]
-			console.log('action.payload', newIcon)
 
+			return
+		}
+		case timelineReducerActions.DELETE_ICON: {
+			state.spatialData.data.style.icons =
+				state.spatialData.data.style.icons.filter(
+					icon => icon.id !== action.payload
+				)
 			return
 		}
 		case timelineReducerActions.SET_ICON_SIZE: {
@@ -148,6 +154,7 @@ export const timelineReducerActions = {
 	FETCH_ERROR: 'FETCH_ERROR',
 	SET_ICON: 'SET_ICON',
 	UPLOAD_ICON: 'UPLOAD_ICON',
+	DELETE_ICON: 'DELETE_ICON',
 	SET_ICON_SIZE: 'SET_ICON_SIZE',
 	SET_BASEMAP: 'SET_BASEMAP',
 	SET_PANELS_ORDER: 'SET_PANELS_ORDER',

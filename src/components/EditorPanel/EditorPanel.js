@@ -18,6 +18,7 @@ const EditorPanel = ({
 	dispatchAppData,
 	appData,
 	mapInstance,
+	setIsRemoveIconModalOpen,
 }) => {
 	const [title, setTitle] = useState({
 		title: appData.spatialData.data.info.title,
@@ -114,6 +115,7 @@ const EditorPanel = ({
 					dispatchAppData={dispatchAppData}
 					appData={appData}
 					mapInstance={mapInstance}
+					setIsRemoveIconModalOpen={setIsRemoveIconModalOpen}
 				/>
 			</ErrorBoundary>
 			<StyledDivider />

@@ -50,7 +50,7 @@ const Map = ({
 			setSelectedIconName(appData.style.selectedIcon.name)
 			setIconIsChanged(true)
 		}
-	}, [appData.style.selectedIcon.icon, map])
+	}, [appData.style.selectedIcon.icon, appData.style.selectedIcon.name, map])
 
 	useEffect(() => {
 		if (map) {
@@ -62,7 +62,7 @@ const Map = ({
 	const addData = useCallback(() => {
 		// console.log('asasdsdasd', sizeIcon)
 		if (!(map || places || icon)) return
-		console.log('addData')
+
 		map.addData(places, {
 			id: 'places',
 			type: 'symbol',
@@ -73,11 +73,10 @@ const Map = ({
 				'icon-image': selectedIconName,
 			},
 		})
-	}, [map, places, icon, sizeIcon])
+	}, [map, places, icon, sizeIcon, selectedIconName])
 
 	useEffect(() => {
 		if (iconIsChanged) {
-			console.log('ICON IS CHANGED', iconIsChanged)
 			setTimeout(() => addData(), 2000)
 			// addData()
 			setIconIsChanged(false)
@@ -106,7 +105,7 @@ const Map = ({
 		img.onload = () => map.images().add(selectedIconName, img)
 
 		addData()
-	}, [addData, isLoaded, icon, map])
+	}, [addData, isLoaded, icon, map, selectedIconName])
 
 	useEffect(() => {
 		if (places) {

@@ -20,7 +20,12 @@ import IconSelector from './IconSelector'
 import { timelineReducerActions } from '../../store/timelineReducer'
 import dispatchMatcher from '../../utils/dispatchMatcher'
 
-const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
+const MapConfig = ({
+	dispatchAppData,
+	appData,
+	mapInstance,
+	setIsRemoveIconModalOpen,
+}) => {
 	const [IconAnchorEl, setIconAnchorEl] = React.useState(null)
 	const [BasemapAnchorEl, setBasemapAnchorEl] = React.useState(null)
 	const [BackgroundColorAnchorEl, setBackgroundColorAnchorEl] =
@@ -219,7 +224,7 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 					tooltip='Change Icon'
 				/>
 
-				<Popover
+				<StyledPopover
 					id={iconId}
 					open={openIconPicker}
 					anchorEl={IconAnchorEl}
@@ -237,8 +242,10 @@ const MapConfig = ({ dispatchAppData, appData, mapInstance }) => {
 						onChange={onChange}
 						action={timelineReducerActions}
 						dispatchAppData={dispatchAppData}
+						setIsRemoveIconModalOpen={setIsRemoveIconModalOpen}
+						mapId={appData.spatialData.id}
 					/>
-				</Popover>
+				</StyledPopover>
 
 				<CustomButton
 					text={<MapIcon />}
@@ -557,4 +564,10 @@ const StyledConfig = styled.div`
 	width: 70%;
 	display: flex;
 	justify-content: space-between;
+`
+const StyledPopover = styled(Popover)`
+	&& {
+		width: 300px;
+		max-height: 400px;
+	}
 `
