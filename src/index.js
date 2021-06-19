@@ -9,6 +9,8 @@ import {
 } from '@material-ui/core/styles'
 import { ThemeProvider } from 'styled-components'
 
+import LanguageWrapper from './components/UI/LanguageWrapper'
+
 const theme = createMuiTheme({
 	palette: {
 		primary: {
@@ -51,11 +53,13 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
 	<React.StrictMode>
-		<MuiThemeProvider theme={theme}>
-			<ThemeProvider theme={theme}>
-				<App />
-			</ThemeProvider>
-		</MuiThemeProvider>
+		<LanguageWrapper>
+			<MuiThemeProvider theme={theme}>
+				<ThemeProvider theme={theme}>
+					<App />
+				</ThemeProvider>
+			</MuiThemeProvider>
+		</LanguageWrapper>
 	</React.StrictMode>,
 	document.getElementById('root')
 )

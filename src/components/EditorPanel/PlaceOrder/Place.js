@@ -4,6 +4,7 @@ import { Draggable } from 'react-beautiful-dnd'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import CustomTooltip from '../../UI/CustomTooltip'
+import translate from '../../../utils/translate'
 
 const Place = ({ placeName, index, onPlaceEdit }) => {
 	const onPlaceEditHandler = () => {
@@ -24,12 +25,12 @@ const Place = ({ placeName, index, onPlaceEdit }) => {
 					isDragging={snapshot.isDragging}>
 					{placeName.properties.title}
 					<StyledIconsWrapper>
-						<CustomTooltip title='Edit'>
+						<CustomTooltip title={translate('ui.button.edit', 'Edit')}>
 							<StyledEditBtn onClick={onPlaceEditHandler}>
 								<EditIcon style={{ width: '15px' }} />
 							</StyledEditBtn>
 						</CustomTooltip>
-						<CustomTooltip title='Remove'>
+						<CustomTooltip title={translate('ui.button.remove', 'Remove')}>
 							<StyledEditBtn onClick={onPlaceRemoveHandler}>
 								<DeleteIcon style={{ width: '15px' }} />
 							</StyledEditBtn>

@@ -9,6 +9,7 @@ import CustomButton from '../UI/CustomButton'
 import { timelineReducerActions } from '../../store/timelineReducer'
 import dispatchMatcher from '../../utils/dispatchMatcher'
 import ErrorBoundary from '../UI/ErrorBoundary'
+import translate from '../../utils/translate'
 
 const EditorPanel = ({
 	setNewObject,
@@ -84,7 +85,7 @@ const EditorPanel = ({
 					<Title title={title} onTitleChange={onTitleChange} />
 					<StyledEditBtnWrapper>
 						<CustomButton
-							text='Edit'
+							text={translate('ui.button.edit', 'Edit')}
 							size='small'
 							variant='contained'
 							onClick={onTitleEditHandle}
@@ -101,7 +102,7 @@ const EditorPanel = ({
 					/>
 					<StyledEditBtnWrapper>
 						<CustomButton
-							text='Edit'
+							text={translate('ui.button.edit', 'Edit')}
 							size='small'
 							variant='contained'
 							onClick={onDescriptionEditHandle}
@@ -129,7 +130,7 @@ const EditorPanel = ({
 			<StyledDivider />
 			<ErrorBoundary>
 				<CustomButton
-					text='Add place'
+					text={translate('ui.button.addPlace', 'Add Place')}
 					size='small'
 					variant='contained'
 					onClick={onAddNewPlace}
@@ -139,7 +140,7 @@ const EditorPanel = ({
 			<StyledDivider />
 			<ErrorBoundary>
 				<CustomButton
-					text='SAVE'
+					text={translate('ui.button.save', 'Save')}
 					size='small'
 					variant='contained'
 					onClick={onPostHandler}

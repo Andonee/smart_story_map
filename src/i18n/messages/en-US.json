@@ -1,0 +1,23 @@
+{
+	"ui.button.edit": "Edit",
+	"ui.button.addPlace": "Add Place",
+	"ui.button.save": "Save",
+	"ui.button.remove": "Remove",
+	"ui.tooltip.changeIcon": "Change icon",
+	"ui.tooltip.changeBasemap": "Change basemap",
+	"ui.tooltip.switch": "Switch",
+	"ui.tooltip.changeTimelineBackgroundColor": "Change timeline background color",
+	"ui.tooltip.changeSidebarColor": "Change sidebar color",
+	"ui.tooltip.changeTextColor": "Change text color",
+	"ui.tooltip.changeTimelineColor": "Change timeline color",
+	"ui.tooltip.changeTimelineIconColor": "Change timeline icon color",
+	"ui.tooltip.changeTimelineIconBorderColor": "Change timeline icon border color",
+	"form.label.title": "Title",
+	"form.label.description": "Description",
+	"form.label.photo": "Photo",
+	"form.label.video": "Video",
+	"form.label.audio": "Audio",
+	"form.label.date": "Date",
+	"form.label.mapTitle": "Map title",
+	"form.label.mapDescription": "Map description"
+}

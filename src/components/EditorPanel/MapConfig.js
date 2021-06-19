@@ -19,6 +19,7 @@ import IconSelector from './IconSelector'
 
 import { timelineReducerActions } from '../../store/timelineReducer'
 import dispatchMatcher from '../../utils/dispatchMatcher'
+import translate from '../../utils/translate'
 
 const MapConfig = ({
 	dispatchAppData,
@@ -221,7 +222,7 @@ const MapConfig = ({
 					size='small'
 					variant='contained'
 					onClick={handleIconClick}
-					tooltip='Change Icon'
+					tooltip={translate('ui.tooltip.changeIcon', 'Change Icon')}
 				/>
 
 				<StyledPopover
@@ -252,7 +253,7 @@ const MapConfig = ({
 					size='small'
 					variant='contained'
 					onClick={handleBasemapClick}
-					tooltip='Change basemap'
+					tooltip={translate('ui.tooltip.changeBasemap', 'Change basemap')}
 				/>
 
 				<Popover
@@ -297,7 +298,7 @@ const MapConfig = ({
 							timelineReducerActions.SET_PANELS_ORDER
 						)
 					}
-					tooltip='Switch'
+					tooltip={translate('ui.tooltip.switch', 'Switch')}
 				/>
 			</StyledConfig>
 			<StyledMap>
@@ -308,7 +309,10 @@ const MapConfig = ({
 							size='small'
 							variant='contained'
 							onClick={handlTimelineColorClick}
-							tooltip='Change timeline color'
+							tooltip={translate(
+								'ui.tooltip.changeTimelineBackgroundColor',
+								'Change timeline background color'
+							)}
 						/>
 						<Popover
 							id={timelineColorId}
@@ -337,7 +341,10 @@ const MapConfig = ({
 					size='small'
 					variant='contained'
 					onClick={handleBackgroundColorClick}
-					tooltip='Change sidebar color'
+					tooltip={translate(
+						'ui.tooltip.changeSidebarColor',
+						'Change sidebar color'
+					)}
 				/>
 
 				<Popover
@@ -365,7 +372,7 @@ const MapConfig = ({
 					size='small'
 					variant='contained'
 					onClick={handleFontColorClick}
-					tooltip='Change text color'
+					tooltip={translate('ui.tooltip.changeTextColor', 'Change text color')}
 				/>
 
 				<Popover
@@ -400,7 +407,10 @@ const MapConfig = ({
 						size='small'
 						variant='contained'
 						onClick={handleAxisColorClick}
-						tooltip='Change timeline color'
+						tooltip={translate(
+							'ui.tooltip.changeTimelineColor',
+							'Change timeline color'
+						)}
 					/>
 
 					<Popover
@@ -429,7 +439,10 @@ const MapConfig = ({
 						size='small'
 						variant='contained'
 						onClick={handleIconColorClick}
-						tooltip='Change timeline icon color'
+						tooltip={translate(
+							'ui.tooltip.changeTimelineIconColor',
+							'Change timeline icon color'
+						)}
 					/>
 
 					<Popover
@@ -458,7 +471,10 @@ const MapConfig = ({
 						size='small'
 						variant='contained'
 						onClick={handleIconColorBorderClick}
-						tooltip='Change timeline icon border color'
+						tooltip={translate(
+							'ui.tooltip.changeTimelineIconBorderColor',
+							'Change timeline icon border color'
+						)}
 					/>
 
 					<Popover
@@ -489,25 +505,6 @@ const MapConfig = ({
 
 export default MapConfig
 
-const StyledIconWrapper = styled.div`
-	&& {
-		max-width: 200px;
-		display: flex;
-		justify-content: start;
-		padding: 5px;
-		flex-wrap: wrap;
-
-		& > img {
-			width: 25px;
-			padding: 5px;
-
-			&:hover {
-				cursor: pointer;
-			}
-		}
-	}
-`
-
 const StyledBasemapWrapper = styled.div`
 	&& {
 		display: flex;
@@ -527,31 +524,6 @@ const StyledBasemap = styled.div`
 	}
 `
 
-const StyledInput = styled(TextField)`
-	&& {
-		${({ theme }) => `
-		width: 50%;
-		margin-left: auto;
-		margin-right: auto;
-		& label {
-			color: ${theme.palette.primary.main};
-		}
-		& label.Mui-focused {
-			color:${theme.palette.primary.main};
-		}
-
-		& .MuiOutlinedInput-root {
-			color: ${theme.palette.primary.main};
-			& fieldset{
-				border-color:${theme.palette.primary.main};
-			}
-			&:hover fieldset {
-				border-color: ${theme.palette.primary.main};
-			}
-		}
-`}
-	}
-`
 const StyledMap = styled.div`
 	width: 70%;
 	display: flex;

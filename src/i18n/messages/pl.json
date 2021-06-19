@@ -1,0 +1,23 @@
+{
+	"ui.button.edit": "Edytuj",
+	"ui.button.addPlace": "Dodaj miejsce",
+	"ui.button.save": "Zapisz",
+	"ui.button.remove": "Usuń",
+	"ui.tooltip.changeIcon": "Zmień ikonkę",
+	"ui.tooltip.changeBasemap": "Zmień podkład",
+	"ui.tooltip.switch": "Zamień",
+	"ui.tooltip.changeTimelineBackgroundColor": "Zmień tło osi",
+	"ui.tooltip.changeSidebarColor": "Zmień tło panelu",
+	"ui.tooltip.changeTextColor": "Zmień kolor tekstu",
+	"ui.tooltip.changeTimelineColor": "Zmień kolor osi",
+	"ui.tooltip.changeTimelineIconColor": "Zmień kolor ikonki osi",
+	"ui.tooltip.changeTimelineIconBorderColor": "Zmień kolor obwódki ikonki osi",
+	"form.label.title": "Nazwa miejsca",
+	"form.label.description": "Opis",
+	"form.label.photo": "Zdjęcie",
+	"form.label.video": "Wideo",
+	"form.label.audio": "Dźwięk",
+	"form.label.date": "Data",
+	"form.label.mapTitle": "Tytuł mapy",
+	"form.label.mapDescription": "Opis mapy"
+}

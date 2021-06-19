@@ -16,6 +16,7 @@ import Spinner from './components/UI/Spinner'
 import FetchDataError from './components/UI/FetchDataError'
 import MapTitle from './components/UI/MapTitle'
 import MapDescription from './components/UI/MapDescription'
+import Toolbox from './components/UI/Toolbox'
 
 import RemoveObjectConfirmation from './components/EditorPanel/RemoveObjectConfirmation/RemoveObjectConfirmation'
 import useHttp from './hooks/useHttp'
@@ -333,6 +334,7 @@ function App() {
 		<StyledWrapper className='apply-font'>
 			{appData.isLoading && <Spinner />}
 			{error && <FetchDataError />}
+			<Toolbox />
 			{!appData.isLoading && (
 				<>
 					{!isMobile && (

@@ -1,6 +1,7 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import styled from 'styled-components'
+import translate from '../../utils/translate'
 
 const Title = ({ description, onDescriptionChange }) => {
 	return (
@@ -9,7 +10,7 @@ const Title = ({ description, onDescriptionChange }) => {
 				<StyledInput
 					id='map-description'
 					name='description'
-					label='Map description'
+					label={translate('form.label.mapDescription', 'Map description')}
 					variant='outlined'
 					multiline
 					defaultValue={description.description}

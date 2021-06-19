@@ -2,6 +2,7 @@ import TextField from '@material-ui/core/TextField'
 import styled from 'styled-components'
 import { useForm, Controller } from 'react-hook-form'
 import CustomButton from '../../UI/CustomButton'
+import translate from '../../../utils/translate'
 
 const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 	const { register, handleSubmit, getValues, setValue, control } = useForm({
@@ -37,7 +38,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 				render={() => (
 					<StyledInput
 						id='title'
-						label='title'
+						label={translate('form.label.title', 'Title')}
 						variant='outlined'
 						size='small'
 						{...register('title')}
@@ -55,7 +56,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 					<StyledInput
 						id='description'
 						{...register('description')}
-						label='description'
+						label={translate('form.label.description', 'Description')}
 						multiline
 						rows={4}
 						variant='outlined'
@@ -76,7 +77,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 						id='photo1'
 						name='photo1'
 						{...register('photo1')}
-						label='Photo'
+						label={translate('form.label.photo', 'Photo')}
 						variant='outlined'
 						size='small'
 						defaultValue={getValues().photo1 ? getValues().photo1 : ''}
@@ -92,7 +93,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 					<StyledInput
 						id='photo2'
 						{...register('photo2')}
-						label='Photo'
+						label={translate('form.label.photo', 'Photo')}
 						variant='outlined'
 						size='small'
 						defaultValue={getValues().photo2 ? getValues().photo2 : ''}
@@ -108,7 +109,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 					<StyledInput
 						id='photo3'
 						{...register('photo3')}
-						label='Photo'
+						label={translate('form.label.photo', 'Photo')}
 						variant='outlined'
 						size='small'
 						defaultValue={getValues().photo3 ? getValues().photo3 : ''}
@@ -124,7 +125,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 					<StyledInput
 						id='video'
 						{...register('video')}
-						label='Video'
+						label={translate('form.label.video', 'Video')}
 						variant='outlined'
 						size='small'
 						defaultValue={getValues().video ? getValues().video : ''}
@@ -140,7 +141,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 					<StyledInput
 						id='audio'
 						{...register('audio')}
-						label='Audio'
+						label={translate('form.label.audio', 'Audio')}
 						variant='outlined'
 						size='small'
 						defaultValue={getValues().audio ? getValues().audio : ''}
@@ -158,7 +159,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 							<StyledInput
 								id='date'
 								{...register('date')}
-								label='Date'
+								label={translate('form.label.date', 'Date')}
 								variant='outlined'
 								size='small'
 								defaultValue={getValues().date ? getValues().date : ''}
@@ -173,7 +174,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 			<StyledDivider />
 			{editedPlace?.id ? (
 				<CustomButton
-					text='Edit'
+					text={translate('ui.button.save', 'Save')}
 					size='small'
 					variant='contained'
 					type='submit'
@@ -181,7 +182,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 				/>
 			) : (
 				<CustomButton
-					text='Create'
+					text={translate('ui.button.addPlace', 'Add Place')}
 					size='small'
 					variant='contained'
 					type='submit'
