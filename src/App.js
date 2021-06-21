@@ -62,7 +62,7 @@ function App() {
 	const { error, sendRequest } = useHttp()
 
 	useEffect(() => {
-		sendRequest({ url: 'http://localhost:5001/maps/2' }).then(res => {
+		sendRequest({ url: 'http://localhost:5001/maps/1' }).then(res => {
 			console.log('RES', res)
 			dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_DATA)
 			if (res?.status === 200) {
@@ -321,7 +321,8 @@ function App() {
 		// })
 
 		if (!isMobile) {
-			document.getElementById(`${object[0].properties.id}`).scrollIntoView({
+			console.log('Object', object)
+			document.getElementById(`${object[0]?.properties.id}`).scrollIntoView({
 				behavior: 'smooth',
 			})
 			setSelectedPlace(object[0])

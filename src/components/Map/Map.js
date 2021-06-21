@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import useMap from '../../hooks/useMap'
 import { filter as rxFilter } from 'rxjs/operators'
 import styled from 'styled-components'
-import { useMapClick, useMapHover } from '../../hooks/useMapEvents'
+import { useMapClick, useMapHover, useMoveEnd } from '../../hooks/useMapEvents'
 import { decode } from 'js-base64'
 
 const Map = ({
@@ -22,6 +22,8 @@ const Map = ({
 	const [selectedIconName, setSelectedIconName] = useState()
 
 	let map = useMap('map', appData.style.basemap)
+
+	let isFlying = false
 
 	useEffect(() => {
 		if (!map) return
@@ -119,7 +121,7 @@ const Map = ({
 		} else {
 			const layers = ['places']
 
-			const { x, y } = e.data.point
+			const { x, y } = e.data?.point
 			const iconCoords = [
 				[x - 5, y - 5],
 				[x + 5, y + 5],
@@ -127,19 +129,22 @@ const Map = ({
 
 			const target = map.query(iconCoords, { layers })
 
-			console.log(target)
-			onObjectClickHandler(target)
+			console.log('CLICK', target)
+			if (target.length > 0) {
+				onObjectClickHandler(target)
+			}
 		}
 	}
 
 	const onObjectHover = e => {
 		const layers = ['places']
-		const { x, y } = e.data.point
+		const { x, y } = e.data?.point
 		const iconCoords = [
 			[x - 5, y - 5],
 			[x + 5, y + 5],
 		]
 		const target = map.query(iconCoords, { layers })
+
 		if (target.length > 0) {
 			map.canvas.style.cursor = 'pointer'
 		} else {
@@ -150,6 +155,10 @@ const Map = ({
 	useMapClick(map, onMapClickHandler)
 
 	useMapHover(map, onObjectHover)
+
+	// useMoveEnd(map, onObjectHover)
+
+	// useMoveEnd(map, onMapClickHandler)
 
 	return <StyledWrapper id='map'></StyledWrapper>
 }

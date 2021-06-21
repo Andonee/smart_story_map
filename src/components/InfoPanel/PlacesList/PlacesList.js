@@ -6,7 +6,7 @@ const PlacesList = ({ spatialData, imageOpenHandler, fontColor }) => {
 	return (
 		<div>
 			{spatialData.features.map(place => (
-				<ErrorBoundary>
+				<ErrorBoundary key={place.properties.id}>
 					<PlaceElement
 						spatialData={place}
 						key={place.properties.id}
