@@ -38,8 +38,6 @@ const MapConfig = ({
 	const [IconColorBorderAnchorEl, setIconColorBorderAnchorEl] =
 		React.useState(null)
 
-	console.log('appData', appData)
-
 	const {
 		fontColor,
 		timelineColor,

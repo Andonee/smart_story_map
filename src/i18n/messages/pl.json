@@ -19,5 +19,10 @@
 	"form.label.audio": "Dźwięk",
 	"form.label.date": "Data",
 	"form.label.mapTitle": "Tytuł mapy",
-	"form.label.mapDescription": "Opis mapy"
+	"form.label.mapDescription": "Opis mapy",
+	"mapConfig.font.preview": "Tutaj możesz podejrzeć czcionkę.",
+	"mapConfig.icon.tooLarge": "Ten plik jest za duży (maks. 0.5 MB)",
+	"mapConfig.icon.remove": "Nie możesz usunąć domyślnych ikonek",
+	"modal.removeObject": "Czy na pewno chcesz usunąć ten obiekt?",
+	"modal.removeIcon": "Czy na pewno chcesz usunąć tą ikonkę?"
 }

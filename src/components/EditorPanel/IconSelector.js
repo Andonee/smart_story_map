@@ -6,6 +6,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import dispatchMatcher from '../../utils/dispatchMatcher'
 import { encode } from 'js-base64'
+import translate from '../../utils/translate'
 
 const IconSelector = ({
 	icons,
@@ -89,9 +90,18 @@ const IconSelector = ({
 				onChange={e => onChange(e.target, action.SET_ICON_SIZE)}
 				size='small'
 			/>
-			{tooLargeIcon && <StyledInfo>This file is too large</StyledInfo>}
+			{tooLargeIcon && (
+				<StyledInfo>
+					{translate('mapConfig.icon.tooLarge', 'This file is too large.')}
+				</StyledInfo>
+			)}
 			{defaultIconsRemoveInfo && (
-				<StyledInfo>You can't remove default icons</StyledInfo>
+				<StyledInfo>
+					{translate(
+						'mapConfig.icon.remove',
+						'You can not remove default icons.'
+					)}
+				</StyledInfo>
 			)}
 			<StyledButtonsWrapper>
 				<StyledButton variant='contained' component='label' color='#2D8DE8'>

@@ -20,7 +20,9 @@ const Title = ({ title, onTitleChange }) => {
 					rows={4}
 				/>
 			) : (
-				<StyledDescription>{title.title}</StyledDescription>
+				<StyledDescription>
+					{title.title ? title.title : 'Map title'}
+				</StyledDescription>
 			)}
 		</StyledWrapper>
 	)

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import FontPicker from 'font-picker-react'
 import styled from 'styled-components'
+import translate from '../../utils/translate'
 
 import { timelineReducerActions } from '../../store/timelineReducer'
 import dispatchMatcher from '../../utils/dispatchMatcher'
@@ -21,7 +22,10 @@ const FontSelector = ({ dispatchAppData, font }) => {
 				onChange={onFontChangeHandler}
 				limit={100}></FontPicker>
 			<StyledFontPreview className='apply-font'>
-				The font will be applied to this text.
+				{translate(
+					'mapConfig.font.preview',
+					'The font will be applied to this text.'
+				)}
 			</StyledFontPreview>
 		</StyledWrapper>
 	)

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext, useCallback } from 'react'
 
 import { nanoid } from 'nanoid'
 import styled from 'styled-components'
@@ -26,6 +26,14 @@ import timelineReducer, {
 } from './store/timelineReducer'
 import dispatchMatcher from './utils/dispatchMatcher'
 import { isMobile } from 'react-device-detect'
+import translate from './utils/translate'
+import InfoIcon from '@material-ui/icons/Info'
+import { Context } from './components/UI/LanguageWrapper'
+import TranslateIcon from '@material-ui/icons/Translate'
+import ZoomInIcon from '@material-ui/icons/ZoomIn'
+import ZoomOutIcon from '@material-ui/icons/ZoomOut'
+import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap'
+import IconButton from '@material-ui/core/IconButton'
 
 function App() {
 	const [mapInstance, setMapInstance] = useState()
@@ -58,33 +66,67 @@ function App() {
 	)
 	const [selectedPlace, setSelectedPlace] = useState()
 	const [visiblePlace, setVisiblePlace] = useState([])
+	const [urlData, setUrlData] = useState({
+		user: '',
+		mapId: '',
+	})
 
 	const { error, sendRequest } = useHttp()
+	const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
+	const context = useContext(Context)
 
 	useEffect(() => {
-		sendRequest({ url: 'http://localhost:5001/maps/1' }).then(res => {
-			console.log('RES', res)
-			dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_DATA)
-			if (res?.status === 200) {
-				const font = res.data.data.style.font.family
-				const link = document.createElement('link')
-				link.rel = 'stylesheet'
-				link.href = `https://fonts.googleapis.com/css2?family=${font}&display=swap`
-				document.getElementsByTagName('head')[0].appendChild(link)
-				document.getElementsByTagName(
-					'body'
-				)[0].style.fontFamily = `${res.data.data.style.font.family}`
+		console.log(window.location.href)
+		const link = window.location.href
 
-				dispatchMatcher(
-					dispatchAppData,
-					timelineReducerActions.FETCH_SUCCESS,
-					res.data
-				)
-			} else {
-				dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_ERROR)
-			}
+		const splittedUrl = link.split('/')
+		const user = splittedUrl[splittedUrl.length - 2]
+		const mapId = splittedUrl[splittedUrl.length - 1]
+		setUrlData({
+			user: user,
+			mapId: mapId,
 		})
-	}, [sendRequest, dispatchAppData])
+	}, [])
+
+	useEffect(() => {
+		console.log('Checking')
+		if (!urlData.mapId) return
+		console.log('Fetching')
+		sendRequest({ url: `http://localhost:5001/maps/${urlData.mapId}` }).then(
+			res => {
+				console.log('RES', res)
+				dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_DATA)
+				if (res?.status === 200) {
+					const font = res.data.data.style.font.family
+					const link = document.createElement('link')
+					link.rel = 'stylesheet'
+					link.href = `https://fonts.googleapis.com/css2?family=${font}&display=swap`
+					document.getElementsByTagName('head')[0].appendChild(link)
+					document.getElementsByTagName(
+						'body'
+					)[0].style.fontFamily = `${res.data.data.style.font.family}`
+
+					dispatchMatcher(
+						dispatchAppData,
+						timelineReducerActions.FETCH_SUCCESS,
+						res.data
+					)
+				} else {
+					dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_ERROR)
+				}
+			}
+		)
+	}, [sendRequest, dispatchAppData, urlData.mapId])
+
+	useEffect(() => {
+		if (
+			appData &&
+			mapInstance &&
+			appData.spatialData.data.map.features.length > 0
+		) {
+			zoomToBBox()
+		}
+	}, [appData, mapInstance])
 
 	useEffect(() => {
 		if (newObject.id && newObject.coordinates.length === 2) {
@@ -177,11 +219,24 @@ function App() {
 	}
 
 	const onPostHandler = async () => {
+		debugger
+		const mapPreview = {
+			places: appData.spatialData.data.map.features.length,
+			title: appData.spatialData.data.info.title,
+			description: appData.spatialData.data.info.description,
+			basemap: appData.spatialData.data.style.basemap,
+		}
 		try {
 			sendRequest({
 				method: 'PATCH',
-				url: `http://localhost:5001/maps/2`,
+				url: `http://localhost:5001/maps/${urlData.mapId}`,
 				body: appData.spatialData,
+			}).then(res => res)
+
+			sendRequest({
+				method: 'PATCH',
+				url: `http://localhost:5001/mapsInfo/${urlData.mapId}`,
+				body: mapPreview,
 			}).then(res => res)
 		} catch {
 			alert('Something went wrong')
@@ -331,11 +386,83 @@ function App() {
 		}
 	}
 
+	const onZoomInHandler = () => {
+		mapInstance.flyTo({
+			center: mapInstance.center,
+			zoom: mapInstance.zoom + 1.5,
+		})
+	}
+
+	const onZoomOutHandler = () => {
+		mapInstance.flyTo({
+			center: mapInstance.center,
+			zoom: mapInstance.zoom - 1.5,
+		})
+	}
+
+	const zoomToBBox = () => {
+		let coords = []
+
+		appData.spatialData.data?.map.features.map(el => {
+			coords.push(el.geometry.coordinates)
+		})
+
+		function getBoundingBox(data) {
+			var bounds = {},
+				coords,
+				latitude,
+				longitude
+
+			for (var i = 0; i < data.length; i++) {
+				coords = data
+
+				for (var j = 0; j < coords.length; j++) {
+					longitude = coords[j][0]
+					latitude = coords[j][1]
+					bounds.xMin = bounds.xMin < longitude ? bounds.xMin : longitude
+					bounds.xMax = bounds.xMax > longitude ? bounds.xMax : longitude
+					bounds.yMin = bounds.yMin < latitude ? bounds.yMin : latitude
+					bounds.yMax = bounds.yMax > latitude ? bounds.yMax : latitude
+				}
+			}
+
+			return bounds
+		}
+
+		mapInstance.fitToBounds(
+			[
+				[getBoundingBox(coords).xMax, getBoundingBox(coords).yMax],
+				[getBoundingBox(coords).xMin, getBoundingBox(coords).yMin],
+			],
+			{ padding: 60, maxZoom: 19 }
+		)
+	}
+
+	const onDescriptionOpenHandler = () => {
+		setIsDescriptionOpen(!isDescriptionOpen)
+	}
+
 	return (
 		<StyledWrapper className='apply-font'>
 			{appData.isLoading && <Spinner />}
 			{error && <FetchDataError />}
-			<Toolbox />
+			<Toolbox>
+				<StyledIconButton onClick={onDescriptionOpenHandler}>
+					<InfoIcon />
+				</StyledIconButton>
+				<StyledIconButton onClick={context.onLanguageChange}>
+					<TranslateIcon />
+				</StyledIconButton>
+				<StyledIconButton onClick={onZoomInHandler}>
+					<ZoomInIcon />
+				</StyledIconButton>
+				<StyledIconButton onClick={onZoomOutHandler}>
+					<ZoomOutIcon />
+				</StyledIconButton>
+				<StyledIconButton onClick={zoomToBBox}>
+					<ZoomOutMapIcon />
+				</StyledIconButton>
+			</Toolbox>
 			{!appData.isLoading && (
 				<>
 					{!isMobile && (
@@ -361,6 +488,7 @@ function App() {
 									)}
 									<MapDescription
 										description={appData.spatialData.data?.info.description}
+										isDescriptionOpen={isDescriptionOpen}
 									/>
 									<Map
 										setMapInstance={setMapInstance}
@@ -418,7 +546,10 @@ function App() {
 						modalIsOpen={isRemoveObjectModalOpen}>
 						<RemoveObjectConfirmation
 							confirmationHandler={onRemoveObjectHandler}
-							content='Are you sure you want to remove this object?'
+							content={translate(
+								'modal.removeObject',
+								'Are you sure you want to remove this object?'
+							)}
 						/>
 					</CustomModal>
 					<CustomModal
@@ -426,7 +557,10 @@ function App() {
 						modalIsOpen={isRemoveIconModalOpen}>
 						<RemoveObjectConfirmation
 							confirmationHandler={onRemoveIconHandler}
-							content='Are you sure you want to remove this icon?'
+							content={translate(
+								'modal.removeIcon',
+								'Are you sure you want to remove this icon?'
+							)}
 						/>
 					</CustomModal>
 				</>
@@ -468,5 +602,19 @@ const StyledWrapper = styled.div`
 	&& {
 		display: flex;
 		overflow: hidden;
+	}
+`
+const StyledIconButton = styled(IconButton)`
+	&& {
+		z-index: 2;
+		color: #fff;
+		padding: 5px;
+		${({ theme }) => `{
+		background: ${theme.palette.info.main};
+
+		&:hover {
+			background: ${theme.palette.info.light};
+		}
+	}`}
 	}
 `

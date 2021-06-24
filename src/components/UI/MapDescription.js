@@ -1,20 +1,9 @@
-import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
-import InfoIcon from '@material-ui/icons/Info'
 
-const MapDescription = ({ description }) => {
-	const [open, setOpen] = useState(false)
-
-	const toggleOpen = () => {
-		setOpen(!open)
-	}
+const MapDescription = ({ description, isDescriptionOpen }) => {
 	return (
 		<StyledWrapper>
-			<StyledButton onClick={toggleOpen}>
-				<InfoIcon />
-			</StyledButton>
-
-			<StyledDescription opened={open}>
+			<StyledDescription opened={isDescriptionOpen}>
 				<StyledContent>{description}</StyledContent>
 			</StyledDescription>
 		</StyledWrapper>
@@ -28,38 +17,17 @@ const StyledWrapper = styled.div`
 	justify-content: center;
 	align-items: center;
 	position: absolute;
-	right: 0px;
+	right: 60px;
 	top: 20px;
 	z-index: 2;
-`
-
-const StyledButton = styled.button`
-	${({ theme }) => `
-  display: flex;
-  align-items: center;
-  background: ${theme.palette.info.main};
-  color: #fff;
-  border: none;
-  margin-bottom: auto;
-  margin-right: 5px;
-  margin-left: 5px;
-  padding: 5px 10px;
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
-  transition: all 0.3s;
-
-&:hover {
-  background: ${theme.palette.info.light};
-  cursor: pointer;
-}
-
-`}
+	text-align: justify;
 `
 
 const StyledDescription = styled.div`
 	display: flex;
 	justify-content: center;
 	order: -1;
-	width: 300px;
+	width: 350px;
 	max-width: 85%;
 	${
 		'' /* height: auto;

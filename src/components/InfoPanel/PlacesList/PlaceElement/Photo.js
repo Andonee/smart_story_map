@@ -25,9 +25,3 @@ const StyledImg = styled.img`
 		background: transparentize;
 	}
 `
-// const StyledIcon = styled(VisibilityIcon)`
-// 	position: absolute;
-// 	color: #fff;
-// 	top: 5px;
-// 	left: 5px;
-// `

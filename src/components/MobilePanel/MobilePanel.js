@@ -18,21 +18,13 @@ const MobilePanel = ({ spatialData, imageOpenHandler, selectedPlace }) => {
 
 	useEffect(() => {
 		if (!selectedPlace) return
-		// console.log(selectedPlace)
-		// const currentEl = document.querySelector('.swiper-slide-active')
-		// currentEl?.classList.remove('swiper-slide-active')
-
-		// console.log('sliderRef.current', sliderRef.current)
-		console.log('SLIDES', slides)
 		const slideIdx = slides.findIndex(
 			el => el.props.children === selectedPlace.properties.title
 		)
-		// console.log('slideIdx', slideIdx)
+
 		sliderRef.current.swiper.slideTo(slideIdx)
-		// console.log('slideREF', sliderRef)
 	}, [selectedPlace])
 
-	console.log('spatialllllll', spatialData)
 	const slides = []
 
 	spatialData.data?.map.features.map(el =>
@@ -41,30 +33,16 @@ const MobilePanel = ({ spatialData, imageOpenHandler, selectedPlace }) => {
 		)
 	)
 
-	// const onSwipeHandler = target => {
-	// 	target.slides.map(slide => {
-	// 		console.log('SLIDE', slide)
-	// 		if (slide.classList.contains('swiper-slide swiper-slide-active')) {
-	// 			console.log('si')
-	// 		}
-	// 	})
-	// }
-
 	const onSlideChange = () => {
-		// console.log(sliderRef)
-		// sliderRef.current.slideTo(2)
-		// sliderRef.current.swiper.slideTo(2)
 		const currentSwipe = setTimeout(() => {
 			const currentEl = document.querySelector('.swiper-slide-active')
-			console.log('CURRENT', currentEl)
 
 			const currentValue = currentEl?.innerHTML
-			console.log('currentValue', currentValue)
 
 			const currentSwipe = spatialData.data?.map.features.find(
 				el => el.properties.title === currentValue
 			)
-			console.log(currentSwipe)
+
 			setCurrentSwipe(currentSwipe)
 		}, 250)
 
@@ -74,8 +52,6 @@ const MobilePanel = ({ spatialData, imageOpenHandler, selectedPlace }) => {
 	}
 
 	const onSlideClick = e => {
-		console.log('click', e)
-		// e.slideTo(2)
 		setOpen(true)
 	}
 

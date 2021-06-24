@@ -23,8 +23,6 @@ const Map = ({
 
 	let map = useMap('map', appData.style.basemap)
 
-	let isFlying = false
-
 	useEffect(() => {
 		if (!map) return
 

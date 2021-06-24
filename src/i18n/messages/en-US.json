@@ -19,5 +19,10 @@
 	"form.label.audio": "Audio",
 	"form.label.date": "Date",
 	"form.label.mapTitle": "Map title",
-	"form.label.mapDescription": "Map description"
+	"form.label.mapDescription": "Map description",
+	"mapConfig.font.preview": "The font will be applied to this text.",
+	"mapConfig.icon.tooLarge": "This file is too large (max size 0.5 MB).",
+	"mapConfig.icon.remove": "You can not remove default icons.",
+	"modal.removeObject": "Are you sure you want to remove this object?",
+	"modal.removeIcon": "Are you sure you want to remove this icon?"
 }

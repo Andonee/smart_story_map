@@ -21,7 +21,11 @@ const Title = ({ description, onDescriptionChange }) => {
 					expanded={description.isEdited}
 				/>
 			) : (
-				<StyledDescription>{description.description}</StyledDescription>
+				<StyledDescription>
+					{description.description
+						? description.description
+						: 'Map description'}
+				</StyledDescription>
 			)}
 		</StyledWrapper>
 	)
