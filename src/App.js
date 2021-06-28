@@ -34,6 +34,7 @@ import ZoomInIcon from '@material-ui/icons/ZoomIn'
 import ZoomOutIcon from '@material-ui/icons/ZoomOut'
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap'
 import IconButton from '@material-ui/core/IconButton'
+import { BaseUrl } from './utils/baseUrl'
 
 function App() {
 	const [mapInstance, setMapInstance] = useState()
@@ -92,30 +93,30 @@ function App() {
 		console.log('Checking')
 		if (!urlData.mapId) return
 		console.log('Fetching')
-		sendRequest({ url: `http://localhost:5001/maps/${urlData.mapId}` }).then(
-			res => {
-				console.log('RES', res)
-				dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_DATA)
-				if (res?.status === 200) {
-					const font = res.data.data.style.font.family
-					const link = document.createElement('link')
-					link.rel = 'stylesheet'
-					link.href = `https://fonts.googleapis.com/css2?family=${font}&display=swap`
-					document.getElementsByTagName('head')[0].appendChild(link)
-					document.getElementsByTagName(
-						'body'
-					)[0].style.fontFamily = `${res.data.data.style.font.family}`
+		sendRequest({
+			url: `${BaseUrl}/api/maps/${urlData.user}/${urlData.mapId}`,
+		}).then(res => {
+			console.log('RES', res)
+			dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_DATA)
+			if (res?.status === 200) {
+				const font = res.data.data.style.font.family
+				const link = document.createElement('link')
+				link.rel = 'stylesheet'
+				link.href = `https://fonts.googleapis.com/css2?family=${font}&display=swap`
+				document.getElementsByTagName('head')[0].appendChild(link)
+				document.getElementsByTagName(
+					'body'
+				)[0].style.fontFamily = `${res.data.data.style.font.family}`
 
-					dispatchMatcher(
-						dispatchAppData,
-						timelineReducerActions.FETCH_SUCCESS,
-						res.data
-					)
-				} else {
-					dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_ERROR)
-				}
+				dispatchMatcher(
+					dispatchAppData,
+					timelineReducerActions.FETCH_SUCCESS,
+					res.data
+				)
+			} else {
+				dispatchMatcher(dispatchAppData, timelineReducerActions.FETCH_ERROR)
 			}
-		)
+		})
 	}, [sendRequest, dispatchAppData, urlData.mapId])
 
 	useEffect(() => {
@@ -229,13 +230,13 @@ function App() {
 		try {
 			sendRequest({
 				method: 'PATCH',
-				url: `http://localhost:5001/maps/${urlData.mapId}`,
+				url: `${BaseUrl}/api/maps/${urlData.user}/${urlData.mapId}`,
 				body: appData.spatialData,
 			}).then(res => res)
 
 			sendRequest({
 				method: 'PATCH',
-				url: `http://localhost:5001/mapsInfo/${urlData.mapId}`,
+				url: `${BaseUrl}/api/mapsInfo/${urlData.mapId}`,
 				body: mapPreview,
 			}).then(res => res)
 		} catch {

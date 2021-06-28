@@ -71,6 +71,8 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 				control={control}
 			/>
 			<StyledDivider />
+			<input type='file' accept='image/png, image/jpeg' />
+			<StyledDivider />
 			<Controller
 				render={() => (
 					<StyledInput
