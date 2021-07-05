@@ -24,5 +24,6 @@
 	"mapConfig.icon.tooLarge": "Ten plik jest za duży (maks. 0.5 MB)",
 	"mapConfig.icon.remove": "Nie możesz usunąć domyślnych ikonek",
 	"modal.removeObject": "Czy na pewno chcesz usunąć ten obiekt?",
-	"modal.removeIcon": "Czy na pewno chcesz usunąć tą ikonkę?"
+	"modal.removeIcon": "Czy na pewno chcesz usunąć tą ikonkę?",
+	"modal.session": "Twoja sesja wygała. Zaloguj się ponownie"
 }

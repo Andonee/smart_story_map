@@ -24,5 +24,6 @@
 	"mapConfig.icon.tooLarge": "This file is too large (max size 0.5 MB).",
 	"mapConfig.icon.remove": "You can not remove default icons.",
 	"modal.removeObject": "Are you sure you want to remove this object?",
-	"modal.removeIcon": "Are you sure you want to remove this icon?"
+	"modal.removeIcon": "Are you sure you want to remove this icon?",
+	"modal.session": "Your session has expired. Please log in."
 }

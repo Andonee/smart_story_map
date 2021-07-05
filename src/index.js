@@ -10,6 +10,8 @@ import {
 import { ThemeProvider } from 'styled-components'
 
 import LanguageWrapper from './components/UI/LanguageWrapper'
+import { BrowserRouter } from 'react-router-dom'
+import { AuthContextProvider } from './store/auth-context'
 
 const theme = createMuiTheme({
 	palette: {
@@ -56,7 +58,11 @@ ReactDOM.render(
 		<LanguageWrapper>
 			<MuiThemeProvider theme={theme}>
 				<ThemeProvider theme={theme}>
-					<App />
+					<AuthContextProvider>
+						<BrowserRouter>
+							<App />
+						</BrowserRouter>
+					</AuthContextProvider>
 				</ThemeProvider>
 			</MuiThemeProvider>
 		</LanguageWrapper>

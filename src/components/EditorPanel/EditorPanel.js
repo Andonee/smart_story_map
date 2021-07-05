@@ -10,6 +10,7 @@ import { timelineReducerActions } from '../../store/timelineReducer'
 import dispatchMatcher from '../../utils/dispatchMatcher'
 import ErrorBoundary from '../UI/ErrorBoundary'
 import translate from '../../utils/translate'
+import { useHistory } from 'react-router-dom'
 
 const EditorPanel = ({
 	setNewObject,
@@ -20,6 +21,7 @@ const EditorPanel = ({
 	appData,
 	mapInstance,
 	setIsRemoveIconModalOpen,
+	user,
 }) => {
 	const [title, setTitle] = useState({
 		title: appData.spatialData.data.info.title,
@@ -29,6 +31,8 @@ const EditorPanel = ({
 		description: appData.spatialData.data.info.description,
 		isEdited: false,
 	})
+
+	const history = useHistory()
 
 	const onTitleChange = e => {
 		dispatchMatcher(
@@ -78,8 +82,21 @@ const EditorPanel = ({
 		)
 	}
 
+	const onReturnHandler = () => {
+		console.log(history)
+		history.replace(`/story-account/maps/${user}`)
+	}
+
 	return (
 		<Editor>
+			<StyledReturnButton>
+				<CustomButton
+					text='Back'
+					size='small'
+					variant='contained'
+					onClick={onReturnHandler}
+				/>
+			</StyledReturnButton>
 			<StyledTitleWrapper>
 				<ErrorBoundary>
 					<Title title={title} onTitleChange={onTitleChange} />
@@ -184,4 +201,9 @@ const StyledDivider = styled.div`
 		background: #cccccc;
 		margin: 20px 0;
 	}
+`
+const StyledReturnButton = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	width: 90%;
 `
