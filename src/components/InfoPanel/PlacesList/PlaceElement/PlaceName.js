@@ -10,7 +10,7 @@ export default PlaceName
 const StyledWrapper = styled.div`
 	&& {
 		color: ${props => props.color};
-		font-size: 26px;
+		font-size: 20px;
 		padding: 20px;
 		font-weight: bold;
 	}

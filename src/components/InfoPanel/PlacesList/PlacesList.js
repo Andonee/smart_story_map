@@ -3,7 +3,13 @@ import PlaceElement from './PlaceElement/PlaceElement'
 import ErrorBoundary from '../../UI/ErrorBoundary'
 import styled from 'styled-components'
 
-const PlacesList = ({ spatialData, imageOpenHandler, fontColor }) => {
+const PlacesList = ({
+	spatialData,
+	imageOpenHandler,
+	selectedIcon,
+	panelStyles,
+}) => {
+	const { fontColor } = panelStyles
 	return (
 		<div>
 			{spatialData.features.map(place => (
@@ -13,6 +19,7 @@ const PlacesList = ({ spatialData, imageOpenHandler, fontColor }) => {
 						key={place.properties.id}
 						imageOpenHandler={imageOpenHandler}
 						fontColor={fontColor}
+						selectedIcon={selectedIcon}
 					/>
 				</ErrorBoundary>
 			))}

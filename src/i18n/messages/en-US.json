@@ -17,6 +17,7 @@
 	"form.label.photo": "Photo",
 	"form.label.video": "Video",
 	"form.label.audio": "Audio",
+	"form.label.address": "Address",
 	"form.label.date": "Date",
 	"form.label.mapTitle": "Map title",
 	"form.label.mapDescription": "Map description",

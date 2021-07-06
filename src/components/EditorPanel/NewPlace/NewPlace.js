@@ -24,6 +24,7 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 			video: data.video?.target ? data.video.target.value : data.video,
 			audio: data.audio?.target ? data.audio.target.value : data.audio,
 			date: data.date?.target ? data.date.target.value : data.date,
+			address: data.address?.target ? data.address.target.value : data.address,
 		}
 		if (editedPlace?.id) {
 			onUpdateObject(objectProps)
@@ -153,26 +154,44 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 				name='audio'
 				control={control}
 			/>
-			{type === 'timeline' && (
-				<>
-					<StyledDivider />
-					<Controller
-						render={() => (
-							<StyledInput
-								id='date'
-								{...register('date')}
-								label={translate('form.label.date', 'Date')}
-								variant='outlined'
-								size='small'
-								defaultValue={getValues().date ? getValues().date : ''}
-								onChange={val => setValue('date', val)}
-							/>
-						)}
-						name='date'
-						control={control}
-					/>
-				</>
-			)}
+			{/* {type === 'timeline' && ( */}
+			<>
+				<StyledDivider />
+				<Controller
+					render={() => (
+						<StyledInput
+							id='address'
+							{...register('address')}
+							label={translate('form.label.address', 'Address')}
+							variant='outlined'
+							size='small'
+							defaultValue={getValues().address ? getValues().address : ''}
+							onChange={val => setValue('address', val)}
+						/>
+					)}
+					name='address'
+					control={control}
+				/>
+			</>
+			<>
+				<StyledDivider />
+				<Controller
+					render={() => (
+						<StyledInput
+							id='date'
+							{...register('date')}
+							label={translate('form.label.date', 'Date')}
+							variant='outlined'
+							size='small'
+							defaultValue={getValues().date ? getValues().date : ''}
+							onChange={val => setValue('date', val)}
+						/>
+					)}
+					name='date'
+					control={control}
+				/>
+			</>
+			{/* )} */}
 			<StyledDivider />
 			{editedPlace?.id ? (
 				<CustomButton

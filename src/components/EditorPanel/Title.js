@@ -20,9 +20,7 @@ const Title = ({ title, onTitleChange }) => {
 					rows={4}
 				/>
 			) : (
-				<StyledDescription>
-					{title.title ? title.title : 'Map title'}
-				</StyledDescription>
+				<StyledTitle>{title.title ? title.title : 'Map title'}</StyledTitle>
 			)}
 		</StyledWrapper>
 	)
@@ -37,7 +35,7 @@ const StyledWrapper = styled.div`
 	padding-top: 5px;
 `
 
-const StyledDescription = styled.div`
+const StyledTitle = styled.div`
 	font-size: 16px;
 	margin-left: 20px;
 	min-height: 50px;

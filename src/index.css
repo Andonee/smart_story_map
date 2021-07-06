@@ -49,14 +49,15 @@ body,
 
 .show {
 	animation: onShow 1s;
-	transform: translateX(0) !important;
+	/* transform: translateX(0) !important; */
+	opacity: 1 !important;
 }
 
-@keyframes onShow {
+/* @keyframes onShow {
 	from {
 		transform: translateX(-100%);
 	}
 	to {
 		transform: translateX(0);
 	}
-}
+} */

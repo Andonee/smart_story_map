@@ -4,16 +4,7 @@ import Timeline from './Timeline/Timeline'
 import styled from 'styled-components'
 import ErrorBoundary from '../UI/ErrorBoundary'
 
-const InfoPanel = ({
-	spatialData,
-	imageOpenHandler,
-	fontColor,
-	timelineColor,
-	timeAxisColor,
-	timelineIconBorderColor,
-	timelineIconColor,
-	onScrollHandler,
-}) => {
+const InfoPanel = ({ spatialData, imageOpenHandler, onScrollHandler }) => {
 	let renderComponent
 
 	if (spatialData.type === 'story map') {
@@ -21,7 +12,8 @@ const InfoPanel = ({
 			<PlacesList
 				spatialData={spatialData.data.map}
 				imageOpenHandler={imageOpenHandler}
-				fontColor={fontColor}
+				selectedIcon={spatialData.data.style.selectedIcon.icon}
+				panelStyles={spatialData.data.style}
 			/>
 		)
 	} else if (spatialData.type === 'timeline') {
@@ -30,11 +22,6 @@ const InfoPanel = ({
 				spatialData={spatialData.data.map}
 				panelStyles={spatialData.data.style}
 				imageOpenHandler={imageOpenHandler}
-				timelineColor={timelineColor}
-				fontColor={fontColor}
-				timeAxisColor={timeAxisColor}
-				timelineIconBorderColor={timelineIconBorderColor}
-				timelineIconColor={timelineIconColor}
 			/>
 		)
 	}

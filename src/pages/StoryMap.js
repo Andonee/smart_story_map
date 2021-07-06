@@ -38,6 +38,7 @@ import { BaseUrl } from '../utils/baseUrl'
 import { useHistory } from 'react-router-dom'
 import AuthContext from '../store/auth-context'
 import CustomButton from '../components/UI/CustomButton'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 function App() {
 	const history = useHistory()
@@ -174,7 +175,7 @@ function App() {
 
 	useEffect(() => {
 		if (error.content === 'Not authorized') {
-			// setIsModalSesssionOpen(true)
+			setIsModalSesssionOpen(true)
 			// history.replace('/story-account/')
 		}
 	}, [error])
@@ -197,8 +198,17 @@ function App() {
 	}
 
 	const onCreateNewObject = props => {
-		const { title, description, photo1, photo2, photo3, video, audio, date } =
-			props
+		const {
+			title,
+			description,
+			photo1,
+			photo2,
+			photo3,
+			video,
+			audio,
+			date,
+			address,
+		} = props
 		const { id, coordinates } = newObject
 		const createNewObject = {
 			type: 'Feature',
@@ -215,11 +225,13 @@ function App() {
 				photo3,
 				video,
 				audio,
+				date,
+				address,
 			},
 		}
-		if (appData.spatialData.type === 'timeline') {
-			createNewObject.properties.date = date
-		}
+		// if (appData.spatialData.type === 'timeline') {
+		// 	createNewObject.properties.date = date
+		// }
 		console.log(createNewObject)
 		setIsNewObjectModalOpen(false)
 
@@ -368,12 +380,18 @@ function App() {
 	const onScrollFlyTo = () => {
 		if (visiblePlace.length === 0) {
 			mapInstance.flyTo({
-				center: [visiblePlace[0], visiblePlace[1]],
+				center: [
+					visiblePlace.geometry.coordinates[0],
+					visiblePlace.geometry.coordinates[1],
+				],
 				zoom: 16,
 			})
 		} else {
 			mapInstance.flyTo({
-				center: [visiblePlace[0][0], visiblePlace[0][1]],
+				center: [
+					visiblePlace[0].geometry.coordinates[0],
+					visiblePlace[0].geometry.coordinates[1],
+				],
 				zoom: 16,
 			})
 		}
@@ -383,10 +401,18 @@ function App() {
 		let visiblePlaces = []
 		appData.spatialData.data.map.features.map(place => {
 			let id = place.properties.id
+
+			const invisibleElement = document.getElementById(id)
+			invisibleElement.classList.remove('show')
 			if (isElementOnScreen(id)) {
-				visiblePlaces.push(place.geometry.coordinates)
+				visiblePlaces.push(place)
 				setVisiblePlace(visiblePlaces)
 				if (!selectedPlace) {
+					const visibleElement = document.getElementById(
+						visiblePlace[0]?.properties.id
+					)
+					console.log(visibleElement)
+					visibleElement?.classList.add('show')
 					onScrollFlyTo()
 				} else {
 					const panel = document.getElementById('info-panel')
@@ -399,12 +425,17 @@ function App() {
 								onScrollFlyTo()
 							}
 						})
+						const visibleElement = document.getElementById(
+							visiblePlace[0]?.properties.id
+						)
+						console.log(visibleElement)
+						visibleElement?.classList.add('show')
 					}
 				}
 
 				const visibleElement = document.getElementById(id)
 				if (id !== appData.spatialData.data.map.features[0].properties.id) {
-					visibleElement.classList.add('show')
+					// visibleElement.classList.add('show')
 				}
 			} else if (!isElementOnScreen(id)) {
 				const invisibleElement = document.getElementById(id)
@@ -487,6 +518,11 @@ function App() {
 		setIsDescriptionOpen(!isDescriptionOpen)
 	}
 
+	const onReturnHandler = () => {
+		console.log(history)
+		history.replace(`/story-account/maps/${urlData.user}`)
+	}
+
 	return (
 		<StyledWrapper className='apply-font'>
 			{appData.isLoading && <Spinner />}
@@ -494,6 +530,9 @@ function App() {
 				<FetchDataError />
 			)}
 			<Toolbox>
+				<StyledIconButton onClick={onReturnHandler}>
+					<ArrowBackIcon />
+				</StyledIconButton>
 				<StyledIconButton onClick={onDescriptionOpenHandler}>
 					<InfoIcon />
 				</StyledIconButton>
@@ -562,7 +601,6 @@ function App() {
 										appData={appData}
 										mapInstance={mapInstance}
 										setIsRemoveIconModalOpen={setIsRemoveIconModalOpen}
-										user={urlData.user}
 									/>
 								</StyledEditorPanel>
 							)}

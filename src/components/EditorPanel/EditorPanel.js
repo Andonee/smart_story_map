@@ -21,7 +21,6 @@ const EditorPanel = ({
 	appData,
 	mapInstance,
 	setIsRemoveIconModalOpen,
-	user,
 }) => {
 	const [title, setTitle] = useState({
 		title: appData.spatialData.data.info.title,
@@ -82,21 +81,21 @@ const EditorPanel = ({
 		)
 	}
 
-	const onReturnHandler = () => {
-		console.log(history)
-		history.replace(`/story-account/maps/${user}`)
-	}
+	// const onReturnHandler = () => {
+	// 	console.log(history)
+	// 	history.replace(`/story-account/maps/${user}`)
+	// }
 
 	return (
 		<Editor>
-			<StyledReturnButton>
+			{/* <StyledReturnButton>
 				<CustomButton
-					text='Back'
+					text={<ArrowBackIcon />}
 					size='small'
 					variant='contained'
 					onClick={onReturnHandler}
 				/>
-			</StyledReturnButton>
+			</StyledReturnButton> */}
 			<StyledTitleWrapper>
 				<ErrorBoundary>
 					<Title title={title} onTitleChange={onTitleChange} />
