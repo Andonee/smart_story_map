@@ -1,11 +1,11 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import translate from '../../utils/translate'
 
 const Title = ({ title, onTitleChange }) => {
 	return (
-		<StyledWrapper expanded={title.isEdited}>
+		<StyledWrapper expanded={title.isEdited} height={title.isEdited}>
 			{title.isEdited ? (
 				<StyledInput
 					id='map-title'
@@ -29,10 +29,16 @@ const Title = ({ title, onTitleChange }) => {
 export default Title
 
 const StyledWrapper = styled.div`
-	height: 100px;
 	display: flex;
 	margin: 5px 0;
 	padding-top: 5px;
+	height: 25px;
+
+	${props =>
+		props.height &&
+		css`
+			height: 100px;
+		`}
 `
 
 const StyledTitle = styled.div`

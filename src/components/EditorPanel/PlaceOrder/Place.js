@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import CustomTooltip from '../../UI/CustomTooltip'
 import translate from '../../../utils/translate'
 
-const Place = ({ placeName, index, onPlaceEdit }) => {
+const Place = ({ placeName, index, onPlaceEdit, icon }) => {
 	const onPlaceEditHandler = () => {
 		onPlaceEdit(placeName.properties, 'edit')
 	}
@@ -23,7 +23,8 @@ const Place = ({ placeName, index, onPlaceEdit }) => {
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}
 					isDragging={snapshot.isDragging}>
-					{placeName.properties.title}
+					<StyledIcon src={`data:image/svg+xml;base64,${icon}`} />
+					<StyledPlaceName>{placeName.properties.title}</StyledPlaceName>
 					<StyledIconsWrapper>
 						<CustomTooltip title={translate('ui.button.edit', 'Edit')}>
 							<StyledEditBtn onClick={onPlaceEditHandler}>
@@ -51,16 +52,18 @@ const StyledPlace = styled.div`
 		justify-content: space-between;
 		padding: 8px;
 		text-align: center;
-		font-size: 12px;
+		font-size: 14px;
 		border: 1px solid gray;
+		border-radius: 5px;
 		margin: 2px 0;
-		background: ${props => (props.isDragging ? '#3f97ea' : '#2D8DE8')};
+		background: ${props => (props.isDragging ? '#9c9c9c' : '#ececec')};
 		transition: background 0.2s ease;
-		color: #fff;
+		color: #636363;
+		font-weight: bold;
 
 		&:hover {
 			cursor: pointer;
-			background: #3f97ea;
+			background: #9c9c9c;
 		}
 	}
 `
@@ -74,11 +77,20 @@ const StyledEditBtn = styled.div`
 		transition: all 0.3s ease-in-out;
 
 		&:hover {
-			background: #2d8de8;
+			background: #ececec;
 			transform: scale(1.2);
 		}
 	}
 `
 const StyledIconsWrapper = styled.div`
 	display: flex;
+`
+const StyledPlaceName = styled.div`
+	width: 85%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+`
+const StyledIcon = styled.img`
+	max-height: 30px;
 `

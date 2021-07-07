@@ -17,7 +17,7 @@ const Title = ({ description, onDescriptionChange }) => {
 					onChange={onDescriptionChange}
 					inputProps={{ maxLength: 1500 }}
 					size='small'
-					rows={5}
+					rows={6}
 					expanded={description.isEdited}
 				/>
 			) : (

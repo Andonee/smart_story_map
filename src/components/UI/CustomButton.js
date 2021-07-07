@@ -6,11 +6,14 @@ import CustomTooltip from './CustomTooltip'
 const CustomButton = ({
 	text,
 	width,
+	height,
 	size,
 	variant = 'contained',
 	onClick,
 	type,
 	tooltip,
+	background,
+	color,
 }) => {
 	return (
 		<>
@@ -18,7 +21,10 @@ const CustomButton = ({
 				<CustomTooltip title={tooltip}>
 					<StyledCustomButton
 						width={width}
+						height={height}
 						size={size}
+						background={background}
+						color={color}
 						variant={variant}
 						onClick={onClick}
 						type={type}>
@@ -28,7 +34,10 @@ const CustomButton = ({
 			) : (
 				<StyledCustomButton
 					width={width}
+					height={height}
 					size={size}
+					background={background}
+					color={color}
 					variant={variant}
 					onClick={onClick}
 					type={type}>
@@ -44,16 +53,17 @@ export default CustomButton
 const StyledCustomButton = styled(Button)`
 	&& {
 		width: ${props => props.width};
-		color: #fff;
+		min-width: ${props => props.width};
+		height: ${props => props.height};
+		color: ${props => props.color || '#fff'};
 		& > span {
 			font-size: 12px;
 		}
-		${({ theme }) => `{
-		background: ${theme.palette.info.main};
+
+		background: ${props => props.background || '#2D8DE8'};
 
 		&:hover {
-			background: ${theme.palette.info.light};
+			background: #3f97ea;
 		}
-	}`}
 	}
 `

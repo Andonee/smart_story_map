@@ -11,7 +11,7 @@ const StyledToolboxWrapper = styled.div`
 	flex-direction: column;
 	position: absolute;
 	top: 40px;
-	right: 360px;
+	right: 410px;
 	z-index: 10;
 
 	& > button {

@@ -16,7 +16,7 @@ import { AuthContextProvider } from './store/auth-context'
 const theme = createMuiTheme({
 	palette: {
 		primary: {
-			main: '#545454',
+			main: '#878787',
 		},
 		secondary: {
 			main: '#gssesg',
@@ -48,6 +48,11 @@ const theme = createMuiTheme({
 				'&$focused': {
 					color: '#2D8DE8',
 				},
+			},
+		},
+		MuiButton: {
+			root: {
+				background: 'red',
 			},
 		},
 	},

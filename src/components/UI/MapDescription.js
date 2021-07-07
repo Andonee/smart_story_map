@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 const MapDescription = ({ description, isDescriptionOpen }) => {
 	return (
-		<StyledWrapper>
+		<StyledWrapper opened={isDescriptionOpen}>
 			<StyledDescription opened={isDescriptionOpen}>
 				<StyledContent>{description}</StyledContent>
 			</StyledDescription>
@@ -13,7 +13,7 @@ const MapDescription = ({ description, isDescriptionOpen }) => {
 export default MapDescription
 
 const StyledWrapper = styled.div`
-	display: flex;
+	display: none;
 	justify-content: center;
 	align-items: center;
 	position: absolute;
@@ -21,6 +21,12 @@ const StyledWrapper = styled.div`
 	top: 20px;
 	z-index: 2;
 	text-align: justify;
+
+	${props =>
+		props.opened &&
+		css`
+			display: flex;
+		`}
 `
 
 const StyledDescription = styled.div`
@@ -34,12 +40,13 @@ const StyledDescription = styled.div`
 	max-height: 50%; */
 	}
 	background: #ffffffb0;
-	z-index: 2;
+	z-index: -1;
 	letter-spacing: 1px;
 	color: #545454;
 	font-size: 14px;
 	line-height: 20px;
 	opacity: 0;
+	border-radius: 10px;
 	${props =>
 		props.opened &&
 		css`

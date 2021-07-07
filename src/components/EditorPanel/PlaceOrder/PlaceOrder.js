@@ -5,7 +5,7 @@ import Place from './Place'
 import { timelineReducerActions } from '../../../store/timelineReducer'
 import dispatchMatcher from '../../../utils/dispatchMatcher'
 
-const PlaceOrder = ({ spatialData, dispatchAppData, onPlaceEdit }) => {
+const PlaceOrder = ({ spatialData, dispatchAppData, onPlaceEdit, icon }) => {
 	const [places, setPlaces] = useState(spatialData.features)
 	const [isReordered, setIsReordered] = useState(false)
 
@@ -54,9 +54,19 @@ const PlaceOrder = ({ spatialData, dispatchAppData, onPlaceEdit }) => {
 		setIsReordered(true)
 	}
 
+	const container = document.getElementById('placeorder-container')
+
+	if (container) {
+		console.log('Container', container.clientHeight)
+
+		if (container.clientHeight > 200) {
+			container.style.overflow = 'scroll'
+		}
+	}
+
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
-			<StyledWrapper>
+			<StyledWrapper id='placeorder-container'>
 				<Droppable droppableId='placelistId'>
 					{(provided, snapshot) => (
 						<StyledList
@@ -70,6 +80,7 @@ const PlaceOrder = ({ spatialData, dispatchAppData, onPlaceEdit }) => {
 										key={place.properties.id}
 										index={idx}
 										onPlaceEdit={onPlaceEdit}
+										icon={icon}
 									/>
 								)
 							})}
@@ -87,15 +98,15 @@ export default PlaceOrder
 const StyledWrapper = styled.div`
 	width: 90%;
 	background: #fff;
-	border: 1px solid #cccccc;
+	${'' /* border: 1px solid #cccccc; */}
 	padding: 5px;
 	height: auto;
-	max-height: 400px;
-	overflow: scroll;
+	max-height: 200px;
+	${'' /* overflow: scroll; */}
 	overflow-x: hidden;
 `
 const StyledList = styled.div`
-	background: ${props => (props.isDraggingOver ? '#a8fff0' : 'wheat')};
+	background: ${props => (props.isDraggingOver ? '#2D8DE8' : '#fff')};
 	transition: background 0.2s ease;
 	display: flex;
 	flex-direction: column;

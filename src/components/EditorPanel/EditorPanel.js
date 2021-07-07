@@ -11,6 +11,9 @@ import dispatchMatcher from '../../utils/dispatchMatcher'
 import ErrorBoundary from '../UI/ErrorBoundary'
 import translate from '../../utils/translate'
 import { useHistory } from 'react-router-dom'
+import EditIcon from '@material-ui/icons/Edit'
+import AddLocationIcon from '@material-ui/icons/AddLocation'
+import Button from '@material-ui/core/Button'
 
 const EditorPanel = ({
 	setNewObject,
@@ -81,11 +84,6 @@ const EditorPanel = ({
 		)
 	}
 
-	// const onReturnHandler = () => {
-	// 	console.log(history)
-	// 	history.replace(`/story-account/maps/${user}`)
-	// }
-
 	return (
 		<Editor>
 			{/* <StyledReturnButton>
@@ -100,8 +98,13 @@ const EditorPanel = ({
 				<ErrorBoundary>
 					<Title title={title} onTitleChange={onTitleChange} />
 					<StyledEditBtnWrapper>
-						<CustomButton
-							text={translate('ui.button.edit', 'Edit')}
+						<StyledEditButton
+							text={
+								<StyledEditButtonWrapper>
+									<StyledEditIcon />
+									{translate('ui.button.edit', 'Edit')}
+								</StyledEditButtonWrapper>
+							}
 							size='small'
 							variant='contained'
 							onClick={onTitleEditHandle}
@@ -117,8 +120,13 @@ const EditorPanel = ({
 						onDescriptionChange={onDescriptionChange}
 					/>
 					<StyledEditBtnWrapper>
-						<CustomButton
-							text={translate('ui.button.edit', 'Edit')}
+						<StyledEditButton
+							text={
+								<StyledEditButtonWrapper>
+									<StyledEditIcon />
+									{translate('ui.button.edit', 'Edit')}
+								</StyledEditButtonWrapper>
+							}
 							size='small'
 							variant='contained'
 							onClick={onDescriptionEditHandle}
@@ -141,28 +149,36 @@ const EditorPanel = ({
 					spatialData={appData.spatialData.data.map}
 					onPlaceEdit={onPlaceEdit}
 					dispatchAppData={dispatchAppData}
+					icon={appData.spatialData.data.style.selectedIcon.icon}
 				/>
 			</ErrorBoundary>
-			<StyledDivider />
-			<ErrorBoundary>
-				<CustomButton
-					text={translate('ui.button.addPlace', 'Add Place')}
-					size='small'
-					variant='contained'
-					onClick={onAddNewPlace}
-					width='90%'
-				/>
-			</ErrorBoundary>
-			<StyledDivider />
-			<ErrorBoundary>
-				<CustomButton
-					text={translate('ui.button.save', 'Save')}
-					size='small'
-					variant='contained'
-					onClick={onPostHandler}
-					width='90%'
-				/>
-			</ErrorBoundary>
+			{/* <StyledDivider /> */}
+			<StyledAddPlaceButtonWrapper>
+				<ErrorBoundary>
+					<StyledAddPlaceButton
+						size='small'
+						variant='contained'
+						onClick={onAddNewPlace}>
+						<StyledEditButtonWrapper>
+							<StyledAddPlaceIcon style={{ color: '#2D8DE8' }} />
+							<strong>{translate('ui.button.addPlace', 'Add Place')}</strong>
+						</StyledEditButtonWrapper>
+					</StyledAddPlaceButton>
+				</ErrorBoundary>
+			</StyledAddPlaceButtonWrapper>
+
+			{/* <StyledDivider /> */}
+			<StyledSaveButtonWrapper>
+				<ErrorBoundary>
+					<CustomButton
+						text={translate('ui.button.save', 'Save')}
+						size='small'
+						variant='contained'
+						onClick={onPostHandler}
+						width='100%'
+					/>
+				</ErrorBoundary>
+			</StyledSaveButtonWrapper>
 		</Editor>
 	)
 }
@@ -171,7 +187,8 @@ export default EditorPanel
 
 const Editor = styled.div`
 	&& {
-		height: auto;
+		position: relative;
+		height: 100%;
 		background: #fff;
 		padding-top: 20px;
 		display: flex;
@@ -189,7 +206,8 @@ const StyledEditBtnWrapper = styled.div`
 	&& {
 		width: 100%;
 		display: flex;
-		justify-content: flex-end;
+		justify-content: center;
+		margin-top: 10px;
 	}
 `
 
@@ -201,8 +219,45 @@ const StyledDivider = styled.div`
 		margin: 20px 0;
 	}
 `
-const StyledReturnButton = styled.div`
+
+const StyledEditButtonWrapper = styled.span`
 	display: flex;
-	justify-content: flex-end;
+	align-items: center;
+`
+
+const StyledEditIcon = styled(EditIcon)`
+	transform: scale(0.6);
+`
+const StyledAddPlaceIcon = styled(AddLocationIcon)`
+	transform: scale(0.8);
+`
+const StyledEditButton = styled(CustomButton)``
+
+const StyledAddPlaceButton = styled(Button)`
+	&& {
+		width: auto;
+		background: #fff;
+		color: '#878787';
+		transition: all 0.3s;
+		margin-right: auto;
+
+		&:hover {
+			cursor: pointer;
+			background: #2d8de8;
+			color: #fff;
+
+			& > span > span > svg > path {
+				color: #fff;
+			}
+		}
+	}
+`
+const StyledAddPlaceButtonWrapper = styled.div`
 	width: 90%;
+	margin-top: 20px;
+`
+const StyledSaveButtonWrapper = styled.div`
+	position: absolute;
+	bottom: 50px;
+	width: 90px;
 `

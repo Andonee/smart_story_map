@@ -381,16 +381,16 @@ function App() {
 		if (visiblePlace.length === 0) {
 			mapInstance.flyTo({
 				center: [
-					visiblePlace.geometry.coordinates[0],
-					visiblePlace.geometry.coordinates[1],
+					visiblePlace.geometry?.coordinates[0],
+					visiblePlace.geometry?.coordinates[1],
 				],
 				zoom: 16,
 			})
 		} else {
 			mapInstance.flyTo({
 				center: [
-					visiblePlace[0].geometry.coordinates[0],
-					visiblePlace[0].geometry.coordinates[1],
+					visiblePlace[0].geometry?.coordinates[0],
+					visiblePlace[0].geometry?.coordinates[1],
 				],
 				zoom: 16,
 			})
@@ -688,9 +688,9 @@ const StyledInfoPanel = styled.div`
 
 const StyledEditorPanel = styled.div`
 	&& {
-		width: 350px;
+		width: 400px;
 		order: ${props => props.order || 1};
-		overflow: scroll;
+		${'' /* overflow: scroll; */}
 		${props => props.color || '#fff'}
 	}
 `

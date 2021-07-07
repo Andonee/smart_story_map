@@ -217,6 +217,8 @@ const MapConfig = ({
 			<StyledConfig>
 				<CustomButton
 					text={<PlaceIcon />}
+					width={'35px'}
+					height={'35px'}
 					size='small'
 					variant='contained'
 					onClick={handleIconClick}
@@ -248,6 +250,8 @@ const MapConfig = ({
 
 				<CustomButton
 					text={<MapIcon />}
+					width={'35px'}
+					height={'35px'}
 					size='small'
 					variant='contained'
 					onClick={handleBasemapClick}
@@ -288,6 +292,8 @@ const MapConfig = ({
 				</Popover>
 				<CustomButton
 					text={<SyncAltIcon />}
+					width={'35px'}
+					height={'35px'}
 					size='small'
 					variant='contained'
 					onClick={e =>
@@ -298,25 +304,26 @@ const MapConfig = ({
 					}
 					tooltip={translate('ui.tooltip.switch', 'Switch')}
 				/>
-			</StyledConfig>
-			<StyledMap>
-				{appData.spatialData.type === 'timeline' && (
+				{appData.spatialData.type === 'story map' && (
 					<>
 						<CustomButton
-							text={<PaletteIcon />}
+							text={<FormatColorFillIcon />}
+							width={'35px'}
+							height={'35px'}
 							size='small'
 							variant='contained'
-							onClick={handlTimelineColorClick}
+							onClick={handleBackgroundColorClick}
 							tooltip={translate(
-								'ui.tooltip.changeTimelineBackgroundColor',
-								'Change timeline background color'
+								'ui.tooltip.changeSidebarColor',
+								'Change sidebar color'
 							)}
 						/>
+
 						<Popover
-							id={timelineColorId}
-							open={openTimelineColorPicker}
-							anchorEl={TimelineColorAnchorEl}
-							onClose={handlTimelineColorClose}
+							id={backgroundColorId}
+							open={openBackgroundColorPicker}
+							anchorEl={BackgroundColorAnchorEl}
+							onClose={handlBackgroundColorClose}
 							anchorOrigin={{
 								vertical: 'bottom',
 								horizontal: 'center',
@@ -327,81 +334,166 @@ const MapConfig = ({
 							}}>
 							<ChromePicker
 								onChange={color =>
-									onChange(color, timelineReducerActions.SET_TIMELINE_COLOR)
+									onChange(color, timelineReducerActions.SET_BACKGROUND_COLOR)
 								}
-								color={timelineColor}
+								color={backgroundColor}
+							/>
+						</Popover>
+						<CustomButton
+							text={<FormatColorTextIcon />}
+							width={'35px'}
+							height={'35px'}
+							size='small'
+							variant='contained'
+							onClick={handleFontColorClick}
+							tooltip={translate(
+								'ui.tooltip.changeTextColor',
+								'Change text color'
+							)}
+						/>
+
+						<Popover
+							id={fontColorId}
+							open={openFontColorPicker}
+							anchorEl={FontColorAnchorEl}
+							onClose={handlFontColorClose}
+							anchorOrigin={{
+								vertical: 'bottom',
+								horizontal: 'center',
+							}}
+							transformOrigin={{
+								vertical: 'top',
+								horizontal: 'center',
+							}}>
+							<FontSelector
+								dispatchAppData={dispatchAppData}
+								font={appData.spatialData.data.style.font}
+							/>
+							<ChromePicker
+								onChange={color =>
+									onChange(color, timelineReducerActions.SET_FONT_COLOR)
+								}
+								color={fontColor}
 							/>
 						</Popover>
 					</>
 				)}
-				<CustomButton
-					text={<FormatColorFillIcon />}
-					size='small'
-					variant='contained'
-					onClick={handleBackgroundColorClick}
-					tooltip={translate(
-						'ui.tooltip.changeSidebarColor',
-						'Change sidebar color'
-					)}
-				/>
+			</StyledConfig>
 
-				<Popover
-					id={backgroundColorId}
-					open={openBackgroundColorPicker}
-					anchorEl={BackgroundColorAnchorEl}
-					onClose={handlBackgroundColorClose}
-					anchorOrigin={{
-						vertical: 'bottom',
-						horizontal: 'center',
-					}}
-					transformOrigin={{
-						vertical: 'top',
-						horizontal: 'center',
-					}}>
-					<ChromePicker
-						onChange={color =>
-							onChange(color, timelineReducerActions.SET_BACKGROUND_COLOR)
-						}
-						color={backgroundColor}
+			{appData.spatialData.type === 'timeline' && (
+				<StyledMap>
+					<CustomButton
+						text={<PaletteIcon />}
+						width={'35px'}
+						height={'35px'}
+						size='small'
+						variant='contained'
+						onClick={handlTimelineColorClick}
+						tooltip={translate(
+							'ui.tooltip.changeTimelineBackgroundColor',
+							'Change timeline background color'
+						)}
 					/>
-				</Popover>
-				<CustomButton
-					text={<FormatColorTextIcon />}
-					size='small'
-					variant='contained'
-					onClick={handleFontColorClick}
-					tooltip={translate('ui.tooltip.changeTextColor', 'Change text color')}
-				/>
+					<Popover
+						id={timelineColorId}
+						open={openTimelineColorPicker}
+						anchorEl={TimelineColorAnchorEl}
+						onClose={handlTimelineColorClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'center',
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'center',
+						}}>
+						<ChromePicker
+							onChange={color =>
+								onChange(color, timelineReducerActions.SET_TIMELINE_COLOR)
+							}
+							color={timelineColor}
+						/>
+					</Popover>
 
-				<Popover
-					id={fontColorId}
-					open={openFontColorPicker}
-					anchorEl={FontColorAnchorEl}
-					onClose={handlFontColorClose}
-					anchorOrigin={{
-						vertical: 'bottom',
-						horizontal: 'center',
-					}}
-					transformOrigin={{
-						vertical: 'top',
-						horizontal: 'center',
-					}}>
-					<FontSelector
-						dispatchAppData={dispatchAppData}
-						font={appData.spatialData.data.style.font}
+					<CustomButton
+						text={<FormatColorFillIcon />}
+						width={'35px'}
+						height={'35px'}
+						size='small'
+						variant='contained'
+						onClick={handleBackgroundColorClick}
+						tooltip={translate(
+							'ui.tooltip.changeSidebarColor',
+							'Change sidebar color'
+						)}
 					/>
-					<ChromePicker
-						onChange={color =>
-							onChange(color, timelineReducerActions.SET_FONT_COLOR)
-						}
-						color={fontColor}
+
+					<Popover
+						id={backgroundColorId}
+						open={openBackgroundColorPicker}
+						anchorEl={BackgroundColorAnchorEl}
+						onClose={handlBackgroundColorClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'center',
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'center',
+						}}>
+						<ChromePicker
+							onChange={color =>
+								onChange(color, timelineReducerActions.SET_BACKGROUND_COLOR)
+							}
+							color={backgroundColor}
+						/>
+					</Popover>
+					<CustomButton
+						text={<FormatColorTextIcon />}
+						width={'35px'}
+						height={'35px'}
+						size='small'
+						variant='contained'
+						onClick={handleFontColorClick}
+						tooltip={translate(
+							'ui.tooltip.changeTextColor',
+							'Change text color'
+						)}
 					/>
-				</Popover>
-			</StyledMap>
+
+					<Popover
+						id={fontColorId}
+						open={openFontColorPicker}
+						anchorEl={FontColorAnchorEl}
+						onClose={handlFontColorClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'center',
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'center',
+						}}>
+						<FontSelector
+							dispatchAppData={dispatchAppData}
+							font={appData.spatialData.data.style.font}
+						/>
+						<ChromePicker
+							onChange={color =>
+								onChange(color, timelineReducerActions.SET_FONT_COLOR)
+							}
+							color={fontColor}
+						/>
+					</Popover>
+				</StyledMap>
+			)}
+
 			{appData.spatialData.type === 'timeline' && (
 				<StyledMap>
 					<CustomButton
 						text={<TimelineIcon />}
+						width={'35px'}
+						height={'35px'}
 						size='small'
 						variant='contained'
 						onClick={handleAxisColorClick}
@@ -434,6 +526,8 @@ const MapConfig = ({
 
 					<CustomButton
 						text={<FiberManualRecordIcon />}
+						width={'35px'}
+						height={'35px'}
 						size='small'
 						variant='contained'
 						onClick={handleIconColorClick}
@@ -466,6 +560,8 @@ const MapConfig = ({
 
 					<CustomButton
 						text={<RadioButtonUncheckedIcon />}
+						width={'35px'}
+						height={'35px'}
 						size='small'
 						variant='contained'
 						onClick={handleIconColorBorderClick}
@@ -532,6 +628,7 @@ const StyledMap = styled.div`
 
 const StyledConfig = styled.div`
 	width: 70%;
+	padding: 10px 0;
 	display: flex;
 	justify-content: space-between;
 `
