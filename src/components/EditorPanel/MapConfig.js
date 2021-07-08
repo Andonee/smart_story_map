@@ -8,8 +8,6 @@ import TimelineIcon from '@material-ui/icons/Timeline'
 import FormatColorFillIcon from '@material-ui/icons/FormatColorFill'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
-import TextField from '@material-ui/core/TextField'
-
 import { ChromePicker } from 'react-color'
 import PaletteIcon from '@material-ui/icons/Palette'
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText'

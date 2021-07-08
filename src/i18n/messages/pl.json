@@ -12,6 +12,7 @@
 	"ui.tooltip.changeTimelineColor": "Zmień kolor osi",
 	"ui.tooltip.changeTimelineIconColor": "Zmień kolor ikonki osi",
 	"ui.tooltip.changeTimelineIconBorderColor": "Zmień kolor obwódki ikonki osi",
+	"ui.addPlace.newPlaceInfo": "Wybierz na mapie miejsce w którym chcesz dodać nowy punkt",
 	"form.label.title": "Nazwa miejsca",
 	"form.label.description": "Opis",
 	"form.label.photo": "Zdjęcie",

@@ -12,6 +12,7 @@
 	"ui.tooltip.changeTimelineColor": "Change timeline color",
 	"ui.tooltip.changeTimelineIconColor": "Change timeline icon color",
 	"ui.tooltip.changeTimelineIconBorderColor": "Change timeline icon border color",
+	"ui.addPlace.newPlaceInfo": "Click on the map where you want to add a new place",
 	"form.label.title": "Title",
 	"form.label.description": "Description",
 	"form.label.photo": "Photo",

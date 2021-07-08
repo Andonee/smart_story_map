@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useCallback } from 'react'
 
 import { nanoid } from 'nanoid'
 import styled from 'styled-components'
@@ -17,6 +17,7 @@ import FetchDataError from '../components/UI/FetchDataError'
 import MapTitle from '../components/UI/MapTitle'
 import MapDescription from '../components/UI/MapDescription'
 import Toolbox from '../components/UI/Toolbox'
+import AddPlaceInfo from '../components/UI/AddPlaceInfo'
 
 import RemoveObjectConfirmation from '../components/EditorPanel/RemoveObjectConfirmation/RemoveObjectConfirmation'
 import useHttp from '../hooks/useHttp'
@@ -476,7 +477,7 @@ function App() {
 		})
 	}
 
-	const zoomToBBox = () => {
+	const zoomToBBox = useCallback(() => {
 		let coords = []
 
 		appData.spatialData.data?.map.features.map(el => {
@@ -512,7 +513,7 @@ function App() {
 			],
 			{ padding: 60, maxZoom: 19 }
 		)
-	}
+	}, [appData.spatialData.data?.map.features, mapInstance])
 
 	const onDescriptionOpenHandler = () => {
 		setIsDescriptionOpen(!isDescriptionOpen)
@@ -529,7 +530,8 @@ function App() {
 			{error.content && error.content !== 'Not authorized' && (
 				<FetchDataError />
 			)}
-			<Toolbox>
+			{newObject.addNewObject && <AddPlaceInfo />}
+			<Toolbox loggedIn={authContext.isLoggedIn}>
 				<StyledIconButton onClick={onReturnHandler}>
 					<ArrowBackIcon />
 				</StyledIconButton>

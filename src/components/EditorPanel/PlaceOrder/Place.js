@@ -50,6 +50,7 @@ const StyledPlace = styled.div`
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		font-family: 'Lato', sans-serif;
 		padding: 8px;
 		text-align: center;
 		font-size: 14px;
