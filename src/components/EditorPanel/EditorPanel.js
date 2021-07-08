@@ -10,7 +10,6 @@ import { timelineReducerActions } from '../../store/timelineReducer'
 import dispatchMatcher from '../../utils/dispatchMatcher'
 import ErrorBoundary from '../UI/ErrorBoundary'
 import translate from '../../utils/translate'
-import { useHistory } from 'react-router-dom'
 import EditIcon from '@material-ui/icons/Edit'
 import AddLocationIcon from '@material-ui/icons/AddLocation'
 import Button from '@material-ui/core/Button'
@@ -33,8 +32,6 @@ const EditorPanel = ({
 		description: appData.spatialData.data.info.description,
 		isEdited: false,
 	})
-
-	const history = useHistory()
 
 	const onTitleChange = e => {
 		dispatchMatcher(
@@ -86,14 +83,6 @@ const EditorPanel = ({
 
 	return (
 		<Editor>
-			{/* <StyledReturnButton>
-				<CustomButton
-					text={<ArrowBackIcon />}
-					size='small'
-					variant='contained'
-					onClick={onReturnHandler}
-				/>
-			</StyledReturnButton> */}
 			<StyledTitleWrapper>
 				<ErrorBoundary>
 					<Title title={title} onTitleChange={onTitleChange} />
@@ -152,7 +141,6 @@ const EditorPanel = ({
 					icon={appData.spatialData.data.style.selectedIcon.icon}
 				/>
 			</ErrorBoundary>
-			{/* <StyledDivider /> */}
 			<StyledAddPlaceButtonWrapper>
 				<ErrorBoundary>
 					<StyledAddPlaceButton
@@ -166,8 +154,6 @@ const EditorPanel = ({
 					</StyledAddPlaceButton>
 				</ErrorBoundary>
 			</StyledAddPlaceButtonWrapper>
-
-			{/* <StyledDivider /> */}
 			<StyledSaveButtonWrapper>
 				<ErrorBoundary>
 					<CustomButton

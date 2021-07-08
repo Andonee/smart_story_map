@@ -31,8 +31,7 @@ const ImageModal = ({ isOpen, setIsOpen }) => {
 			BackdropComponent={Backdrop}
 			BackdropProps={{
 				timeout: 500,
-			}}
-		>
+			}}>
 			<Fade in={open}>
 				<StyledPaper>
 					<StyledCloseBtn onClick={handleClose} size='small'>
@@ -49,13 +48,11 @@ export default ImageModal
 
 const StyledWrapper = styled(Modal)`
 	&& {
-		${({ theme }) => `
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	box-shadow: theme.shadows[5];
-	position: relative;
-		`}
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: theme.shadows[5];
+		position: relative;
 	}
 `
 const StyledPaper = styled.div`

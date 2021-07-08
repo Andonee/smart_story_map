@@ -62,7 +62,6 @@ const StyledInput = styled(TextField)`
 			transition: all .3s;
       color: ${theme.palette.info.main}
     }
-
 `}
 	}
 `

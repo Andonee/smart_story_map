@@ -38,6 +38,6 @@ export default InfoPanel
 const StyledWrapper = styled.div`
 	&& {
 		height: 100%;
-		overflow: scroll; /* background: black; */
+		overflow: scroll;
 	}
 `

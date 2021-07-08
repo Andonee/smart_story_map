@@ -22,12 +22,6 @@ const LanguageWrapper = ({ children }) => {
 		const newLocale = e.target.value
 		setLocale(newLocale)
 
-		// if (newLocale === 'pl') {
-		// 	setMessages(Polish)
-		// } else {
-		// 	setMessages(English)
-		// }
-
 		setMessages(prevState => (prevState === Polish ? English : Polish))
 	}
 

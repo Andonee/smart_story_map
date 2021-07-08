@@ -13,6 +13,8 @@
 	"ui.tooltip.changeTimelineIconColor": "Zmień kolor ikonki osi",
 	"ui.tooltip.changeTimelineIconBorderColor": "Zmień kolor obwódki ikonki osi",
 	"ui.addPlace.newPlaceInfo": "Wybierz na mapie miejsce w którym chcesz dodać nowy punkt",
+	"ui.infopanel.addPlaces": "Dodaj miejsca do swojej mapy",
+	"ui.errorBoundary": "Coś poszło nie tak :(",
 	"form.label.title": "Nazwa miejsca",
 	"form.label.description": "Opis",
 	"form.label.photo": "Zdjęcie",
@@ -27,5 +29,8 @@
 	"mapConfig.icon.remove": "Nie możesz usunąć domyślnych ikonek",
 	"modal.removeObject": "Czy na pewno chcesz usunąć ten obiekt?",
 	"modal.removeIcon": "Czy na pewno chcesz usunąć tą ikonkę?",
-	"modal.session": "Twoja sesja wygała. Zaloguj się ponownie"
+	"modal.session": "Twoja sesja wygała. Zaloguj się ponownie",
+	"account.logout": "Wyloguj",
+	"account.createStoryMap": "Stwórz Story Map",
+	"account.createTimeline": "Stwórz Timeline"
 }

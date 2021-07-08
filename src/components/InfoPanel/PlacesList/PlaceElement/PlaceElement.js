@@ -35,8 +35,6 @@ const PlaceElement = ({
 		address,
 	} = spatialData.properties
 
-	console.log('fontColor', fontColor)
-
 	return (
 		<StyledWrapper id={id}>
 			<StyledAccordion>
@@ -53,7 +51,7 @@ const PlaceElement = ({
 					</StyledTitleContainer>
 
 					{address && <Address address={address} fontColor={fontColor} />}
-					<Divider variant='fullWidth' />
+					{date && <Divider variant='fullWidth' />}
 					{date && <StorymapDate date={date} fontColor={fontColor} />}
 				</StyledAccordionSummary>
 				<StyledAccordionDetails>
@@ -71,20 +69,6 @@ const PlaceElement = ({
 					{audio && <Audio audio={audio} />}
 				</StyledAccordionDetails>
 			</StyledAccordion>
-			{/* {photo1 && <Photo photo={photo1} open={imageOpenHandler} />}
-			{photo2 && <Photo photo={photo2} open={imageOpenHandler} />}
-			{photo3 && <Photo photo={photo3} open={imageOpenHandler} />}
-			{title && <PlaceName title={title} fontColor={fontColor} />}
-			{description && <Divider variant='middle' />}
-			{description && (
-				<PlaceDescription description={description} fontColor={fontColor} />
-			)}
-			{video && <Divider variant='middle' />}
-			{video && <Video video={video} />}
-			{link && <Divider variant='middle' />}
-			{link && <Link link={link} fontColor={fontColor} />}
-			{audio && <Divider variant='middle' />}
-			{audio && <Audio audio={audio} />} */}
 		</StyledWrapper>
 	)
 }
@@ -92,15 +76,14 @@ const PlaceElement = ({
 export default PlaceElement
 
 const StyledWrapper = styled.div`
-	margin-bottom: 25px;
+	margin-bottom: 20px;
 
 	& + & {
-		${'' /* transform: translateX(-100%); */}
-		opacity: 0.5
+		opacity: 0.5;
 	}
 
 	&:first-of-type {
-		margin-top: 20px;
+		margin-top: 15px;
 	}
 
 	&:last-of-type {
@@ -116,7 +99,6 @@ const StyledAccordion = styled(Accordion)`
 	&& {
 		margin: 0 auto;
 		width: 95%;
-		${'' /* border-radius: 10px; */}
 		border-radius: 5px !important;
 		box-shadow: 2px 2px 5px 0px rgba(107, 107, 107, 1);
 	}

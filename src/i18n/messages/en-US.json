@@ -13,6 +13,8 @@
 	"ui.tooltip.changeTimelineIconColor": "Change timeline icon color",
 	"ui.tooltip.changeTimelineIconBorderColor": "Change timeline icon border color",
 	"ui.addPlace.newPlaceInfo": "Click on the map where you want to add a new place",
+	"ui.infopanel.addPlaces": "Add places to your map",
+	"ui.errorBoundary": "Something went wrong :(",
 	"form.label.title": "Title",
 	"form.label.description": "Description",
 	"form.label.photo": "Photo",
@@ -27,5 +29,8 @@
 	"mapConfig.icon.remove": "You can not remove default icons.",
 	"modal.removeObject": "Are you sure you want to remove this object?",
 	"modal.removeIcon": "Are you sure you want to remove this icon?",
-	"modal.session": "Your session has expired. Please log in."
+	"modal.session": "Your session has expired. Please log in.",
+	"account.logout": "Logout",
+	"account.createStoryMap": "Create a Story Map",
+	"account.createTimeline": "Create a Timeline"
 }

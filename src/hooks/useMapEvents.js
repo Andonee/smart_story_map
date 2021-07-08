@@ -34,18 +34,6 @@ const useMapHover = (map, callback = () => {}) => {
 	useMapEvents(source, callback)
 }
 
-const useMoveEnd = (map, callback = () => {}) => {
-	const [source, setSource] = useState(empty())
-
-	useEffect(() => {
-		const source$ = (map && map.event$) ?? empty()
-		const moveEnd$ = source$.pipe(rxFilter(({ type }) => 'moveend' === type))
-		setSource(moveEnd$)
-	}, [map])
-
-	useMapEvents(source, callback)
-}
-
 export default useMapEvents
 
-export { useMapClick, useMapHover, useMoveEnd }
+export { useMapClick, useMapHover }

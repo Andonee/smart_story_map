@@ -2,7 +2,6 @@ import { useState } from 'react'
 import FontPicker from 'font-picker-react'
 import styled from 'styled-components'
 import translate from '../../utils/translate'
-
 import { timelineReducerActions } from '../../store/timelineReducer'
 import dispatchMatcher from '../../utils/dispatchMatcher'
 

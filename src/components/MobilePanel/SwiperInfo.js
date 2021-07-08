@@ -10,8 +10,6 @@ import Divider from '@material-ui/core/Divider'
 import CloseIcon from '@material-ui/icons/Close'
 
 const SwiperInfo = ({ info, open, setOpen, fontColor, imageOpenHandler }) => {
-	console.log('info', info)
-
 	const onMobileInfoCloseHandler = () => {
 		setOpen(false)
 	}

@@ -154,7 +154,6 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 				name='audio'
 				control={control}
 			/>
-			{/* {type === 'timeline' && ( */}
 			<>
 				<StyledDivider />
 				<Controller
@@ -191,7 +190,6 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
 					control={control}
 				/>
 			</>
-			{/* )} */}
 			<StyledDivider />
 			{editedPlace?.id ? (
 				<CustomButton
@@ -227,9 +225,7 @@ const StyledContainer = styled.form`
 const StyledInput = styled(TextField)`
 	&& {
 		${({ theme }) => `
-
       width: 90%;
-
 
     &:hover label {
 			transition: all .3s;

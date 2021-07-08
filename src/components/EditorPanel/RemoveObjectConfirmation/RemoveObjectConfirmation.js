@@ -39,6 +39,7 @@ const StyledWrapper = styled.div`
 	justify-content: center;
 	margin-top: 20px;
 `
+
 const StyledEditBtnWrapper = styled.div`
 	&& {
 		width: 100%;

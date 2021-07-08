@@ -11,13 +11,9 @@ const AuthContext = createContext({
 })
 
 const calculateRemainingTime = expirationTime => {
-	// debugger
 	const currentTime = new Date().getTime()
 	console.log('currentTime', currentTime)
-	// const adjExpirationtime = new Date(expirationTime).getTime()
 	const adjExpirationtime = expirationTime
-
-	// console.log(expirationTime.getTime())
 
 	const remainingTime = adjExpirationtime - currentTime
 
@@ -75,8 +71,6 @@ export const AuthContextProvider = ({ children }) => {
 		localStorage.setItem('expirationTime', expirationTime)
 
 		const remainingTime = calculateRemainingTime(expirationTime)
-
-		console.log('remaining', remainingTime)
 
 		logoutTimer = setTimeout(logoutHandler, remainingTime)
 	}

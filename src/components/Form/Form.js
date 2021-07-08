@@ -11,7 +11,7 @@ const Form = () => {
 	const [isLogin, setIsLogin] = useState(true)
 	const [errorMessage, setErrorMessage] = useState('')
 
-	const { error, sendRequest } = useHttp()
+	const { sendRequest } = useHttp()
 
 	const authContext = useContext(AuthContext)
 
@@ -28,9 +28,6 @@ const Form = () => {
 	const onSubmitHandler = async e => {
 		e.preventDefault()
 
-		// debugger
-
-		// This is a demo app (temporary) so there is no validation
 		const enteredLogin = loginRef.current.value
 		const enteredPassword = passwordRef.current.value
 
@@ -41,10 +38,6 @@ const Form = () => {
 			} else {
 				url = `${BaseUrl}/signup`
 			}
-			// const request = await sendRequest(url, 'POST', {
-			// 	user: enteredLogin || '',
-			// 	password: enteredPassword,
-			// })
 
 			const request = await sendRequest({
 				method: 'POST',
@@ -55,22 +48,16 @@ const Form = () => {
 				},
 			})
 
-			console.log(request)
-
 			if (request.status === 200) {
 				setErrorMessage('')
 				const data = request.data
 
 				const decodedToken = jwt_decode(data.token)
-				console.log(decodedToken)
-				const expirationTime = +decodedToken.exp * 1000
 
-				console.log('Expiration time', expirationTime)
+				const expirationTime = +decodedToken.exp * 1000
 
 				authContext.login(data.token, expirationTime)
 
-				console.log('userId', data.user, 'token', data.token)
-				console.log(data)
 				authContext.user(data.user)
 				history.replace(`/story-account/maps/${data.user}`)
 			} else {
@@ -85,7 +72,6 @@ const Form = () => {
 	return (
 		<StyledFormWrapper>
 			<Title />
-
 			<StyledFormSection>
 				<StyledFormTitle>Witamy na Story Map</StyledFormTitle>
 				<StyledForm onSubmit={onSubmitHandler}>
@@ -96,7 +82,6 @@ const Form = () => {
 						ref={loginRef}
 						required
 					/>
-
 					<StyledFormInput
 						type='password'
 						id='password'

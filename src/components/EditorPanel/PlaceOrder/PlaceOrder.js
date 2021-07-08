@@ -98,11 +98,9 @@ export default PlaceOrder
 const StyledWrapper = styled.div`
 	width: 90%;
 	background: #fff;
-	${'' /* border: 1px solid #cccccc; */}
 	padding: 5px;
 	height: auto;
-	max-height: 200px;
-	${'' /* overflow: scroll; */}
+	max-height: 250px;
 	overflow-x: hidden;
 `
 const StyledList = styled.div`

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import useMap from '../../hooks/useMap'
 import { filter as rxFilter } from 'rxjs/operators'
 import styled from 'styled-components'
-import { useMapClick, useMapHover, useMoveEnd } from '../../hooks/useMapEvents'
+import { useMapClick, useMapHover } from '../../hooks/useMapEvents'
 import { decode } from 'js-base64'
 
 const Map = ({
@@ -35,14 +35,7 @@ const Map = ({
 			setIsLoaded(false)
 			subsription.unsubscribe()
 		}
-	}, [
-		map,
-		// appData.style.selectedIcon.icon,
-		// appData.style.icons,
-		// icon,
-		// appData.style.basemap,
-		setMapInstance,
-	])
+	}, [map, setMapInstance])
 
 	useEffect(() => {
 		if (map) {
@@ -78,7 +71,6 @@ const Map = ({
 	useEffect(() => {
 		if (iconIsChanged) {
 			setTimeout(() => addData(), 2000)
-			// addData()
 			setIconIsChanged(false)
 		}
 		setIconIsChanged(false)
@@ -153,10 +145,6 @@ const Map = ({
 	useMapClick(map, onMapClickHandler)
 
 	useMapHover(map, onObjectHover)
-
-	// useMoveEnd(map, onObjectHover)
-
-	// useMoveEnd(map, onMapClickHandler)
 
 	return <StyledWrapper id='map'></StyledWrapper>
 }

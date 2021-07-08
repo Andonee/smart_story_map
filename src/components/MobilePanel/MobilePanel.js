@@ -28,7 +28,7 @@ const MobilePanel = ({
 		)
 
 		sliderRef.current.swiper.slideTo(slideIdx)
-	}, [selectedPlace])
+	}, [selectedPlace, slides])
 
 	const slides = []
 

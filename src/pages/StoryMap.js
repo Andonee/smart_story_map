@@ -40,6 +40,7 @@ import { useHistory } from 'react-router-dom'
 import AuthContext from '../store/auth-context'
 import CustomButton from '../components/UI/CustomButton'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import { getBoundingBox } from '../utils/getBoundingBox'
 
 function App() {
 	const history = useHistory()
@@ -89,7 +90,6 @@ function App() {
 	const context = useContext(Context)
 
 	useEffect(() => {
-		console.log('history', history)
 		if (history.action === 'REPLACE') {
 			setIsEditable({
 				allowed: true,
@@ -97,7 +97,6 @@ function App() {
 			})
 		}
 
-		console.log(window.location.href)
 		const link = window.location.href
 
 		const splittedUrl = link.split('/')
@@ -110,9 +109,7 @@ function App() {
 	}, [])
 
 	useEffect(() => {
-		console.log('Checking')
 		if (!urlData.mapId) return
-		console.log('Fetching')
 		sendRequest({
 			url: `${BaseUrl}/maps/${urlData.user}/${urlData.mapId}`,
 		}).then(res => {
@@ -154,7 +151,7 @@ function App() {
 		) {
 			zoomToBBox()
 		}
-	}, [appData, mapInstance])
+	}, [mapInstance])
 
 	useEffect(() => {
 		if (newObject.id && newObject.coordinates.length === 2) {
@@ -230,10 +227,7 @@ function App() {
 				address,
 			},
 		}
-		// if (appData.spatialData.type === 'timeline') {
-		// 	createNewObject.properties.date = date
-		// }
-		console.log(createNewObject)
+
 		setIsNewObjectModalOpen(false)
 
 		dispatchMatcher(
@@ -412,7 +406,6 @@ function App() {
 					const visibleElement = document.getElementById(
 						visiblePlace[0]?.properties.id
 					)
-					console.log(visibleElement)
 					visibleElement?.classList.add('show')
 					onScrollFlyTo()
 				} else {
@@ -434,10 +427,6 @@ function App() {
 					}
 				}
 
-				const visibleElement = document.getElementById(id)
-				if (id !== appData.spatialData.data.map.features[0].properties.id) {
-					// visibleElement.classList.add('show')
-				}
 			} else if (!isElementOnScreen(id)) {
 				const invisibleElement = document.getElementById(id)
 				invisibleElement.classList.remove('show')
@@ -447,10 +436,6 @@ function App() {
 	}
 
 	const onObjectClickHandler = object => {
-		// mapInstance.flyTo({
-		// 	center: object[0].geometry.coordinates,
-		// 	zoom: 16,
-		// })
 
 		if (!isMobile) {
 			console.log('Object', object)
@@ -484,28 +469,6 @@ function App() {
 			coords.push(el.geometry.coordinates)
 		})
 
-		function getBoundingBox(data) {
-			var bounds = {},
-				coords,
-				latitude,
-				longitude
-
-			for (var i = 0; i < data.length; i++) {
-				coords = data
-
-				for (var j = 0; j < coords.length; j++) {
-					longitude = coords[j][0]
-					latitude = coords[j][1]
-					bounds.xMin = bounds.xMin < longitude ? bounds.xMin : longitude
-					bounds.xMax = bounds.xMax > longitude ? bounds.xMax : longitude
-					bounds.yMin = bounds.yMin < latitude ? bounds.yMin : latitude
-					bounds.yMax = bounds.yMax > latitude ? bounds.yMax : latitude
-				}
-			}
-
-			return bounds
-		}
-
 		mapInstance.fitToBounds(
 			[
 				[getBoundingBox(coords).xMax, getBoundingBox(coords).yMax],
@@ -520,7 +483,6 @@ function App() {
 	}
 
 	const onReturnHandler = () => {
-		console.log(history)
 		history.replace(`/story-account/maps/${urlData.user}`)
 	}
 
@@ -685,9 +647,6 @@ export default App
 const StyledInfoPanel = styled.div`
 	&& {
 		width: ${props => (props.type === 'timeline' ? '600px' : '400px')};
-		${
-			'' /* max-width: ${props => (props.type === 'timeline' ? '50%' : '50%')}; */
-		}
 		order: ${props => props.order || -1};
 		background: ${props => props.color || '#fff'};
 	}
@@ -697,7 +656,6 @@ const StyledEditorPanel = styled.div`
 	&& {
 		width: 400px;
 		order: ${props => props.order || 1};
-		${'' /* overflow: scroll; */}
 		${props => props.color || '#fff'}
 	}
 `

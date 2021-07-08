@@ -9,6 +9,7 @@ import { nanoid } from 'nanoid'
 import { httpRequest } from '../utils/http-request'
 import { BaseUrl } from '../utils/baseUrl'
 import styled from 'styled-components'
+import translate from '../utils/translate'
 
 const Account = () => {
 	const authContext = useContext(AuthContext)
@@ -19,16 +20,13 @@ const Account = () => {
 	const [reload, setReload] = useState(false)
 
 	useEffect(() => {
-		// debugger
 		const user = authContext.userName
-		console.log('USER', user)
 		setUserName(user)
 		localStorage.setItem('user', user)
 	}, [])
 
 	useEffect(() => {
 		if (!userName) return
-		console.log('FETCH')
 
 		fetch(`${BaseUrl}/mapsInfo/${userName}`, {
 			headers: {
@@ -116,7 +114,6 @@ const Account = () => {
 
 		const mapList = maps.filter(map => map.id !== mapId)
 		setMaps(mapList)
-		debugger
 		try {
 			const removeMap = await httpRequest(
 				`${BaseUrl}/maps/${user}/${mapId}`,
@@ -144,12 +141,15 @@ const Account = () => {
 
 	return (
 		<StyledMapsWrapper>
-			<StyledLogoutButton onClick={onLogoutHandler}>Wyloguj</StyledLogoutButton>
+			<StyledLogoutButton onClick={onLogoutHandler}>
+				{' '}
+				{translate('account.logout', 'Logout')}
+			</StyledLogoutButton>
 			<StyledStoryMapButton id='story map' onClick={onStoryMapCreate}>
-				Utwórz Story Map
+				{translate('account.createStoryMap', 'Create a Story Map')}
 			</StyledStoryMapButton>
 			<StyledTimelineButton id='timeline' onClick={onStoryMapCreate}>
-				Utwórz Timeline
+				{translate('account.createTimeline', 'Create a Timeline')}
 			</StyledTimelineButton>
 			{maps?.length > 0
 				? maps?.map(el => (
@@ -182,14 +182,6 @@ const StyledMapsWrapper = styled.div`
 	width: 90%;
 	margin-top: 100px;
 `
-const StyledActionButtons = styled.div`
-	position: fixed;
-	top: 20px;
-	right: 20px;
-	width: 100px;
-	height: 40px;
-`
-
 const StyledLogoutButton = styled.button`
 	position: fixed;
 	top: 20px;

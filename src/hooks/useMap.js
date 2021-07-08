@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react'
 
 const useMap = (mapContainer, Basemap) => {
 	const [map, setMap] = useState()
-	// const [mapUrl, setMapUrl] = useState(
-	// 	'https://map.nmaps.pl/carto.NVYBik/-4G0QGiVu2'
-	// )
 	const [currentMap, setCurrentMap] = useState(Basemap)
 
 	useEffect(() => {

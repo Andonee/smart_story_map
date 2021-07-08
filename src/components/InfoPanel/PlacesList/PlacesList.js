@@ -2,6 +2,7 @@ import React from 'react'
 import PlaceElement from './PlaceElement/PlaceElement'
 import ErrorBoundary from '../../UI/ErrorBoundary'
 import styled from 'styled-components'
+import translate from '../../../utils/translate'
 
 const PlacesList = ({
 	spatialData,
@@ -24,7 +25,9 @@ const PlacesList = ({
 				</ErrorBoundary>
 			))}
 			{spatialData.features.length === 0 && (
-				<StyledPlaceholder>Dodaj miejsca do swojej mapy</StyledPlaceholder>
+				<StyledPlaceholder>
+					{translate('ui.infopanel.addPlaces', 'Add places to your map')}
+				</StyledPlaceholder>
 			)}
 		</div>
 	)

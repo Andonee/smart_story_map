@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import translate from '../../utils/translate'
 
 class ErrorBoundary extends Component {
 	constructor(props) {
@@ -16,7 +17,11 @@ class ErrorBoundary extends Component {
 	}
 	render() {
 		if (this.state.hasError) {
-			return <StyledError>Something went wrong :(</StyledError>
+			return (
+				<StyledError>
+					{translate('ui.errorBoundary', 'Something went wrong :(')}
+				</StyledError>
+			)
 		}
 
 		return this.props.children

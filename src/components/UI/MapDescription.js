@@ -22,7 +22,6 @@ const StyledWrapper = styled.div`
 	top: ${isMobile ? '100px' : '20px'};
 	z-index: 2;
 	text-align: justify;
-	${'' /* overflow: scroll; */}
 
 	${props =>
 		props.opened &&
@@ -37,10 +36,6 @@ const StyledDescription = styled.div`
 	order: -1;
 	width: 350px;
 	max-width: 85%;
-	${
-		'' /* height: auto;
-	max-height: 50%; */
-	}
 	background: #ffffffb0;
 	z-index: -1;
 	letter-spacing: 1px;
@@ -60,7 +55,6 @@ const StyledDescription = styled.div`
 const StyledContent = styled.div`
     height: ${isMobile ? '350px' : '400px'};
     max-height: 80%;
-    ${'' /* overflow: scroll; */}
     overflow-x:hidden;
     padding: 10px 10px;
     width: 100%;

@@ -6,6 +6,7 @@ import mapboxlight from '../../assets/images/mapboxlight.png'
 import mapboxdark from '../../assets/images/mapboxdark.png'
 import { useHistory } from 'react-router-dom'
 import AuthContext from '../../store/auth-context'
+import CloseIcon from '@material-ui/icons/Close'
 
 const MapPreview = ({
 	title,
@@ -21,12 +22,7 @@ const MapPreview = ({
 	const authContext = useContext(AuthContext)
 
 	const onMapClickHandler = () => {
-		// const baseUrl = 'http://localhost:3001/api/maps/'
 		const mapId = id
-
-		// const url = `http://localhost:3000/map/${user}/${mapId}`
-
-		// window.open(url, '_blank')
 
 		history.replace(`/map/${user}/${mapId}`, { secretToken: authContext.token })
 	}
@@ -44,13 +40,10 @@ const MapPreview = ({
 
 	let avatar = basemap === 'bright' ? brightMap : darkMap
 
-	console.log(process.env.NODE_ENV)
-
 	return (
 		<StyledMapsContainer>
-			{/* <img src={`/${mapboxdark}`} /> */}
 			<StyledCloseButton id={id} onClick={onRemoveMapClickHandler}>
-				X
+				<CloseIcon />
 			</StyledCloseButton>
 			<StyledImageContainer>
 				<StyledImage
@@ -102,8 +95,9 @@ const StyledMapsContainer = styled.div`
 `
 const StyledCloseButton = styled.button`
 	position: absolute;
-	top: 5px;
-	right: 5px;
+	top: 2px;
+	right: 2px;
+	color: #848282;
 	background: none;
 	border: none;
 	transition: all 0.3s;
