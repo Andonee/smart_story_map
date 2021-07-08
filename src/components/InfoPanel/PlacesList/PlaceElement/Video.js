@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const Video = ({ video }) => {
 	return (
@@ -10,8 +10,7 @@ const Video = ({ video }) => {
 				height='200'
 				src={video}
 				frameBorder='0'
-				allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
-			></iframe>
+				allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'></iframe>
 		</StyledWrapper>
 	)
 }

@@ -7,7 +7,7 @@ import {
 	createMuiTheme,
 	ThemeProvider as MuiThemeProvider,
 } from '@material-ui/core/styles'
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider } from 'styled-components/macro'
 
 import LanguageWrapper from './components/UI/LanguageWrapper'
 import { BrowserRouter } from 'react-router-dom'

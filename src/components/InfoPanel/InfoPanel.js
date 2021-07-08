@@ -1,7 +1,7 @@
 import React from 'react'
 import PlacesList from './PlacesList/PlacesList'
 import Timeline from './Timeline/Timeline'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import ErrorBoundary from '../UI/ErrorBoundary'
 
 const InfoPanel = ({ spatialData, imageOpenHandler, onScrollHandler }) => {

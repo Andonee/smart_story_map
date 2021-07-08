@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import mapboxlight from '../../assets/images/mapboxlight.png'
 import mapboxdark from '../../assets/images/mapboxdark.png'

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import Place from './Place'
 import { timelineReducerActions } from '../../../store/timelineReducer'

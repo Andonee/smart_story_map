@@ -6,7 +6,7 @@ import CustomModal from '../components/UI/CustomModal'
 import CustomButton from '../components/UI/CustomButton'
 import translate from '../utils/translate'
 
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const Auth = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false)

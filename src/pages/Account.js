@@ -8,7 +8,7 @@ import MapPreviewStructure from '../utils/map-preview-structure.json'
 import { nanoid } from 'nanoid'
 import { httpRequest } from '../utils/http-request'
 import { BaseUrl } from '../utils/baseUrl'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import translate from '../utils/translate'
 
 const Account = () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const Date = ({ date, fontColor }) => {
 	return <StyledDate color={fontColor}>{date}</StyledDate>

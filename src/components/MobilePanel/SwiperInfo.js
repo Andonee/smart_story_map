@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components/macro'
 import PlaceName from '../InfoPanel/PlacesList/PlaceElement/PlaceName'
 import PlaceDescription from '../InfoPanel/PlacesList/PlaceElement/PlaceDescription'
 import Video from '../InfoPanel/PlacesList/PlaceElement/Video'

@@ -1,6 +1,6 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components/macro'
 import translate from '../../utils/translate'
 
 const Title = ({ title, onTitleChange }) => {

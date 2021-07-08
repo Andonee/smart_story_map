@@ -13,7 +13,7 @@ import Link from '../PlacesList/PlaceElement/Link'
 import Audio from '../PlacesList/PlaceElement/Audio'
 import Date from '../PlacesList/PlaceElement/Date'
 import TimelineIcon from '@material-ui/icons/Timeline'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const Timeline = ({ spatialData, imageOpenHandler, panelStyles }) => {
 	const {

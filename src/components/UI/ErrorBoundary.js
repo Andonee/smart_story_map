@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import translate from '../../utils/translate'
 
 class ErrorBoundary extends Component {

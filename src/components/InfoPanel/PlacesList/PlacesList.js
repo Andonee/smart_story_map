@@ -1,7 +1,7 @@
 import React from 'react'
 import PlaceElement from './PlaceElement/PlaceElement'
 import ErrorBoundary from '../../UI/ErrorBoundary'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import translate from '../../../utils/translate'
 
 const PlacesList = ({

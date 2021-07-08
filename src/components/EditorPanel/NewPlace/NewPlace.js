@@ -1,5 +1,5 @@
 import TextField from '@material-ui/core/TextField'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { useForm, Controller } from 'react-hook-form'
 import CustomButton from '../../UI/CustomButton'
 import translate from '../../../utils/translate'

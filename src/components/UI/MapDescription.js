@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components/macro'
 import { isMobile } from 'react-device-detect'
 
 const MapDescription = ({ description, isDescriptionOpen }) => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const Address = ({ address, fontColor }) => {
 	return <StyledWrapper color={fontColor}>{address}</StyledWrapper>

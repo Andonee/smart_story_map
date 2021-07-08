@@ -4,7 +4,7 @@ import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import IconButton from '@material-ui/core/IconButton'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const ImageModal = ({ isOpen, setIsOpen }) => {
 	const [open, setOpen] = React.useState(isOpen.isOpen)

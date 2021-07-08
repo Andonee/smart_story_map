@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, useCallback } from 'react'
 
 import { nanoid } from 'nanoid'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import produce from 'immer'
 import { useImmerReducer } from 'use-immer'
 
@@ -426,7 +426,6 @@ function App() {
 						visibleElement?.classList.add('show')
 					}
 				}
-
 			} else if (!isElementOnScreen(id)) {
 				const invisibleElement = document.getElementById(id)
 				invisibleElement.classList.remove('show')
@@ -436,7 +435,6 @@ function App() {
 	}
 
 	const onObjectClickHandler = object => {
-
 		if (!isMobile) {
 			console.log('Object', object)
 			document.getElementById(`${object[0]?.properties.id}`).scrollIntoView({

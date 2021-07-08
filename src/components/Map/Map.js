@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import useMap from '../../hooks/useMap'
 import { filter as rxFilter } from 'rxjs/operators'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { useMapClick, useMapHover } from '../../hooks/useMapEvents'
 import { decode } from 'js-base64'
 

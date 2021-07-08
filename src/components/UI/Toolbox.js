@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { isMobile } from 'react-device-detect'
 
 const Toolbox = ({ children, loggedIn }) => {

@@ -4,7 +4,7 @@ import Title from './Title'
 import { useHistory } from 'react-router-dom'
 import useHttp from '../../hooks/useHttp'
 import { BaseUrl } from '../../utils/baseUrl'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import jwt_decode from 'jwt-decode'
 
 const Form = () => {

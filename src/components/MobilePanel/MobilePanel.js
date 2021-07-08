@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Pagination } from 'swiper'
 import 'swiper/swiper-bundle.css'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import SwiperInfo from './SwiperInfo'
 
 SwiperCore.use(Pagination)

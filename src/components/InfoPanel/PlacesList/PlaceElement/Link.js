@@ -1,6 +1,6 @@
 import React from 'react'
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const Link = ({ link, fontColor }) => {
 	return (
@@ -13,8 +13,7 @@ const Link = ({ link, fontColor }) => {
 				target='_blank'
 				rel='noreferrer'
 				title={link}
-				color={fontColor}
-			>
+				color={fontColor}>
 				{link}
 			</StyledHyperlink>
 		</StyledWrapper>
