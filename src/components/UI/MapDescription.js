@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { isMobile } from 'react-device-detect'
 
 const MapDescription = ({ description, isDescriptionOpen }) => {
 	return (
@@ -17,10 +18,11 @@ const StyledWrapper = styled.div`
 	justify-content: center;
 	align-items: center;
 	position: absolute;
-	right: 60px;
-	top: 20px;
+	right: ${isMobile ? '35px' : '60px'};
+	top: ${isMobile ? '100px' : '20px'};
 	z-index: 2;
 	text-align: justify;
+	${'' /* overflow: scroll; */}
 
 	${props =>
 		props.opened &&
@@ -56,10 +58,10 @@ const StyledDescription = styled.div`
 	transition: all 0.3s;
 `
 const StyledContent = styled.div`
-    height: 400px;
+    height: ${isMobile ? '350px' : '400px'};
     max-height: 80%;
-    overflow: scroll;
+    ${'' /* overflow: scroll; */}
     overflow-x:hidden;
-    padding: 10px 20px;
+    padding: 10px 10px;
     width: 100%;
 }`

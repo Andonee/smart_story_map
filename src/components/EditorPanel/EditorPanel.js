@@ -207,7 +207,7 @@ const StyledEditBtnWrapper = styled.div`
 		width: 100%;
 		display: flex;
 		justify-content: center;
-		margin-top: 10px;
+		margin-top: 25px;
 	}
 `
 

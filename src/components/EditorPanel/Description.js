@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField'
 import styled from 'styled-components'
 import translate from '../../utils/translate'
 
-const Title = ({ description, onDescriptionChange }) => {
+const Description = ({ description, onDescriptionChange }) => {
 	return (
 		<StyledWrapper>
 			{description.isEdited ? (
@@ -31,7 +31,7 @@ const Title = ({ description, onDescriptionChange }) => {
 	)
 }
 
-export default Title
+export default Description
 
 const StyledWrapper = styled.div`
 	height: 150px;

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { isMobile } from 'react-device-detect'
 
 const Toolbox = ({ children, loggedIn }) => {
 	return (
@@ -12,8 +13,8 @@ const StyledToolboxWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	position: absolute;
-	top: 40px;
-	right: ${props => (props.loggedIn ? '410px' : '20px')};
+	top: ${isMobile ? '100px' : '40px'};
+	right: ${props => (props.loggedIn ? '410px' : isMobile ? '20px' : '20px')};
 	z-index: 10;
 
 	& > button {

@@ -7,7 +7,12 @@ import SwiperInfo from './SwiperInfo'
 
 SwiperCore.use(Pagination)
 
-const MobilePanel = ({ spatialData, imageOpenHandler, selectedPlace }) => {
+const MobilePanel = ({
+	spatialData,
+	imageOpenHandler,
+	selectedPlace,
+	mapInstance,
+}) => {
 	const [open, setOpen] = useState(false)
 	const [currentSwipe, setCurrentSwipe] = useState(null)
 	const sliderRef = useRef(null)
@@ -50,6 +55,17 @@ const MobilePanel = ({ spatialData, imageOpenHandler, selectedPlace }) => {
 			clearTimeout(currentSwipe)
 		}
 	}
+
+	useEffect(() => {
+		if (!currentSwipe) return
+		mapInstance?.flyTo({
+			center: [
+				currentSwipe.geometry.coordinates[0],
+				currentSwipe.geometry.coordinates[1],
+			],
+			zoom: 18,
+		})
+	}, [currentSwipe])
 
 	const onSlideClick = e => {
 		setOpen(true)

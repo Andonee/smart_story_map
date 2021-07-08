@@ -532,15 +532,19 @@ function App() {
 			)}
 			{newObject.addNewObject && <AddPlaceInfo />}
 			<Toolbox loggedIn={authContext.isLoggedIn}>
-				<StyledIconButton onClick={onReturnHandler}>
-					<ArrowBackIcon />
-				</StyledIconButton>
+				{!isMobile && (
+					<StyledIconButton onClick={onReturnHandler}>
+						<ArrowBackIcon />
+					</StyledIconButton>
+				)}
 				<StyledIconButton onClick={onDescriptionOpenHandler}>
 					<InfoIcon />
 				</StyledIconButton>
-				<StyledIconButton onClick={context.onLanguageChange}>
-					<TranslateIcon />
-				</StyledIconButton>
+				{!isMobile && (
+					<StyledIconButton onClick={context.onLanguageChange}>
+						<TranslateIcon />
+					</StyledIconButton>
+				)}
 				<StyledIconButton onClick={onZoomInHandler}>
 					<ZoomInIcon />
 				</StyledIconButton>
@@ -613,6 +617,7 @@ function App() {
 							spatialData={appData.spatialData}
 							imageOpenHandler={imageOpenHandler}
 							selectedPlace={selectedPlace}
+							mapInstance={mapInstance}
 						/>
 					)}
 					<ImageModal
