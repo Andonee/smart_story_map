@@ -20,10 +20,19 @@ const MapPreview = ({
 	const history = useHistory()
 	const authContext = useContext(AuthContext)
 
-	const onMapClickHandler = () => {
+	const onMapEditHandler = () => {
 		const mapId = id
 
 		history.replace(`/map/${user}/${mapId}`, { secretToken: authContext.token })
+	}
+
+	const onMapPreviewHandler = () => {
+		const mapId = id
+
+		history.replace(`/map/${user}/${mapId}`, {
+			secretToken: authContext.token,
+			preview: true,
+		})
 	}
 
 	const environment = process.env.NODE_ENV
@@ -45,14 +54,13 @@ const MapPreview = ({
 				<CloseIcon />
 			</StyledCloseButton>
 			<StyledImageContainer>
-				<StyledImage
-					onClick={onMapClickHandler}
-					src={`${avatar}`}
-					alt={title}
-				/>
-				<StyledImageTextWrapper onClick={onMapClickHandler}>
-					<StyledImageInfo>
+				<StyledImage src={`${avatar}`} alt={title} />
+				<StyledImageTextWrapper>
+					<StyledImageInfo onClick={onMapPreviewHandler}>
 						{translate('mapPreview.open', 'Open the map')}
+					</StyledImageInfo>
+					<StyledImageInfo onClick={onMapEditHandler}>
+						{translate('mapPreview.edit', 'Edit')}
 					</StyledImageInfo>
 				</StyledImageTextWrapper>
 			</StyledImageContainer>
@@ -120,6 +128,9 @@ const StyledImage = styled.img`
 `
 
 const StyledImageTextWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 	transition: 0.3s ease;
 	opacity: 0;
 	position: absolute;
@@ -128,6 +139,7 @@ const StyledImageTextWrapper = styled.div`
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 	text-align: center;
+	height: 80%;
 `
 
 const StyledImageContainer = styled.div`
@@ -141,7 +153,6 @@ const StyledImageContainer = styled.div`
 
 	&:hover ${StyledImage} {
 		filter: brightness(50%);
-		cursor: pointer;
 	}
 `
 
@@ -150,6 +161,13 @@ const StyledImageInfo = styled.div`
 	color: white;
 	font-size: 16px;
 	padding: 16px 32px;
+	border-radius: 10px;
+	transition: all 0.3s;
+
+	&:hover {
+		background: #889cff;
+		transform: scale(1.05);
+	}
 `
 
 const StyledTitle = styled.div`

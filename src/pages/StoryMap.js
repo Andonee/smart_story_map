@@ -564,22 +564,27 @@ function App() {
 					</StyledMap>
 					{appData.spatialData.data && (
 						<>
-							{!isMobile && isEditable.allowed && isEditable.token && (
-								<StyledEditorPanel
-									order={appData.spatialData.data.style.panelsOrder.editorPanel}
-									color={appData.spatialData.data.style.backgroundColor}>
-									<EditorPanel
-										setNewObject={setNewObject}
-										newObject={newObject}
-										onPostHandler={onPostHandler}
-										onPlaceEdit={onPlaceEdit}
-										dispatchAppData={dispatchAppData}
-										appData={appData}
-										mapInstance={mapInstance}
-										setIsRemoveIconModalOpen={setIsRemoveIconModalOpen}
-									/>
-								</StyledEditorPanel>
-							)}
+							{!isMobile &&
+								isEditable.allowed &&
+								isEditable.token &&
+								!history.location.state.preview && (
+									<StyledEditorPanel
+										order={
+											appData.spatialData.data.style.panelsOrder.editorPanel
+										}
+										color={appData.spatialData.data.style.backgroundColor}>
+										<EditorPanel
+											setNewObject={setNewObject}
+											newObject={newObject}
+											onPostHandler={onPostHandler}
+											onPlaceEdit={onPlaceEdit}
+											dispatchAppData={dispatchAppData}
+											appData={appData}
+											mapInstance={mapInstance}
+											setIsRemoveIconModalOpen={setIsRemoveIconModalOpen}
+										/>
+									</StyledEditorPanel>
+								)}
 						</>
 					)}
 					{isMobile && (

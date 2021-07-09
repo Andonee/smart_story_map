@@ -108,7 +108,7 @@ const Account = () => {
 	}
 
 	const onRemoveMapClickHandler = async e => {
-		const mapId = e.target.parentElement.id
+		const mapId = e.target.parentElement.id || e.target.id
 		const user = userName
 
 		const mapList = maps.filter(map => map.id !== mapId)

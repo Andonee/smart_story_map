@@ -1,9 +1,15 @@
 import styled from 'styled-components/macro'
 import { isMobile } from 'react-device-detect'
+import { useHistory } from 'react-router-dom'
 
 const Toolbox = ({ children, loggedIn }) => {
+	const history = useHistory()
 	return (
-		<StyledToolboxWrapper loggedIn={loggedIn}>{children}</StyledToolboxWrapper>
+		<StyledToolboxWrapper
+			loggedIn={loggedIn}
+			preview={history.location.state.preview}>
+			{children}
+		</StyledToolboxWrapper>
 	)
 }
 
@@ -14,7 +20,8 @@ const StyledToolboxWrapper = styled.div`
 	flex-direction: column;
 	position: absolute;
 	top: ${isMobile ? '100px' : '40px'};
-	right: ${props => (props.loggedIn ? '410px' : isMobile ? '20px' : '20px')};
+	right: ${props =>
+		props.loggedIn && !props.preview ? '410px' : isMobile ? '20px' : '20px'};
 	z-index: 10;
 
 	& > button {

@@ -34,6 +34,7 @@
 	"account.createStoryMap": "Create a Story Map",
 	"account.createTimeline": "Create a Timeline",
 	"mapPreview.open": "Open the map",
+	"mapPreview.edit": "Edit",
 	"mapPreview.places": "Places",
 	"mapPreview.type": "Type"
 }
