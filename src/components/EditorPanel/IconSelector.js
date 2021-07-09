@@ -104,7 +104,10 @@ const IconSelector = ({
 				</StyledInfo>
 			)}
 			<StyledButtonsWrapper>
-				<StyledButton variant='contained' component='label' color='#2D8DE8'>
+				<StyledButton
+					variant='contained'
+					component='label'
+					background='#2D8DE8'>
 					<AddCircleOutlineIcon style={{ color: '#fff' }} />
 					<input
 						accept='image/svg+xml'
@@ -119,7 +122,7 @@ const IconSelector = ({
 				<StyledButton
 					variant='contained'
 					onClick={onRemoveIconConfirmation}
-					color='#de1919'>
+					background='#de1919'>
 					<DeleteForeverIcon style={{ color: '#fff' }} />
 				</StyledButton>
 			</StyledButtonsWrapper>
@@ -208,6 +211,6 @@ const StyledButtonsWrapper = styled.div`
 `
 const StyledButton = styled(Button)`
 	&& {
-		background: ${props => props.color};
+		background: ${props => props.background};
 	}
 `

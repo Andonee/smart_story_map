@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
-
 import styled from 'styled-components/macro'
-
 import mapboxlight from '../../assets/images/mapboxlight.png'
 import mapboxdark from '../../assets/images/mapboxdark.png'
 import { useHistory } from 'react-router-dom'
 import AuthContext from '../../store/auth-context'
 import CloseIcon from '@material-ui/icons/Close'
+import translate from '../../utils/translate'
 
 const MapPreview = ({
 	title,
@@ -52,7 +51,9 @@ const MapPreview = ({
 					alt={title}
 				/>
 				<StyledImageTextWrapper onClick={onMapClickHandler}>
-					<StyledImageInfo>Otwórz mapę</StyledImageInfo>
+					<StyledImageInfo>
+						{translate('mapPreview.open', 'Open the map')}
+					</StyledImageInfo>
 				</StyledImageTextWrapper>
 			</StyledImageContainer>
 			<StyledTitle>
@@ -63,10 +64,10 @@ const MapPreview = ({
 
 			<StyledMapsInfo>
 				<p>
-					Places: <strong>{places}</strong>
+					{translate('mapPreview.places', 'Places')}: <strong>{places}</strong>
 				</p>
 				<p>
-					Type: <strong>{type}</strong>
+					{translate('mapPreview.type', 'Type')}: <strong>{type}</strong>
 				</p>
 			</StyledMapsInfo>
 		</StyledMapsContainer>
@@ -88,6 +89,7 @@ const StyledMapsContainer = styled.div`
 	transition: all 0.3s;
 	border-radius: 2%;
 	position: relative;
+	font-family: 'Lato', sans-serif;
 
 	&:hover {
 		transform: translateY(-5px);

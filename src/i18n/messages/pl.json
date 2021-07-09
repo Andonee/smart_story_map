@@ -32,5 +32,8 @@
 	"modal.session": "Twoja sesja wygała. Zaloguj się ponownie",
 	"account.logout": "Wyloguj",
 	"account.createStoryMap": "Stwórz Story Map",
-	"account.createTimeline": "Stwórz Timeline"
+	"account.createTimeline": "Stwórz Timeline",
+	"mapPreview.open": "Otwórz mapę",
+	"mapPreview.places": "Miejsca",
+	"mapPreview.type": "Typ"
 }

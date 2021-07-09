@@ -6,10 +6,10 @@ import StoryMapStructure from '../utils/story-map-structure.json'
 import TimelineStructure from '../utils/timeline-structure.json'
 import MapPreviewStructure from '../utils/map-preview-structure.json'
 import { nanoid } from 'nanoid'
-import { httpRequest } from '../utils/http-request'
 import { BaseUrl } from '../utils/baseUrl'
 import styled from 'styled-components/macro'
 import translate from '../utils/translate'
+import useHttp from '../hooks/useHttp'
 
 const Account = () => {
 	const authContext = useContext(AuthContext)
@@ -18,6 +18,8 @@ const Account = () => {
 	const [maps, setMaps] = useState()
 	const [userName, setUserName] = useState()
 	const [reload, setReload] = useState(false)
+
+	const { sendRequest } = useHttp()
 
 	useEffect(() => {
 		const user = authContext.userName
@@ -61,8 +63,6 @@ const Account = () => {
 	const onStoryMapCreate = async e => {
 		if (!userName) return
 
-		debugger
-
 		const type = e.target.id
 
 		const structure =
@@ -79,26 +79,25 @@ const Account = () => {
 		MapPreviewStructure.belongsTo = userName
 
 		try {
-			const createMap = await httpRequest(
-				`${BaseUrl}/maps/`,
-				'POST',
-				newStoryMap,
-				{
-					'Content-Type': 'application/json',
-					Authorization: 'Bearer ' + authContext.token,
-				}
-			)
-			const createMapPreview = await httpRequest(
-				`${BaseUrl}/mapsInfo/`,
-				'POST',
-
-				{
+			const createMap = await sendRequest({
+				method: 'POST',
+				url: `${BaseUrl}/maps/`,
+				body: newStoryMap,
+				headers: {
 					'Content-Type': 'application/json',
 					Authorization: 'Bearer ' + authContext.token,
 				},
-				MapPreviewStructure
-			)
-			if (createMap.ok && createMapPreview.ok) {
+			})
+			const createMapPreview = await sendRequest({
+				method: 'POST',
+				url: `${BaseUrl}/mapsInfo/`,
+				body: MapPreviewStructure,
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + authContext.token,
+				},
+			})
+			if (createMap.status === 201 && createMapPreview.status === 201) {
 				setReload(true)
 			} else {
 				throw new Error('Creating story map error. Try again.')
@@ -109,26 +108,26 @@ const Account = () => {
 	}
 
 	const onRemoveMapClickHandler = async e => {
-		const mapId = e.target.id
-		const user = authContext.user()
+		const mapId = e.target.parentElement.id
+		const user = userName
 
 		const mapList = maps.filter(map => map.id !== mapId)
 		setMaps(mapList)
 		try {
-			const removeMap = await httpRequest(
-				`${BaseUrl}/maps/${user}/${mapId}`,
-				'DELETE',
-				{
+			const removeMap = await sendRequest({
+				method: 'DELETE',
+				url: `${BaseUrl}/maps/${user}/${mapId}`,
+				headers: {
 					Authorization: 'Bearer ' + authContext.token,
-				}
-			)
-			const removeMapPreview = await httpRequest(
-				`${BaseUrl}/mapsInfo/${mapId}`,
-				'DELETE',
-				{
+				},
+			})
+			const removeMapPreview = await sendRequest({
+				method: 'DELETE',
+				url: `${BaseUrl}/mapsInfo/${mapId}`,
+				headers: {
 					Authorization: 'Bearer ' + authContext.token,
-				}
-			)
+				},
+			})
 			if (removeMap.ok && removeMapPreview.ok) {
 				setReload(true)
 			} else {
@@ -142,7 +141,6 @@ const Account = () => {
 	return (
 		<StyledMapsWrapper>
 			<StyledLogoutButton onClick={onLogoutHandler}>
-				{' '}
 				{translate('account.logout', 'Logout')}
 			</StyledLogoutButton>
 			<StyledStoryMapButton id='story map' onClick={onStoryMapCreate}>

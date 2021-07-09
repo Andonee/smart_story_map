@@ -5,7 +5,7 @@ import translate from '../../utils/translate'
 
 const Title = ({ title, onTitleChange }) => {
 	return (
-		<StyledWrapper expanded={title.isEdited} height={title.isEdited}>
+		<StyledWrapper height={title.isEdited}>
 			{title.isEdited ? (
 				<StyledInput
 					id='map-title'

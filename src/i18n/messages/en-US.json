@@ -32,5 +32,8 @@
 	"modal.session": "Your session has expired. Please log in.",
 	"account.logout": "Logout",
 	"account.createStoryMap": "Create a Story Map",
-	"account.createTimeline": "Create a Timeline"
+	"account.createTimeline": "Create a Timeline",
+	"mapPreview.open": "Open the map",
+	"mapPreview.places": "Places",
+	"mapPreview.type": "Type"
 }

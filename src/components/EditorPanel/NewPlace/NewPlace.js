@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form'
 import CustomButton from '../../UI/CustomButton'
 import translate from '../../../utils/translate'
 
-const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject, type }) => {
+const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject }) => {
 	const { register, handleSubmit, getValues, setValue, control } = useForm({
 		mode: 'onChange',
 		reValidateMode: 'onChange',

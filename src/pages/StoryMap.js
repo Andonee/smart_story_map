@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, useCallback } from 'react'
 
 import { nanoid } from 'nanoid'
-import styled from 'styled-components/macro'
+import styled from 'styled-components'
 import produce from 'immer'
 import { useImmerReducer } from 'use-immer'
 
@@ -52,7 +52,7 @@ function App() {
 	})
 	const [isNewObjectModalOpen, setIsNewObjectModalOpen] = useState(false)
 	const [isRemoveObjectModalOpen, setIsRemoveObjectModalOpen] = useState(false)
-	const [isModalSessionOpen, setIsModalSesssionOpen] = useState(false)
+	const [isModalSessionOpen, setIsModalSessionOpen] = useState(false)
 	const [isRemoveIconModalOpen, setIsRemoveIconModalOpen] = useState(false)
 	const [newObject, setNewObject] = useState({
 		addNewObject: false,
@@ -173,10 +173,15 @@ function App() {
 
 	useEffect(() => {
 		if (error.content === 'Not authorized') {
-			setIsModalSesssionOpen(true)
-			// history.replace('/story-account/')
+			setIsModalSessionOpen(true)
 		}
 	}, [error])
+
+	useEffect(() => {
+		if (!authContext.isLoggedIn && isEditable.allowed) {
+			setIsModalSessionOpen(true)
+		}
+	}, [authContext.isLoggedIn])
 
 	const imageOpenHandler = e => {
 		const image = e.target.src
@@ -258,12 +263,13 @@ function App() {
 		setIsNewObjectModalOpen(false)
 	}
 
-	const onPostHandler = async () => {
+	const onPostHandler = useCallback(async () => {
+		if (!appData.spatialData.data) return
 		const mapPreview = {
-			places: appData.spatialData.data.map.features.length,
-			title: appData.spatialData.data.info.title,
-			description: appData.spatialData.data.info.description,
-			basemap: appData.spatialData.data.style.basemap,
+			places: appData.spatialData.data?.map.features.length,
+			title: appData.spatialData.data?.info.title,
+			description: appData.spatialData.data?.info.description,
+			basemap: appData.spatialData.data?.style.basemap,
 		}
 		try {
 			sendRequest({
@@ -288,10 +294,14 @@ function App() {
 		} catch {
 			alert('Something went wrong')
 		}
-	}
+	}, [appData.spatialData, authContext.token, urlData, sendRequest])
+
+	useEffect(() => {
+		onPostHandler()
+	}, [appData, onPostHandler])
 
 	const onModalSessionClose = () => {
-		setIsModalSesssionOpen(false)
+		setIsModalSessionOpen(false)
 		history.replace('/story-account/')
 	}
 
@@ -701,7 +711,6 @@ const StyledModalContent = styled.div`
 const StyledCloseButton = styled(CustomButton)`
 	&& {
 		margin-top: 20px;
-		background: red;
 		width: 1000px;
 		display: none;
 	}

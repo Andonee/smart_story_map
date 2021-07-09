@@ -15,9 +15,9 @@ const Auth = () => {
 	}
 	const authContext = useContext(AuthContext)
 
-	useEffect(() => {
-		if (!authContext.token && authContext.userName) setIsModalOpen(true)
-	}, [authContext])
+	// useEffect(() => {
+	// 	if (!authContext.token && authContext.userName) setIsModalOpen(true)
+	// }, [authContext])
 
 	return (
 		<StyledContainer>
@@ -63,6 +63,7 @@ const StyledModalContent = styled.div`
 	& > p {
 		margin-bottom: 20px;
 		font-weight: bold;
+		font-family: 'Lato', sans-serif;
 	}
 `
 

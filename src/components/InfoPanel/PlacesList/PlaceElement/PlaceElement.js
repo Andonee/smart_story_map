@@ -39,7 +39,7 @@ const PlaceElement = ({
 		<StyledWrapper id={id}>
 			<StyledAccordion>
 				<StyledAccordionSummary
-					expandIcon={<StyledExpandIcon color={`${fontColor}`} />}
+					expandIcon={<StyledExpandIcon background={`${fontColor}`} />}
 					aria-controls='panel1a-content'
 					id='panel1a-header'>
 					<StyledTitleContainer>
@@ -120,9 +120,9 @@ const StyledTitleContainer = styled.div`
 `
 const StyledExpandIcon = styled(ExpandMoreIcon)`
 	&& {
-		color: ${props => props.color};
-		border: 2px solid ${props => props.color};
+		border: 2px solid ${props => props.background};
 		border-radius: 50%;
+		color: ${props => props.background};
 	}
 `
 const StyledAccordionDetails = styled(AccordionDetails)`
