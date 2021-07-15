@@ -6,4 +6,4 @@ Kolejnym krokiem jest utworzenie swojej mapy. Mamy 2 rodzaje do wybóry - klasyc
 
 Po wstawieniu obiektów mapę można zapisać oraz przesłać link do innych osób by także mogły podziwiać ciekawe miejsca.
 
-Do działania aplikacji konieczne jest sklonowanie repozytorium <a href="https://github.com/Andonee/story-map-express" target="_blank">story-map-express</a> będącej serwerem API. W razie konieczności można również zmienić url do API modyfikując plik BaseUrl.js
+Aplikację można uruchomić łączać się automatycznie do REST API znajdującego się na Heroku, lub można sklonować repozytorium <a href="https://github.com/Andonee/story-map-express" target="_blank">story-map-express</a> i podpiąć własną bazę danych, po czym zmienić adres API w pliku "baseUrl.js" w aplikacji smart_story_map.
