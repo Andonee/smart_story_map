@@ -6,4 +6,4 @@ Kolejnym krokiem jest utworzenie swojej mapy. Mamy 2 rodzaje do wybóry - klasyc
 
 Po wstawieniu obiektów mapę można zapisać oraz przesłać link do innych osób by także mogły podziwiać ciekawe miejsca.
 
-Do działania aplikacji konieczne jest sklonowanie aplikacji "story-map-express" będącej serwerem API. W razie konieczności można również zmienić url do API modyfikując plik BaseUrl.js
+Do działania aplikacji konieczne jest sklonowanie repozytorium <a href="https://github.com/Andonee/story-map-express" target="_blank">story-map-express</a> będącej serwerem API. W razie konieczności można również zmienić url do API modyfikując plik BaseUrl.js
