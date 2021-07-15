@@ -95,7 +95,9 @@ const Form = () => {
 					<StyledFormActions>
 						<button>{!isLogin ? 'Utwórz nowe konto' : 'Zaloguj'}</button>
 						<button onClick={onActionChangeHandler}>
-							{isLogin ? 'Utwórz konto' : 'Przełącz do logowania'}
+							{isLogin
+								? 'Przełącz aby utworzyć konto'
+								: 'Przełącz do logowania'}
 						</button>
 					</StyledFormActions>
 				</StyledForm>
