@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components/macro'
+import styled, { css } from 'styled-components/macro'
 import PlaceIcon from '@material-ui/icons/Place'
 import MapIcon from '@material-ui/icons/Map'
 import SyncAltIcon from '@material-ui/icons/SyncAlt'
@@ -212,7 +212,7 @@ const MapConfig = ({
 
 	return (
 		<>
-			<StyledConfig>
+			<StyledMap type={appData.spatialData.type}>
 				<CustomButton
 					text={<PlaceIcon />}
 					width={'35px'}
@@ -376,10 +376,10 @@ const MapConfig = ({
 						</Popover>
 					</>
 				)}
-			</StyledConfig>
+			</StyledMap>
 
 			{appData.spatialData.type === 'timeline' && (
-				<StyledMap>
+				<StyledMap type={appData.spatialData.type}>
 					<CustomButton
 						text={<PaletteIcon />}
 						width={'35px'}
@@ -487,7 +487,7 @@ const MapConfig = ({
 			)}
 
 			{appData.spatialData.type === 'timeline' && (
-				<StyledMap>
+				<StyledMap type={appData.spatialData.type}>
 					<CustomButton
 						text={<TimelineIcon />}
 						width={'35px'}
@@ -617,11 +617,19 @@ const StyledBasemap = styled.div`
 `
 
 const StyledMap = styled.div`
-	width: 70%;
+	${'' /* width: 70%; */}
 	display: flex;
 	justify-content: space-between;
-
 	margin-top: 20px;
+
+	${props =>
+		props.type === 'timeline'
+			? css`
+					width: 40%;
+			  `
+			: css`
+					width: 70%;
+			  `}
 `
 
 const StyledConfig = styled.div`
