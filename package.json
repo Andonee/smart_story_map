@@ -2,7 +2,7 @@
 	"name": "story-map",
 	"version": "0.1.0",
 	"private": true,
-	"homepage": "http://Andonee.github.io/react-gh-pages",
+	"homepage": "http://Andonee.github.io/story-account",
 	"dependencies": {
 		"@material-ui/core": "^4.11.3",
 		"@material-ui/icons": "^4.11.2",
