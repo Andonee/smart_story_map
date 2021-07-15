@@ -507,9 +507,11 @@ function App() {
 						<ArrowBackIcon />
 					</StyledIconButton>
 				)}
-				<StyledIconButton onClick={onDescriptionOpenHandler}>
-					<InfoIcon />
-				</StyledIconButton>
+				{appData.spatialData.data?.info.description && (
+					<StyledIconButton onClick={onDescriptionOpenHandler}>
+						<InfoIcon />
+					</StyledIconButton>
+				)}
 				{!isMobile && isEditable.allowed && !history.location.state.preview && (
 					<StyledIconButton onClick={context.onLanguageChange}>
 						<TranslateIcon />
