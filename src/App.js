@@ -23,7 +23,7 @@ function App() {
 					<Route path='/map/:user/:id'>
 						<StoryMap />
 					</Route>
-					<Route path='/story-account/*'>
+					<Route path='/*'>
 						<Redirect to='/story-account/' />
 					</Route>
 				</Switch>
