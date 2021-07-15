@@ -48,7 +48,7 @@ const Account = () => {
 			})
 			.catch(err => {
 				console.log(err)
-				history.replace('/smart_story_map/')
+				history.replace('/story-account/')
 			})
 
 		setReload(false)
@@ -56,7 +56,7 @@ const Account = () => {
 
 	const onLogoutHandler = () => {
 		authContext.logout()
-		history.replace('/smart_story_map/')
+		history.replace('/story-account/')
 	}
 
 	const onStoryMapCreate = async e => {

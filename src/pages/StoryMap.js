@@ -302,7 +302,7 @@ function App() {
 
 	const onModalSessionClose = () => {
 		setIsModalSessionOpen(false)
-		history.replace('/smart_story_map/')
+		history.replace('/story-account/')
 	}
 
 	const onModalClose = () => {
@@ -491,7 +491,7 @@ function App() {
 	}
 
 	const onReturnHandler = () => {
-		history.replace(`/smart_story_map/maps/${urlData.user}`)
+		history.replace(`/story-account/maps/${urlData.user}`)
 	}
 
 	return (

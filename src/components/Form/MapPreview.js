@@ -40,11 +40,11 @@ const MapPreview = ({
 	const brightMap =
 		environment === 'development'
 			? mapboxlight
-			: '/smart_story_map/assets/images/mapboxlight.png'
+			: '/story-account/assets/images/mapboxlight.png'
 	const darkMap =
 		environment === 'development'
 			? mapboxdark
-			: '/smart_story_map/assets/images/mapboxdark.png'
+			: '/story-account/assets/images/mapboxdark.png'
 
 	let avatar = basemap === 'bright' ? brightMap : darkMap
 

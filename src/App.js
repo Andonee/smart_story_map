@@ -16,15 +16,15 @@ function App() {
 						<Auth />
 					</Route>
 					{authContext.isLoggedIn && (
-						<Route path='/smart_story_map/maps/:user'>
+						<Route path='/story-account/maps/:user'>
 							<Account />
 						</Route>
 					)}
 					<Route path='/map/:user/:id'>
 						<StoryMap />
 					</Route>
-					<Route path='/smart_story_map/*'>
-						<Redirect to='/smart_story_map/' />
+					<Route path='/story-account/*'>
+						<Redirect to='/story-account/' />
 					</Route>
 				</Switch>
 			</BrowserRouter>

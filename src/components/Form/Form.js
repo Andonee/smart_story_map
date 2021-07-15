@@ -59,7 +59,7 @@ const Form = () => {
 				authContext.login(data.token, expirationTime)
 
 				authContext.user(data.user)
-				history.replace(`/smart_story_map/maps/${data.user}`)
+				history.replace(`/story-account/maps/${data.user}`)
 			} else {
 				request.json().then(data => setErrorMessage(data.message))
 				throw new Error('data')
