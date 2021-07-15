@@ -10,9 +10,9 @@ function App() {
 	const authContext = useContext(AuthContext)
 	return (
 		<div className='App'>
-			<BrowserRouter basename={process.env.PUBLIC_URL}>
+			<BrowserRouter>
 				<Switch>
-					<Route path='/smart_story_map/' exact>
+					<Route path='/story-account/' exact>
 						<Auth />
 					</Route>
 					{authContext.isLoggedIn && (

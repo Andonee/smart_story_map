@@ -27,7 +27,7 @@ const Form = () => {
 
 	const onSubmitHandler = async e => {
 		e.preventDefault()
-
+		debugger
 		const enteredLogin = loginRef.current.value
 		const enteredPassword = passwordRef.current.value
 
@@ -60,6 +60,8 @@ const Form = () => {
 
 				authContext.user(data.user)
 				history.replace(`/story-account/maps/${data.user}`)
+			} else if (request.status === 201) {
+				setIsLogin(true)
 			} else {
 				request.json().then(data => setErrorMessage(data.message))
 				throw new Error('data')
