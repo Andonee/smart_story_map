@@ -27,7 +27,7 @@ const Form = () => {
 
 	const onSubmitHandler = async e => {
 		e.preventDefault()
-		debugger
+
 		const enteredLogin = loginRef.current.value
 		const enteredPassword = passwordRef.current.value
 
@@ -68,6 +68,7 @@ const Form = () => {
 			}
 		} catch (err) {
 			console.log('Submit error', err)
+			setErrorMessage('Niewłaściwy login lub hasło')
 		}
 	}
 
@@ -150,6 +151,7 @@ const StyledFormInput = styled.input`
 
 const StyledFormError = styled.p`
 	color: #d32a2a;
+	font-weight: bold;
 `
 const StyledFormActions = styled.div`
 	display: flex;
