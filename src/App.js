@@ -12,19 +12,19 @@ function App() {
 		<div className='App'>
 			<BrowserRouter basename={process.env.PUBLIC_URL}>
 				<Switch>
-					<Route path='/smart-story-map/' exact>
+					<Route path='/smart_story_map/' exact>
 						<Auth />
 					</Route>
 					{authContext.isLoggedIn && (
-						<Route path='/smart-story-map/maps/:user'>
+						<Route path='/smart_story_map/maps/:user'>
 							<Account />
 						</Route>
 					)}
 					<Route path='/map/:user/:id'>
 						<StoryMap />
 					</Route>
-					<Route path='/smart-story-map/*'>
-						<Redirect to='/smart-story-map/' />
+					<Route path='/smart_story_map/*'>
+						<Redirect to='/smart_story_map/' />
 					</Route>
 				</Switch>
 			</BrowserRouter>
