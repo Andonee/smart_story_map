@@ -10,7 +10,7 @@ function App() {
 	const authContext = useContext(AuthContext)
 	return (
 		<div className='App'>
-			<BrowserRouter>
+			<BrowserRouter basename={process.env.PUBLIC_URL}>
 				<Switch>
 					<Route path='/story-account/' exact>
 						<Auth />
