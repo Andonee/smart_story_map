@@ -173,7 +173,7 @@ function App() {
 
 	useEffect(() => {
 		if (error.content === 'Not authorized') {
-			setIsModalSessionOpen(true)
+			// setIsModalSessionOpen(true)
 		}
 	}, [error])
 
@@ -502,7 +502,7 @@ function App() {
 			)}
 			{newObject.addNewObject && <AddPlaceInfo />}
 			<Toolbox loggedIn={authContext.isLoggedIn}>
-				{!isMobile && (
+				{!isMobile && isEditable.allowed && (
 					<StyledIconButton onClick={onReturnHandler}>
 						<ArrowBackIcon />
 					</StyledIconButton>
@@ -510,7 +510,7 @@ function App() {
 				<StyledIconButton onClick={onDescriptionOpenHandler}>
 					<InfoIcon />
 				</StyledIconButton>
-				{!isMobile && (
+				{!isMobile && isEditable.allowed && !history.location.state.preview && (
 					<StyledIconButton onClick={context.onLanguageChange}>
 						<TranslateIcon />
 					</StyledIconButton>

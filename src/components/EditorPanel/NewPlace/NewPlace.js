@@ -71,8 +71,8 @@ const NewPlace = ({ onCreateNewObject, editedPlace, onUpdateObject }) => {
 				name='description'
 				control={control}
 			/>
-			<StyledDivider />
-			<input type='file' accept='image/png, image/jpeg' />
+			{/* <StyledDivider />
+			<input type='file' accept='image/png, image/jpeg' /> */}
 			<StyledDivider />
 			<Controller
 				render={() => (

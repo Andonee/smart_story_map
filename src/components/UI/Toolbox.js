@@ -7,7 +7,7 @@ const Toolbox = ({ children, loggedIn }) => {
 	return (
 		<StyledToolboxWrapper
 			loggedIn={loggedIn}
-			preview={history.location.state.preview}>
+			preview={history.location.state?.preview}>
 			{children}
 		</StyledToolboxWrapper>
 	)
