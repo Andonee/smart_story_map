@@ -2,7 +2,11 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 const PlaceDescription = ({ description, fontColor }) => {
-	return <StyledWrapper color={fontColor}>{description}</StyledWrapper>
+	return (
+		<StyledWrapper color={fontColor} data-test='component-placeDescription'>
+			{description}
+		</StyledWrapper>
+	)
 }
 
 export default PlaceDescription
