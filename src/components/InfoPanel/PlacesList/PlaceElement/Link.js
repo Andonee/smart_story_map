@@ -4,8 +4,8 @@ import styled from 'styled-components/macro'
 
 const Link = ({ link, fontColor }) => {
 	return (
-		<StyledWrapper>
-			<StyledArrow color={fontColor}>
+		<StyledWrapper data-test='component-link'>
+			<StyledArrow color={fontColor} data-test='component-icon'>
 				<ArrowRightAltIcon />
 			</StyledArrow>
 			<StyledHyperlink
@@ -13,7 +13,8 @@ const Link = ({ link, fontColor }) => {
 				target='_blank'
 				rel='noreferrer'
 				title={link}
-				color={fontColor}>
+				color={fontColor}
+				data-test='link-value'>
 				{link}
 			</StyledHyperlink>
 		</StyledWrapper>
