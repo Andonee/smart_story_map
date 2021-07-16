@@ -3,8 +3,8 @@ import styled from 'styled-components/macro'
 
 const Photo = ({ photo, open }) => {
 	return (
-		<StyledWrapper>
-			<StyledImg src={photo} onClick={open} />
+		<StyledWrapper data-test='component-photo'>
+			<StyledImg src={photo} onClick={open} data-test='photo-element' />
 		</StyledWrapper>
 	)
 }
