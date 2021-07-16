@@ -2,7 +2,11 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 const Address = ({ address, fontColor }) => {
-	return <StyledWrapper color={fontColor}>{address}</StyledWrapper>
+	return (
+		<StyledWrapper color={fontColor} data-test='component-address'>
+			{address}
+		</StyledWrapper>
+	)
 }
 
 export default Address
