@@ -2,7 +2,11 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 const PlaceName = ({ title, fontColor }) => {
-	return <StyledWrapper color={fontColor}>{title}</StyledWrapper>
+	return (
+		<StyledWrapper color={fontColor} data-test='component-placeName'>
+			{title}
+		</StyledWrapper>
+	)
 }
 
 export default PlaceName

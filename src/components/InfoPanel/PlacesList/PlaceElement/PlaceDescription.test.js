@@ -11,7 +11,7 @@ test('renders without error', () => {
 	expect(component.length).toBe(1)
 })
 
-test('renders non-empty title', () => {
+test('renders non-empty place description', () => {
 	const wrapper = setup('dummy description')
 	const component = findByTestAttr(wrapper, 'component-placeDescription').text()
 	expect(component).toBe('dummy description')
