@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 const Title = () => {
-	return <StyledTitle>Story Map</StyledTitle>
+	return <StyledTitle data-test='component-title'>Story Map</StyledTitle>
 }
 
 export default Title
