@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 
 const Audio = ({ audio }) => {
 	return (
-		<StyledPlayer controls>
+		<StyledPlayer controls data-test='component-audio'>
 			<source src={audio} type='audio/mpeg' />
 		</StyledPlayer>
 	)
